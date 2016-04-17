@@ -1,0 +1,785 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="记录," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="青林亦" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="转载请注明：http://www.qinglinyi.com/posts/publish-to-jcenter/
+第一次发布项目到jcenter，虽然网上有很多教程了，但是过程还是比较曲折。不过最终还是找到简单的方式，使用com.novoda.bintray-release实现发布。
+认识jcenter我们经常在android studio项目中看到：
+12345allprojects &amp;#123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio 发布项目到jcenter库">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/publish-to-jcenter/index.html">
+<meta property="og:site_name" content="青林亦">
+<meta property="og:description" content="转载请注明：http://www.qinglinyi.com/posts/publish-to-jcenter/
+第一次发布项目到jcenter，虽然网上有很多教程了，但是过程还是比较曲折。不过最终还是找到简单的方式，使用com.novoda.bintray-release实现发布。
+认识jcenter我们经常在android studio项目中看到：
+12345allprojects &amp;#123">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/gson_file.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/lib_info_0.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/lib_info_1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/about_jcenter.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/how_bintray_work.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/bintray_type.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/api_0.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/api_1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/api_2.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/add_package_0.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/add_package_1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/add_package_2.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/add_package_3.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/publish_0.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/publish_1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/use_self.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/add_to_jcenter_0.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/add_to_jcenter_1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/add_to_jcenter_2.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/maven_add_gpg.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/ptj/maven_add.png">
+<meta property="og:updated_time" content="2016-04-15T09:33:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Studio 发布项目到jcenter库">
+<meta name="twitter:description" content="转载请注明：http://www.qinglinyi.com/posts/publish-to-jcenter/
+第一次发布项目到jcenter，虽然网上有很多教程了，但是过程还是比较曲折。不过最终还是找到简单的方式，使用com.novoda.bintray-release实现发布。
+认识jcenter我们经常在android studio项目中看到：
+12345allprojects &amp;#123">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/ptj/gson_file.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android Studio 发布项目到jcenter库 | 青林亦 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76ab47522bfa6c63d79e65cd88427dbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">青林亦</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">世界如此喧嚣</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android Studio 发布项目到jcenter库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-06T14:59:13+08:00" content="2016-04-06">
+              2016-04-06
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/publish-to-jcenter/" class="leancloud_visitors" data-flag-title="Android Studio 发布项目到jcenter库">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>转载请注明：<a href="http://www.qinglinyi.com/posts/publish-to-jcenter/">http://www.qinglinyi.com/posts/publish-to-jcenter/</a></p>
+<p>第一次发布项目到jcenter，虽然网上有很多教程了，但是过程还是比较曲折。不过最终还是找到简单的方式，使用com.novoda.bintray-release实现发布。</p>
+<h2 id="认识jcenter"><a href="#认识jcenter" class="headerlink" title="认识jcenter"></a>认识jcenter</h2><p>我们经常在android studio项目中看到：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">allprojects </span>&#123;</span><br><span class="line">    <span class="class">repositories </span>&#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>那么jcenter到底是什么呢？</strong></p>
+<p>我们可以将jcenter理解为<strong>代码仓库</strong>。如果我们在builde.gradle文件中设置例如：</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> 'com.google.<span class="built_in">code</span>.gson:gson:<span class="number">2.3</span><span class="number">.1</span>'</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>这时，Android Studio或者说Gradle会<strong>自动</strong>从jcenter<strong>下载</strong>    gson的jar包（实际上Maven packages，但是我们主要关心是jar或者aar），这样我们就可以在项目中使用gson了。不需要手动下载jar包然后导入到项目中了。 </p>
+<p>我们在文件夹下面（.gradle/caches/modules-2/files-2.1，这个路径我电脑下的）找到这些由gradle下载的文件，像这样：</p>
+<p><img src="/images/ptj/gson_file.png" alt="gson文件"></p>
+<p>不过我们一般不用关心这些，只要项目能自动导入依赖就好了。</p>
+<p>如果你想关心这些文件在哪里也没关系。</p>
+<p><img src="/images/ptj/lib_info_0.png" alt="library属性"><br><img src="/images/ptj/lib_info_1.png" alt="library属性"></p>
+<p>（走偏了，回来。。）</p>
+<p><strong>所以，我们就能大致明白了这个jcenter是干什么的。那么来确定一下吧：</strong></p>
+<p><img src="/images/ptj/about_jcenter.png" alt="about_jcenter"></p>
+<p>详细信息在这里：<a href="https://bintray.com/bintray/jcenter" target="_blank" rel="external">https://bintray.com/bintray/jcenter</a></p>
+<p><strong>主要就是说：</strong></p>
+<blockquote>
+<p>JCenter is the place to find and share popular Apache Maven packages for use by Maven, Gradle, Ivy, SBT, etc. </p>
+</blockquote>
+<p> <strong>提供Maven, Gradle, Ivy, SBT等查找和分享Apache Maven packages的地方</strong></p>
+<p>顺便我们了解一下bintray <a href="https://bintray.com/howbintrayworks" target="_blank" rel="external">https://bintray.com/howbintrayworks</a></p>
+<p><img src="/images/ptj/how_bintray_work.png" alt="bintray"></p>
+<blockquote>
+<p>Bintray, your platform for automated software distribution</p>
+</blockquote>
+<p><strong>当然jcenter只是bintray下的一个maven packages repository</strong></p>
+<p>bintray不只支持maven packages 还支持其他类型：</p>
+<p><img src="/images/ptj/bintray_type.png" alt="bintray"></p>
+<p><strong>了解完jcenter我们就开始吧！</strong></p>
+<h2 id="账号注册"><a href="#账号注册" class="headerlink" title="账号注册"></a>账号注册</h2><ol>
+<li>要把项目发布到jcenter我们需要先注册bintray的账号，<a href="https://bintray.com" target="_blank" rel="external">https://bintray.com</a>，我是通过GitHub账号注册的。（这一步基本没什么问题） </li>
+<li>然后获取API key （图）<br><img src="/images/ptj/api_0.png" alt="API key"><br><img src="/images/ptj/api_1.png" alt="API key"><br><img src="/images/ptj/api_2.png" alt="API key"></li>
+</ol>
+<p><strong>记下API key 发布的时候使用</strong></p>
+<h2 id="添加package"><a href="#添加package" class="headerlink" title="添加package"></a>添加package</h2><p><img src="/images/ptj/add_package_0.png" alt="package"><br><img src="/images/ptj/add_package_1.png" alt="package"><br><img src="/images/ptj/add_package_2.png" alt="package"><br><img src="/images/ptj/add_package_3.png" alt="package"></p>
+<p>其中，<strong>name</strong> ：包名字<br>例如：<br><figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">'com.android.tools.build:gradle:1.5.0</span>'</span><br></pre></td></tr></table></figure></p>
+<p>gradle 就是名字。</p>
+<h2 id="配置项目"><a href="#配置项目" class="headerlink" title="配置项目"></a>配置项目</h2><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:1.5.0'</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.novoda:bintray-release:0.3.4'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">allprojects</span> &#123;</span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ext &#123;</span><br><span class="line">    userOrg = <span class="string">'qinglinyi'</span></span><br><span class="line">    groupId = <span class="string">'com.qinglinyi.arg'</span></span><br><span class="line">    <span class="keyword">description</span> = <span class="string">'fragment arg'</span></span><br><span class="line">    publishVersion = <span class="string">'1.0.0'</span> </span><br><span class="line">    website = <span class="string">'https://github.com/qinglinyi/FragmentArg'</span></span><br><span class="line">    dryRun = <span class="string">'false'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'java'</span></span><br><span class="line">apply plugin: <span class="string">'com.novoda.bintray-release'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">publish &#123;</span><br><span class="line">    artifactId = <span class="string">'arg-api'</span> <span class="comment">// library的名字</span></span><br><span class="line">    userOrg = rootProject<span class="selector-class">.userOrg</span> <span class="comment">//用户所在组织</span></span><br><span class="line">    groupId = rootProject<span class="selector-class">.groupId</span> <span class="comment">// 包名</span></span><br><span class="line">    publishVersion = rootProject<span class="selector-class">.publishVersion</span> <span class="comment">// 版本</span></span><br><span class="line">    description = rootProject<span class="selector-class">.description</span> <span class="comment">// 描述</span></span><br><span class="line">    website = rootProject<span class="selector-class">.website</span> </span><br><span class="line">    bintrayUser = rootProject<span class="selector-class">.bintrayUser</span> <span class="comment">// 账户名</span></span><br><span class="line">    bintrayKey = rootProject<span class="selector-class">.bintrayKey</span> <span class="comment">// 就是API key</span></span><br><span class="line">    dryRun = rootProject<span class="selector-class">.dryRun</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我是使用com.novoda:bintray-release来完成的，详细信息和各个字段的含义可以看这里：<br><a href="https://github.com/novoda/bintray-release" target="_blank" rel="external">https://github.com/novoda/bintray-release</a><br><a href="https://github.com/novoda/bintray-release/wiki/Configuration-of-the-publish-closure" target="_blank" rel="external">https://github.com/novoda/bintray-release/wiki/Configuration-of-the-publish-closure</a></p>
+<h2 id="运行发布"><a href="#运行发布" class="headerlink" title="运行发布"></a>运行发布</h2><p>点击Gradle的命令工具</p>
+<p><img src="/images/ptj/publish_0.png" alt="publish"></p>
+<p>如果成功会在网站上看到：</p>
+<p><img src="/images/ptj/publish_1.png" alt="publish"></p>
+<p><strong>证明发布成功了</strong></p>
+<p>这样我们就能够使用了，但是这个只是在我们自己的仓库中，还没到jcenter。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">allprojects</span> &#123;</span><br><span class="line">    <span class="section">repositories</span> &#123;</span><br><span class="line">        <span class="section">maven</span> &#123;</span><br><span class="line">            <span class="attribute">url</span> <span class="string">'https://dl.bintray.com/qinglinyi/maven'</span></span><br><span class="line">        &#125;</span><br><span class="line">        jcenter()</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个地址你可以在网站上复制一下或者使用这个地址的中名字改成自己的就可以了。</p>
+<p>复制在这里：</p>
+<p><img src="/images/ptj/use_self.png" alt="use"></p>
+<h2 id="添加到jcenter"><a href="#添加到jcenter" class="headerlink" title="添加到jcenter"></a>添加到jcenter</h2><p>最后我们将包添加到jcenter中，添加成功时候我们就不需要添加自己的maven地址了。</p>
+<p><img src="/images/ptj/add_to_jcenter_0.png" alt="to_jcenter"><br><img src="/images/ptj/add_to_jcenter_1.png" alt="to_jcenter"></p>
+<p>通过可能需要一些时间，注册查看通知。</p>
+<p><strong>成功之后，是这样的</strong><br><img src="/images/ptj/add_to_jcenter_2.png" alt="to_jcenter"></p>
+<p><strong>大功告成！！</strong></p>
+<p>详细的配置可以看我的Github项目<a href="https://github.com/qinglinyi/FragmentArg" target="_blank" rel="external">https://github.com/qinglinyi/FragmentArg</a></p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>发布jcenter之后如果需要上传到Maven Center的话，需要修改maven仓库首页的GPG<br><img src="/images/ptj/maven_add_gpg.png" alt="to_maven"></p>
+<p>然后才能在这里同步到maven center</p>
+<p><img src="/images/ptj/maven_add.png" alt="to_maven"></p>
+<p><strong>同时，提交到maven的时候bintray-release 插件有一个问题</strong></p>
+<p>解决方案在这里<a href="https://github.com/novoda/bintray-release/wiki/Add-support-for-syncing-to-maven-central" target="_blank" rel="external">https://github.com/novoda/bintray-release/wiki/Add-support-for-syncing-to-maven-central</a></p>
+<p><strong>如果发布成功可以在这里检查</strong>：</p>
+<ol>
+<li>maven center <a href="https://oss.sonatype.org/content/repositories/releases" target="_blank" rel="external">https://oss.sonatype.org/content/repositories/releases</a></li>
+<li>jcenter <a href="http://jcenter.bintray.com" target="_blank" rel="external">http://jcenter.bintray.com</a></li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.jianshu.com/p/499a086e3bab" target="_blank" rel="external">http://www.jianshu.com/p/499a086e3bab</a><br><a href="http://www.cnblogs.com/qianxudetianxia/p/4322331.html" target="_blank" rel="external">http://www.cnblogs.com/qianxudetianxia/p/4322331.html</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/记录/" rel="tag">#记录</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/ViewPropertyAnimator/" rel="next" title="属性动画系列之ViewPropertyAnimator">
+                <i class="fa fa-chevron-left"></i> 属性动画系列之ViewPropertyAnimator
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/fragment-arg/" rel="prev" title="使用注解操作Fragment Argument">
+                使用注解操作Fragment Argument <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="青林亦" />
+          <p class="site-author-name" itemprop="name">青林亦</p>
+          <p class="site-description motion-element" itemprop="description">每天多一点点</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinglinyi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#认识jcenter"><span class="nav-text">认识jcenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#账号注册"><span class="nav-text">账号注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加package"><span class="nav-text">添加package</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置项目"><span class="nav-text">配置项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行发布"><span class="nav-text">运行发布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加到jcenter"><span class="nav-text">添加到jcenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充"><span class="nav-text">补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">青林亦</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("3st61MMMD2zD8CRaS0Ss5maJ-MdYXbMMI", "6RQRnIAIKw8R8zRrQvsy4cx8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

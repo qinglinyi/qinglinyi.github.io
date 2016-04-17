@@ -1,0 +1,764 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,property animation,属性动画," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="青林亦" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="写在开始转载请注明：http://www.qinglinyi.com/posts/ViewPropertyAnimator/
+属性动画动画系列从开始到现在，其他类例如ValueAnimator、ObjectAnimator还有AnimatorSet等的介绍挺多的，但是关于ViewPropertyAnimator这个类的介绍似乎比较少，所以本文详细的介绍一下这个类（主要是这个类的内部实现）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="属性动画系列之ViewPropertyAnimator">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/ViewPropertyAnimator/index.html">
+<meta property="og:site_name" content="青林亦">
+<meta property="og:description" content="写在开始转载请注明：http://www.qinglinyi.com/posts/ViewPropertyAnimator/
+属性动画动画系列从开始到现在，其他类例如ValueAnimator、ObjectAnimator还有AnimatorSet等的介绍挺多的，但是关于ViewPropertyAnimator这个类的介绍似乎比较少，所以本文详细的介绍一下这个类（主要是这个类的内部实现）。">
+<meta property="og:image" content="http://www.qinglinyi.com/images/animation/view_property_animator_0.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/animation/view_property_animator_1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/animation/view_property_animator_2.png">
+<meta property="og:updated_time" content="2016-03-29T10:19:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="属性动画系列之ViewPropertyAnimator">
+<meta name="twitter:description" content="写在开始转载请注明：http://www.qinglinyi.com/posts/ViewPropertyAnimator/
+属性动画动画系列从开始到现在，其他类例如ValueAnimator、ObjectAnimator还有AnimatorSet等的介绍挺多的，但是关于ViewPropertyAnimator这个类的介绍似乎比较少，所以本文详细的介绍一下这个类（主要是这个类的内部实现）。">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/animation/view_property_animator_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 属性动画系列之ViewPropertyAnimator | 青林亦 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76ab47522bfa6c63d79e65cd88427dbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">青林亦</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">世界如此喧嚣</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                属性动画系列之ViewPropertyAnimator
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-29T15:55:30+08:00" content="2016-03-29">
+              2016-03-29
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/ViewPropertyAnimator/" class="leancloud_visitors" data-flag-title="属性动画系列之ViewPropertyAnimator">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在开始"><a href="#写在开始" class="headerlink" title="写在开始"></a>写在开始</h2><p>转载请注明：<a href="http://www.qinglinyi.com/posts/ViewPropertyAnimator/">http://www.qinglinyi.com/posts/ViewPropertyAnimator/</a></p>
+<p>属性动画动画系列从开始到现在，其他类例如ValueAnimator、ObjectAnimator还有AnimatorSet等的介绍挺多的，但是关于ViewPropertyAnimator这个类的介绍似乎比较少，所以本文详细的介绍一下这个类（主要是这个类的内部实现）。</p>
+<a id="more"></a>
+<h2 id="类概述"><a href="#类概述" class="headerlink" title="类概述"></a>类概述</h2><p>ViewPropertyAnimator这个类能够对View对象进行自动添加和优化属性动画（用来便捷方式处理一系列View对象的属性动画的类）。</p>
+<p>这个类提供了链式调用进行多个属性同时变化的动画，更加简洁方便我们操作组合动画（多个属性同时进行变化）。</p>
+<p>这个类可以为同时动画提供更好的性能。这个类在动画进行的时候只对多个属性的变化进行一次invalidate调用，而不是对变化每个属性进行调用（n个ObjectAnimator就会进行n次属性变化，就有n次invalidate）。当然这个类的调用方式更方便，调用对应属性方法传一个属性值就可以自动实现动画。每个属性方法都有两种调用形式，例如 alpha(float value) 和alphaBy(float value)，前者是变化到多少，后者是变化多少。</p>
+<p>这个类没用提供公开的构造方法，通过调用view的animate()获取引用。</p>
+<p>上面说的比较拗口，<strong>总结</strong>起来就是：</p>
+<ol>
+<li>这个类操作View对象的。</li>
+<li>提供链式调用设置多个属性动画，这些动画同时进行的。</li>
+<li>更好的性能，多个属性动画是一次同时变化，只执行一次UI刷新。</li>
+<li>每个属性提供两种类型方法设置。</li>
+<li>这个类只能通过View的animate()获取引用进行通话设置。</li>
+</ol>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">imageView.animate()</span><br><span class="line">          .setDuration(<span class="number">4000</span>)</span><br><span class="line">          .rotationY(<span class="number">45f</span>)</span><br><span class="line">          .translationX(imageView.getWidth())</span><br><span class="line">          .alpha(<span class="number">0f</span>);</span><br></pre></td></tr></table></figure>
+<p>如上，使用很方便，对imageView设置三个属性的变化，同时进行动画。</p>
+<p><strong>等价</strong>的ObjectAnimator形式是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> AnimatorSet().playTogether(</span><br><span class="line">      ObjectAnimator.ofFloat(imageView, <span class="string">"translationX"</span>, imageView.getWidth()),</span><br><span class="line">      ObjectAnimator.ofFloat(imageView, <span class="string">"alpha"</span>, <span class="number">0</span>),</span><br><span class="line">      ObjectAnimator.ofFloat(imageView, <span class="string">"rotationY"</span>, <span class="number">45f</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>前者明显<strong>更简洁</strong>。</p>
+<p>ViewPropertyAnimator使用很简单，那么来看看它是怎么实现的。</p>
+<h2 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h2><ol>
+<li>NameValuesHolder  标记每个属性值对应的开始值和变化值。</li>
+<li>PropertyBundle    这个类包含的全局动画的属性集合的信息。包含一个NameValueHolder列表和mPropertyMask，mPropertyMask是标记这个动画都有什么属性变化。通过这个类我们可以知道都有那么属性需要变化，变化的值是什么。</li>
+<li>AnimatorEventListener  操作各种Animator事件的工具类。这个类实现了Animator.AnimatorListener, ValueAnimator.AnimatorUpdateListener接口。我们只需要关心这些事件的<strong>结束事件</strong>（在动画结束之后用来清除animator map的事件）和<strong>更新事件</strong>（计算view对象的当前属性值，下面还会介绍）。</li>
+</ol>
+<h2 id="重要属性"><a href="#重要属性" class="headerlink" title="重要属性"></a>重要属性</h2><p><strong>ArrayList<namevaluesholder> mPendingAnimations</namevaluesholder></strong> : 要进行动画的属性值（NameValueHolder）列表。</p>
+<p><img src="/images/animation/view_property_animator_0.png" alt="mPendingAnimations"></p>
+<p><strong>Runnable mAnimationStarter</strong> : 用来执行动画的Runnable。它会执行startAnimation方法，启动动画。</p>
+<p><img src="/images/animation/view_property_animator_1.png" alt="mAnimationStarter"></p>
+<p><strong>HashMap<animator, propertybundle=""> mAnimatorMap</animator,></strong> : Animator到PropertyBundle的Map。这个Map放到是正在执行的动画和对应的PropertyBundle，这个PropertyBundle包含这这次动画的所有进行动画的属性的信息。在AnimatorEventListener的更新方法中会通过这个map获取相应的属性，然后更新属性值，达到动画效果。这个Map同时还保证当前动画的属性变化是唯一的，不会存在两个Animator在操作同一个属性。</p>
+<p><img src="/images/animation/view_property_animator_2.png" alt="mAnimatorMap"></p>
+<h2 id="重要方法"><a href="#重要方法" class="headerlink" title="重要方法"></a>重要方法</h2><p><strong>animatePropertyBy(int constantName, float startValue, float byValue)方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">animatePropertyBy</span><span class="params">(<span class="keyword">int</span> constantName, <span class="keyword">float</span> startValue, <span class="keyword">float</span> byValue)</span> </span>&#123;</span><br><span class="line">     <span class="comment">// 移除正在进行动画的对应的这个属性</span></span><br><span class="line">     <span class="keyword">if</span> (mAnimatorMap.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">         Animator animatorToCancel = <span class="keyword">null</span>;</span><br><span class="line">         Set&lt;Animator&gt; animatorSet = mAnimatorMap.keySet();</span><br><span class="line">         <span class="keyword">for</span> (Animator runningAnim : animatorSet) &#123;</span><br><span class="line">             PropertyBundle bundle = mAnimatorMap.get(runningAnim);</span><br><span class="line">             <span class="keyword">if</span> (bundle.cancel(constantName)) &#123;<span class="comment">// 移除对应属性</span></span><br><span class="line">                 <span class="keyword">if</span> (bundle.mPropertyMask == NONE) &#123;<span class="comment">// 判断还有其他属性没</span></span><br><span class="line">                     animatorToCancel = runningAnim;</span><br><span class="line">                     <span class="keyword">break</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">if</span> (animatorToCancel != <span class="keyword">null</span>) &#123;</span><br><span class="line">             animatorToCancel.cancel();</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line"><span class="comment">// 创建这个属性的NameValuesHolder对象，放到mPendingAnimations列表中</span></span><br><span class="line">     NameValuesHolder nameValuePair = <span class="keyword">new</span> NameValuesHolder(constantName, startValue, byValue);</span><br><span class="line">     mPendingAnimations.add(nameValuePair);</span><br><span class="line">     <span class="comment">//  执行动画</span></span><br><span class="line">     mView.removeCallbacks(mAnimationStarter);</span><br><span class="line">     mView.postOnAnimation(mAnimationStarter);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法<strong>主要完成</strong>三件事：</p>
+<ol>
+<li><p>如果当前已经存在正在运行的Animator的话，并且这个Animator包含这个属性的话，将这个Animator的这个属性移除，移除完之后如果这个Animator没有属性了就结束它。这个操作是保证View对象的一个属性只有一个动画在操作它。</p>
+</li>
+<li><p>将属性和属性值变化装到NameValuesHolder类中，然后放到mPendingAnimations列表中。以便在之后放到mAnimatorMap中。</p>
+</li>
+<li><p>取消并且重新启动mAnimationStarter就是启动动画，并且保证链式设置的属性是同时进行的。</p>
+</li>
+</ol>
+<p><strong>startAnimation方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startAnimation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mRTBackend != <span class="keyword">null</span> &amp;&amp; mRTBackend.startAnimation(<span class="keyword">this</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    mView.setHasTransientState(<span class="keyword">true</span>);</span><br><span class="line">    <span class="comment">// 创建简单的animator,变化值从0到1</span></span><br><span class="line">    ValueAnimator animator = ValueAnimator.ofFloat(<span class="number">1.0f</span>);</span><br><span class="line">    <span class="comment">// 拷贝mPendingAnimations并且清除原有的mPendingAnimations</span></span><br><span class="line">    ArrayList&lt;NameValuesHolder&gt; nameValueList =</span><br><span class="line">            (ArrayList&lt;NameValuesHolder&gt;) mPendingAnimations.clone();</span><br><span class="line">    mPendingAnimations.clear();</span><br><span class="line">    <span class="comment">// 迭代拷贝之后的mPendingAnimations获取属性值标记propertyMask</span></span><br><span class="line">    <span class="keyword">int</span> propertyMask = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> propertyCount = nameValueList.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; propertyCount; ++i) &#123;</span><br><span class="line">        NameValuesHolder nameValuesHolder = nameValueList.get(i);</span><br><span class="line">        propertyMask |= nameValuesHolder.mNameConstant;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将这个animator放入到mAnimatorMap。</span></span><br><span class="line">    mAnimatorMap.put(animator, <span class="keyword">new</span> PropertyBundle(propertyMask, nameValueList));</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// 设置监听器器</span></span><br><span class="line">    animator.addUpdateListener(mAnimatorEventListener);</span><br><span class="line">    animator.addListener(mAnimatorEventListener);</span><br><span class="line">    <span class="keyword">if</span> (mStartDelaySet) &#123;</span><br><span class="line">        animator.setStartDelay(mStartDelay);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mDurationSet) &#123;</span><br><span class="line">        animator.setDuration(mDuration);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mInterpolatorSet) &#123;</span><br><span class="line">        animator.setInterpolator(mInterpolator);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 启动动画</span></span><br><span class="line">    animator.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在animatePropertyBy方法中执行mView.postOnAnimation(mAnimationStarter)会触发startAnimation方法，startAnimation方法<strong>主要</strong>做了这些事情：</p>
+<ol>
+<li>创建简单的Animator,变化值从0到1，设置监听器mAnimatorEventListener。</li>
+<li>拷贝mPendingAnimations这个列表，并计算属性值标记propertyMask，生成PropertyBundle对象。</li>
+<li>使用mAnimatorMap保存这个Animator和对应的PropertyBundle对象。以便在animatePropertyBy方法和Animator监听器mAnimatorEventListener中使用。</li>
+<li>设置监听器mAnimatorEventListener并且启动动画。</li>
+</ol>
+<p><strong>mAnimatorEventListener的onAnimationUpdate方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</span><br><span class="line">PropertyBundle propertyBundle = mAnimatorMap.get(animation);</span><br><span class="line">    ...</span><br><span class="line">    ArrayList&lt;NameValuesHolder&gt; valueList = propertyBundle.mNameValuesHolder;</span><br><span class="line">    <span class="keyword">if</span> (valueList != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> count = valueList.size();</span><br><span class="line">        <span class="comment">// 迭代所有的属性，计算变化之后的属性值，将属性值设置给对应的属性</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</span><br><span class="line">            NameValuesHolder values = valueList.get(i);</span><br><span class="line">            <span class="keyword">float</span> value = values.mFromValue + fraction * values.mDeltaValue;</span><br><span class="line">            <span class="keyword">if</span> (values.mNameConstant == ALPHA) &#123;</span><br><span class="line">                alphaHandled = mView.setAlphaNoInvalidation(value);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                setValue(values.mNameConstant, value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (alphaHandled) &#123;</span><br><span class="line">        mView.invalidate(<span class="keyword">true</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mView.invalidateViewProperty(<span class="keyword">false</span>, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法完成了属性值的设置。通过mAnimatorMap获取对应的所有属性，计算变化之后的属性，然后设置给对应的属性，再进行更行UI。</p>
+<h2 id="对照使用串联ViewPropertyAnimator"><a href="#对照使用串联ViewPropertyAnimator" class="headerlink" title="对照使用串联ViewPropertyAnimator"></a>对照使用串联ViewPropertyAnimator</h2><p>我们再次回过来看看我们前面是怎么使用的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">imageView.animate()</span><br><span class="line">          .setDuration(<span class="number">4000</span>)</span><br><span class="line">          .rotationY(<span class="number">45f</span>)</span><br><span class="line">          .translationX(imageView.getWidth())</span><br><span class="line">          .alpha(<span class="number">0f</span>);</span><br></pre></td></tr></table></figure>
+<p>通过imageView.animate()获取ViewPropertyAnimator类对象。调用rotationY、translationX、alpha设置属性动画。</p>
+<p>我们看看alpha方法的<strong>实现</strong>：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ViewPropertyAnimator <span class="title">alpha</span>(<span class="params"><span class="keyword">float</span> <span class="keyword">value</span></span>) </span>&#123;</span><br><span class="line">    animateProperty(ALPHA, <span class="keyword">value</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">animateProperty</span>(<span class="params"><span class="keyword">int</span> constantName, <span class="keyword">float</span> toValue</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">float</span> fromValue = getValue(constantName);</span><br><span class="line">    <span class="keyword">float</span> deltaValue = toValue - fromValue;</span><br><span class="line">    animatePropertyBy(constantName, fromValue, deltaValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最终调用了<strong>animatePropertyBy(int constantName, float startValue, float byValue)方法</strong></p>
+<p>这样我们就可以将这个ViewPropertyAnimator类的使用<strong>串起来了</strong>：</p>
+<ol>
+<li>通过imageView.animate()获取ViewPropertyAnimator对象。</li>
+<li>调用alpha、rotationY等方法，返回当前ViewPropertyAnimator对象，可以继续调用。</li>
+<li>alpha等方法会调用animatePropertyBy(int constantName, float startValue, float byValue)方法。</li>
+<li>animatePropertyBy方法启动mAnimationStarter，调用startAnimation，开始动画。</li>
+<li>在动画的监听器里面设置所有属性的变化值，并刷新。</li>
+</ol>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/property-animation/" rel="tag">#property animation</a>
+          
+            <a href="/tags/属性动画/" rel="tag">#属性动画</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Property-Animation-3/" rel="next" title="Android属性动画Property Animation系列(4)_AnimatorSet">
+                <i class="fa fa-chevron-left"></i> Android属性动画Property Animation系列(4)_AnimatorSet
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/publish-to-jcenter/" rel="prev" title="Android Studio 发布项目到jcenter库">
+                Android Studio 发布项目到jcenter库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="青林亦" />
+          <p class="site-author-name" itemprop="name">青林亦</p>
+          <p class="site-description motion-element" itemprop="description">每天多一点点</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinglinyi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在开始"><span class="nav-text">写在开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类概述"><span class="nav-text">类概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-text">使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部类"><span class="nav-text">内部类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要属性"><span class="nav-text">重要属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重要方法"><span class="nav-text">重要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对照使用串联ViewPropertyAnimator"><span class="nav-text">对照使用串联ViewPropertyAnimator</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">青林亦</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("3st61MMMD2zD8CRaS0Ss5maJ-MdYXbMMI", "6RQRnIAIKw8R8zRrQvsy4cx8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

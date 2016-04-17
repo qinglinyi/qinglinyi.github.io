@@ -1,0 +1,758 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo,Mac,Github," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="青林亦" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="一、环境
+电脑环境：OS 10.11.2
+拥有Github账号
+
+二、Hexo 安装安装Hexo之前需要安装Nodejs。
+在官网下载Download for OS X (x64) v5.7.1稳定版。
+安装时直接保持默认配置即可。
+安装完之后，还需要为npm设置一下镜像:1$ sudo npm install -g hexo  --registry=https://registry.npm.ta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac使用Hexo+Github构建自己的博客">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/build-blog/index.html">
+<meta property="og:site_name" content="青林亦">
+<meta property="og:description" content="一、环境
+电脑环境：OS 10.11.2
+拥有Github账号
+
+二、Hexo 安装安装Hexo之前需要安装Nodejs。
+在官网下载Download for OS X (x64) v5.7.1稳定版。
+安装时直接保持默认配置即可。
+安装完之后，还需要为npm设置一下镜像:1$ sudo npm install -g hexo  --registry=https://registry.npm.ta">
+<meta property="og:updated_time" content="2016-03-04T08:55:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac使用Hexo+Github构建自己的博客">
+<meta name="twitter:description" content="一、环境
+电脑环境：OS 10.11.2
+拥有Github账号
+
+二、Hexo 安装安装Hexo之前需要安装Nodejs。
+在官网下载Download for OS X (x64) v5.7.1稳定版。
+安装时直接保持默认配置即可。
+安装完之后，还需要为npm设置一下镜像:1$ sudo npm install -g hexo  --registry=https://registry.npm.ta">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Mac使用Hexo+Github构建自己的博客 | 青林亦 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76ab47522bfa6c63d79e65cd88427dbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">青林亦</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">世界如此喧嚣</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Mac使用Hexo+Github构建自己的博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-04T15:01:11+08:00" content="2016-03-04">
+              2016-03-04
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/build-blog/" class="leancloud_visitors" data-flag-title="Mac使用Hexo+Github构建自己的博客">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、环境"><a href="#一、环境" class="headerlink" title="一、环境"></a>一、环境</h2><ul>
+<li>电脑环境：OS 10.11.2</li>
+<li>拥有Github账号</li>
+</ul>
+<h2 id="二、Hexo-安装"><a href="#二、Hexo-安装" class="headerlink" title="二、Hexo 安装"></a>二、Hexo 安装</h2><p>安装Hexo之前需要安装Nodejs。</p>
+<p>在<a href="https://nodejs.org/en/" target="_blank" rel="external">官网</a>下载Download for OS X (x64) v5.7.1稳定版。</p>
+<p>安装时直接保持默认配置即可。</p>
+<p>安装完之后，还需要为npm设置一下镜像:<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo <span class="built_in">npm</span> install -g hexo  --registry=https:<span class="regexp">//</span>registry.<span class="built_in">npm</span>.taobao.org</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>设置完之后，就可以通过国内的镜像下载了。设置的信息会写到$HOME的.npmrc文件里面。否则：<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">npm</span> ERR! network socket hang up</span><br><span class="line"><span class="built_in">npm</span> ERR! network This <span class="keyword">is</span> most likely <span class="keyword">not</span> a problem <span class="keyword">with</span> <span class="built_in">npm</span> itself</span><br><span class="line"><span class="built_in">npm</span> ERR! network <span class="keyword">and</span> <span class="keyword">is</span> related <span class="keyword">to</span> network connectivity.</span><br><span class="line"><span class="built_in">npm</span> ERR! network In most cases you are behind a proxy <span class="keyword">or</span> have bad network settings.</span><br><span class="line"><span class="built_in">npm</span> ERR! network </span><br><span class="line"><span class="built_in">npm</span> ERR! network If you are behind a proxy, please make sure <span class="literal">that</span> the</span><br><span class="line"><span class="built_in">npm</span> ERR! network <span class="string">'proxy'</span> config <span class="keyword">is</span> set properly.  See: <span class="string">'npm help config'</span></span><br></pre></td></tr></table></figure></p>
+<p>同时，还需要注意：/usr/local/bin/文件夹的权限。</p>
+<p>总之，一顿折腾。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">hexo-cli</span>: 1<span class="selector-class">.0</span><span class="selector-class">.1</span></span><br><span class="line"><span class="selector-tag">os</span>: <span class="selector-tag">Darwin</span> 15<span class="selector-class">.2</span><span class="selector-class">.0</span> <span class="selector-tag">darwin</span> <span class="selector-tag">x64</span></span><br><span class="line"><span class="selector-tag">http_parser</span>: 2<span class="selector-class">.6</span><span class="selector-class">.2</span></span><br><span class="line"><span class="selector-tag">node</span>: 5<span class="selector-class">.7</span><span class="selector-class">.1</span></span><br><span class="line"><span class="selector-tag">v8</span>: 4<span class="selector-class">.6</span><span class="selector-class">.85</span><span class="selector-class">.31</span></span><br><span class="line"><span class="selector-tag">uv</span>: 1<span class="selector-class">.8</span><span class="selector-class">.0</span></span><br><span class="line"><span class="selector-tag">zlib</span>: 1<span class="selector-class">.2</span><span class="selector-class">.8</span></span><br><span class="line"><span class="selector-tag">ares</span>: 1<span class="selector-class">.10</span><span class="selector-class">.1-DEV</span></span><br><span class="line"><span class="selector-tag">icu</span>: 56<span class="selector-class">.1</span></span><br><span class="line"><span class="selector-tag">modules</span>: 47</span><br><span class="line"><span class="selector-tag">openssl</span>: 1<span class="selector-class">.0</span><span class="selector-class">.2g</span></span><br></pre></td></tr></table></figure>
+<p><strong><em>Hexo 安装完成！！</em></strong></p>
+<h2 id="三、Hexo-初始化"><a href="#三、Hexo-初始化" class="headerlink" title="三、Hexo 初始化"></a>三、Hexo 初始化</h2><p>安装完成就要开始我们的博客的搭建了，找个地方（例如：~/hexo/）创建一个文件夹用来存放博客。进入该文件夹。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo hexo init</span><br></pre></td></tr></table></figure>
+<p>或则<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>sudo hexo init blog</span><br></pre></td></tr></table></figure></p>
+<p>前者在当前文件夹下（~/hexo/）初始化，后者在（~/hexo/blog/）下初始化。</p>
+<p>初始化完成之后。Hexo会在这个文件下生成初始文件。</p>
+<p>然后<strong>进入</strong>init的文件夹（前者：~/hexo/，后者：~/hexo/blog/）</p>
+<p>这里我还多了一个步骤（有些教程没有这一步，有些没有）</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<p>目录中安装 node_modules</p>
+<p>当然如果还要安装插件也是在这里执行命令<a href="http://www.chinaz.com/web/2015/1016/458004.shtml" target="_blank" rel="external">参考</a>:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> hexo-generator-<span class="keyword">index</span> <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-<span class="keyword">archive</span> <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-<span class="keyword">category</span> <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-tag <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-<span class="keyword">server</span> <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-deployer-git <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-deployer-heroku <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-deployer-rsync <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-deployer-openshift <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-renderer-marked@<span class="number">0.2</span> <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-renderer-stylus@<span class="number">0.2</span> <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-feed@<span class="number">1</span> <span class="comment">--save</span></span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-sitemap@<span class="number">1</span> <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
+<p>我安装了：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm <span class="keyword">install</span> hexo-deployer-git <span class="comment">--save # 提交到github时需要</span></span><br><span class="line"># 生成 RSS 和站点地图需要</span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-feed@<span class="number">1</span> <span class="comment">--save </span></span><br><span class="line">npm <span class="keyword">install</span> hexo-generator-sitemap@<span class="number">1</span> <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
+<p>好了看看效果</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo <span class="keyword">server</span> <span class="meta">#启动hexo服务</span></span><br></pre></td></tr></table></figure>
+<p>打开浏览器，输入网址 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> </p>
+<h2 id="四、配置自己的博客信息"><a href="#四、配置自己的博客信息" class="headerlink" title="四、配置自己的博客信息"></a>四、配置自己的博客信息</h2><p>初始化完成之后，就要配置属于自己的博客信息了。</p>
+<p>修改文件下的_config.yml文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hexo Configuration</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/configuration.html</span></span><br><span class="line"><span class="comment">## Source: https://github.com/hexojs/hexo/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Site</span></span><br><span class="line"><span class="attr">title:</span> 青林亦</span><br><span class="line"><span class="attr">subtitle:</span> 世界如此喧嚣</span><br><span class="line"><span class="attr">description:</span></span><br><span class="line"><span class="attr">author:</span> 青林亦</span><br><span class="line"><span class="attr">language:</span> zh-CN <span class="comment">#语言</span></span><br><span class="line"><span class="attr">timezone:</span> Asia/Shanghai <span class="comment">#时区</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span></span><br><span class="line"><span class="attr">url:</span> http://www.qinglinyi.com <span class="comment"># 我的域名</span></span><br><span class="line"><span class="attr">root:</span> /</span><br><span class="line"><span class="comment">#permalink: :year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink:</span> posts/:title/</span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Directory #目录</span></span><br><span class="line"><span class="attr">source_dir:</span> source <span class="comment">#源文件</span></span><br><span class="line"><span class="attr">public_dir:</span> public <span class="comment">#生成的网页文件</span></span><br><span class="line"><span class="attr">tag_dir:</span> tags <span class="comment">#标签</span></span><br><span class="line"><span class="attr">archive_dir:</span> archives <span class="comment">#归档</span></span><br><span class="line"><span class="attr">category_dir:</span> categories <span class="comment">#分类</span></span><br><span class="line"><span class="attr">code_dir:</span> downloads/code</span><br><span class="line"><span class="attr">i18n_dir:</span> :lang <span class="comment">#国际化</span></span><br><span class="line"><span class="attr">skip_render:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Writing #写作</span></span><br><span class="line"><span class="attr">new_post_name:</span> :title.md <span class="comment">#新文章标题</span></span><br><span class="line"><span class="attr">default_layout:</span> post <span class="comment">#默认模板(post page photo draft)</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment">#标题转换成大写</span></span><br><span class="line"><span class="attr">external_link:</span> <span class="literal">true</span> <span class="comment">#新标签页里打开连接</span></span><br><span class="line"><span class="attr">filename_case:</span> <span class="number">0</span></span><br><span class="line"><span class="attr">render_drafts:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">relative_link:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">future:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">highlight:</span> <span class="comment">#语法高亮</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  line_number:</span> <span class="literal">true</span> <span class="comment">#显示行号</span></span><br><span class="line"><span class="attr">  auto_detect:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  tab_replace:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Category &amp; Tag #分类和标签</span></span><br><span class="line"><span class="attr">default_category:</span> uncategorized</span><br><span class="line"><span class="attr">category_map:</span></span><br><span class="line"><span class="attr">tag_map:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Date / Time format</span></span><br><span class="line"><span class="comment">## Hexo uses Moment.js to parse and display date</span></span><br><span class="line"><span class="comment">## You can customize the date format as defined in</span></span><br><span class="line"><span class="comment">## http://momentjs.com/docs/#/displaying/format/</span></span><br><span class="line"><span class="attr">date_format:</span> YYYY-MM-DD</span><br><span class="line"><span class="attr">time_format:</span> HH:mm:ss</span><br><span class="line"></span><br><span class="line"><span class="comment"># Pagination #分页</span></span><br><span class="line"><span class="attr">per_page:</span> <span class="number">10</span> <span class="comment">#每页文章数, 设置成 0 禁用分页</span></span><br><span class="line"><span class="attr">pagination_dir:</span> page</span><br><span class="line"></span><br><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> landscape</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line"><span class="comment"># Deployment #部署, 同时发布在 GitHub 注意格式 空格</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> git   </span><br><span class="line"><span class="attr">  repository:</span> https://github.com/qinglinyi/qinglinyi.github.io.git</span><br><span class="line"><span class="attr">  branch:</span> master</span><br><span class="line"></span><br><span class="line"><span class="comment"># Disqus #Disqus评论系统</span></span><br><span class="line"><span class="attr">disqus_shortname:</span> </span><br><span class="line"></span><br><span class="line"><span class="attr">plugins:</span> <span class="comment">#插件，例如生成 RSS 和站点地图的</span></span><br><span class="line"> hexo-generator-feed</span><br><span class="line"> hexo-generator-sitemap</span><br></pre></td></tr></table></figure>
+<p><strong><em>特别注意</em></strong><br>配置文件的里面格式，比如<br>deploy:（顶格）<br> type: git（type空一格并且冒号也要空一格；部署type这里确实是git，据说与Hexo版本相关，老版本是github）</p>
+<p>当然这个部署格式是没问题的，<strong>亲测可用</strong></p>
+<p>假如你发现还有问题的话:</p>
+<ul>
+<li>保证你的git可以连接到github。<a href="http://www.cnblogs.com/zhcncn/p/3787849.html" target="_blank" rel="external">我是通过这个设置的SSH连接github</a></li>
+<li>保证hexo-deployer-git插件可用</li>
+</ul>
+<h2 id="五、部署到Github"><a href="#五、部署到Github" class="headerlink" title="五、部署到Github"></a>五、部署到Github</h2><p>这个很多<a href="http://jingyan.baidu.com/article/d8072ac47aca0fec95cefd2d.html" target="_blank" rel="external">教程</a>都有。</p>
+<p>主要是注意创建的Repository的名字是：qinglinyi.github.io。保持和你的Github账户一致。</p>
+<p>使用命令行测试一下连接Github</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">ssh</span> -T git<span class="variable">@github</span>.com</span><br></pre></td></tr></table></figure>
+<p>然后部署项目</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>hexo generate</span><br><span class="line"><span class="variable">$ </span>hexo deploy</span><br></pre></td></tr></table></figure>
+<p>当然是用简写的命令也是可以。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>hexo g</span><br><span class="line"><span class="variable">$ </span>hexo s</span><br></pre></td></tr></table></figure>
+<p>部署完成之后，到<a href="https://qinglinyi.github.io/" target="_blank" rel="external">https://qinglinyi.github.io/</a>就可以访问博客了。</p>
+<h2 id="六、主题"><a href="#六、主题" class="headerlink" title="六、主题"></a>六、主题</h2><p>我是使用<a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="external">hexo-theme-yilia</a>。</p>
+<h2 id="七、绑定域名"><a href="#七、绑定域名" class="headerlink" title="七、绑定域名"></a>七、绑定域名</h2><p>首先申请域名，设置域名解析详细可以移步<a href="http://www.jianshu.com/p/1d427e888dda" target="_blank" rel="external">这里</a></p>
+<p>当然，在_config.yml文件下我也设置了url。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>构建过程肯定不是一帆风顺的，都是一路折腾，所谓道路是曲折的，前途是光明的！</p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag">#Hexo</a>
+          
+            <a href="/tags/Mac/" rel="tag">#Mac</a>
+          
+            <a href="/tags/Github/" rel="tag">#Github</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/retrofit/" rel="prev" title="Retrofit2 源码解析">
+                Retrofit2 源码解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="青林亦" />
+          <p class="site-author-name" itemprop="name">青林亦</p>
+          <p class="site-description motion-element" itemprop="description">每天多一点点</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinglinyi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、环境"><span class="nav-text">一、环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、Hexo-安装"><span class="nav-text">二、Hexo 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Hexo-初始化"><span class="nav-text">三、Hexo 初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置自己的博客信息"><span class="nav-text">四、配置自己的博客信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、部署到Github"><span class="nav-text">五、部署到Github</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、主题"><span class="nav-text">六、主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、绑定域名"><span class="nav-text">七、绑定域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-text">最后</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">青林亦</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("3st61MMMD2zD8CRaS0Ss5maJ-MdYXbMMI", "6RQRnIAIKw8R8zRrQvsy4cx8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

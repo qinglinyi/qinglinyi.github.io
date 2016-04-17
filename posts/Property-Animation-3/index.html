@@ -1,0 +1,735 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,property animation,属性动画," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="青林亦" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="类概述AnimatorSet是将一系列Animator对象按照指定的顺序进行播放的类。这些动画可以是同时播放，顺序播放，延迟播放。
+主要了解以下几种方式：
+
+playTogether() 两种参数形式：Animator… items和Collection items。将这些Animator同时进行播放。
+playSequentially() 和playTogether类似也是两种参数形式，Anim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android属性动画Property Animation系列(4)_AnimatorSet">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/Property-Animation-3/index.html">
+<meta property="og:site_name" content="青林亦">
+<meta property="og:description" content="类概述AnimatorSet是将一系列Animator对象按照指定的顺序进行播放的类。这些动画可以是同时播放，顺序播放，延迟播放。
+主要了解以下几种方式：
+
+playTogether() 两种参数形式：Animator… items和Collection items。将这些Animator同时进行播放。
+playSequentially() 和playTogether类似也是两种参数形式，Anim">
+<meta property="og:image" content="http://www.qinglinyi.com/images/animation/animator_set1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/animation/animator_set0.png">
+<meta property="og:updated_time" content="2016-03-24T10:13:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android属性动画Property Animation系列(4)_AnimatorSet">
+<meta name="twitter:description" content="类概述AnimatorSet是将一系列Animator对象按照指定的顺序进行播放的类。这些动画可以是同时播放，顺序播放，延迟播放。
+主要了解以下几种方式：
+
+playTogether() 两种参数形式：Animator… items和Collection items。将这些Animator同时进行播放。
+playSequentially() 和playTogether类似也是两种参数形式，Anim">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/animation/animator_set1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Android属性动画Property Animation系列(4)_AnimatorSet | 青林亦 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76ab47522bfa6c63d79e65cd88427dbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">青林亦</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">世界如此喧嚣</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android属性动画Property Animation系列(4)_AnimatorSet
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-24T10:10:47+08:00" content="2016-03-24">
+              2016-03-24
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/Property-Animation-3/" class="leancloud_visitors" data-flag-title="Android属性动画Property Animation系列(4)_AnimatorSet">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="类概述"><a href="#类概述" class="headerlink" title="类概述"></a>类概述</h2><p>AnimatorSet是将一系列Animator对象按照指定的顺序进行播放的类。这些动画可以是同时播放，顺序播放，延迟播放。</p>
+<p>主要了解以下几种方式：</p>
+<ol>
+<li>playTogether() 两种参数形式：Animator… items和Collection<animator> items。将这些Animator同时进行播放。</animator></li>
+<li>playSequentially() 和playTogether类似也是两种参数形式，Animator是顺序播放。</li>
+<li>play(Animator) 返回一个Builder，这个Builder提供with,before方法设置这些Animator的顺序。</li>
+</ol>
+<p>其实，playTogether和playSequentially也是使用play(Animator)和Builder的方式实现的。</p>
+<a id="more"></a>
+<h2 id="使用（源码）"><a href="#使用（源码）" class="headerlink" title="使用（源码）"></a>使用（<strong><a href="https://github.com/qinglinyi/Animator" target="_blank" rel="external">源码</a></strong>）</h2><p><strong>代码中</strong></p>
+<p>先设置四个测试Animator<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">animatorA</span> = ObjectAnimator.<span class="literal">ofF</span>loat(mImageView, <span class="string">"translationX"</span>, <span class="number">0</span>f, <span class="number">300</span>f, <span class="number">0</span>f);// 位移</span><br><span class="line"><span class="attr">animatorB</span> = ObjectAnimator.<span class="literal">ofF</span>loat(mImageView, <span class="string">"scaleX"</span>, <span class="number">1</span>f, <span class="number">1.5</span>f, <span class="number">1</span>f);// 缩放</span><br><span class="line"><span class="attr">animatorC</span> = ObjectAnimator.<span class="literal">ofF</span>loat(mImageView, <span class="string">"rotationX"</span>, <span class="number">0</span>f, <span class="number">90</span>f, <span class="number">0</span>f);// 旋转</span><br><span class="line"><span class="attr">animatorD</span> = ObjectAnimator.<span class="literal">ofF</span>loat(mImageView, <span class="string">"alpha"</span>, <span class="number">1</span>f, <span class="number">0</span>f, <span class="number">1</span>f);// 透明度</span><br></pre></td></tr></table></figure></p>
+<p>同时播放playTogether</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">animatorSet</span><span class="selector-class">.playTogether</span>(<span class="selector-tag">animatorA</span>, <span class="selector-tag">animatorB</span>, <span class="selector-tag">animatorC</span>, <span class="selector-tag">animatorD</span>);</span><br><span class="line"><span class="selector-tag">animatorSet</span><span class="selector-class">.start</span>();</span><br></pre></td></tr></table></figure>
+<p>顺序播放playSequentially</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">animatorSet</span><span class="selector-class">.playSequentially</span>(<span class="selector-tag">animatorA</span>, <span class="selector-tag">animatorB</span>, <span class="selector-tag">animatorC</span>, <span class="selector-tag">animatorD</span>);</span><br><span class="line"><span class="selector-tag">animatorSet</span><span class="selector-class">.start</span>();</span><br></pre></td></tr></table></figure>
+<p>还试了一把Builder</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 尽量使用play.after,play.after..的形式如下</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 顺序 正 A B C D</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorA).before(animatorB);</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorB).before(animatorC);</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorC).before(animatorD);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 顺序 反 D C B A</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorA).after(animatorB);</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorB).after(animatorC);</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorC).after(animatorD);</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时 使用with的时候连着设置都是同时播放</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorA).with(animatorB).with(animatorC).with(animatorD);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 不要这样，因为这样BCD其实是没有直接关系的</span></span><br><span class="line"><span class="comment">//（没有理解为什么这样设计，提供了方法，但是使用的效果和预期的不一样）</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorA).before(animatorB).before(animatorC); // 这个时候吃掉B了，执行顺序是A-&gt;C</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// animatorSet.play(animatorA).before(animatorB).before(animatorC).before(animatorD); </span></span><br><span class="line"><span class="comment">// 还是吃掉B了，执行顺序是A-&gt;C&amp;D</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// A 依赖 B , B 依赖 C , C 依赖 A 报错了😢，当然文档说了，别这么干</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorA).after(animatorB);</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorB).after(animatorC);</span></span><br><span class="line"><span class="comment">// animatorSet.play(animatorC).after(animatorA);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 好吧，也别这么搞</span></span><br><span class="line"><span class="comment">// animatorSet.playTogether(animatorA, animatorB, animatorC);</span></span><br><span class="line"><span class="comment">// animatorSet.playSequentially(animatorD, animatorSet);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//B--------</span></span><br><span class="line"><span class="comment">//         A---------</span></span><br><span class="line"><span class="comment">//         C---------</span></span><br><span class="line"><span class="comment">//              D--------</span></span><br><span class="line"></span><br><span class="line"> animatorD.setStartDelay(<span class="number">2000</span>)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line"> animatorSet.play(animatorB).before(animatorA)<span class="comment">;</span></span><br><span class="line"> animatorSet.play(animatorA).with(animatorC)<span class="comment">;</span></span><br><span class="line"> animatorSet.play(animatorD).after(animatorB)<span class="comment">;</span></span><br><span class="line"> </span><br><span class="line"> animatorSet.start()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>playTogether和playSequentially很简单，将animator传入就可以了，当然也支持Collection作为参数。</li>
+<li>Builder比较绕一点，但是可以灵活完成各种要求，注意一下官方建议的调用形式。</li>
+<li><p><strong>使用代码设置AnimatorSet的时候，子Animator的Duration和TimeInterpolator是会被AnimatorSet覆盖的,并且这个Duration不是Set的总时长，是每个Animator的时长(和XML不一样)。</strong><img src="/images/animation/animator_set1.png" alt="Duration"><img src="/images/animation/animator_set0.png" alt="Duration和TimeInterpolator"></p>
+</li>
+<li><p>PivotX，PivotY的设置没有提供方法，可以自己手动设置。</p>
+</li>
+</ol>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mImageView.setPivotX(mImageView.getWidth() / <span class="number">2</span>)<span class="comment">;</span></span><br><span class="line">mImageView.setPivotY(mImageView.getHeight() / <span class="number">2</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p><strong>XML</strong></p>
+<p>相对应的XML实现就比较麻烦了</p>
+<p>顺序执行</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">     <span class="attr">android:ordering</span>=<span class="string">"sequentially"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 官网显示支持propertyValuesHolder和keyframe，但是我测试还是不行。所以只能用这个笨方法了--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- ps:测试机 4.4.4和5.0 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"translationX"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"0"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"300"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"translationX"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"300"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:startOffset</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"scaleX"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"1"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"1.5"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"scaleX"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"1.5"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"1"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"rotationX"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"0"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"90"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"rotationX"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"90"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"alpha"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"1"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">        <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">        <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">        <span class="attr">android:propertyName</span>=<span class="string">"alpha"</span></span><br><span class="line">        <span class="attr">android:valueFrom</span>=<span class="string">"0"</span></span><br><span class="line">        <span class="attr">android:valueTo</span>=<span class="string">"1"</span></span><br><span class="line">        <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>同时执行</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">     <span class="attr">android:ordering</span>=<span class="string">"sequentially"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span> <span class="attr">android:ordering</span>=<span class="string">"together"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"translationX"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"0"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"300"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"scaleX"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"1"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"1.5"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"rotationX"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"0"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"90"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"alpha"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"1"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">set</span> <span class="attr">android:ordering</span>=<span class="string">"together"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"translationX"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"300"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"scaleX"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"1.5"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"1"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"rotationX"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"90"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"0"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">objectAnimator</span></span><br><span class="line">            <span class="attr">android:duration</span>=<span class="string">"2000"</span></span><br><span class="line">            <span class="attr">android:interpolator</span>=<span class="string">"@android:interpolator/linear"</span></span><br><span class="line">            <span class="attr">android:propertyName</span>=<span class="string">"alpha"</span></span><br><span class="line">            <span class="attr">android:valueFrom</span>=<span class="string">"0"</span></span><br><span class="line">            <span class="attr">android:valueTo</span>=<span class="string">"1"</span></span><br><span class="line">            <span class="attr">android:valueType</span>=<span class="string">"floatType"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/property-animation/" rel="tag">#property animation</a>
+          
+            <a href="/tags/属性动画/" rel="tag">#属性动画</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Property-Animation-2/" rel="next" title="Android属性动画Property Animation系列(3)_ObjectAnimator">
+                <i class="fa fa-chevron-left"></i> Android属性动画Property Animation系列(3)_ObjectAnimator
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/ViewPropertyAnimator/" rel="prev" title="属性动画系列之ViewPropertyAnimator">
+                属性动画系列之ViewPropertyAnimator <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="青林亦" />
+          <p class="site-author-name" itemprop="name">青林亦</p>
+          <p class="site-description motion-element" itemprop="description">每天多一点点</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinglinyi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类概述"><span class="nav-text">类概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用（源码）"><span class="nav-text">使用（源码）</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">青林亦</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("3st61MMMD2zD8CRaS0Ss5maJ-MdYXbMMI", "6RQRnIAIKw8R8zRrQvsy4cx8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
