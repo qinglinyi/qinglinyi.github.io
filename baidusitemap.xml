@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://www.qinglinyi.com/posts/logger/</loc>
+    <lastmod>2016-06-12T02:34:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>Logger源码解析</title>
+        <pubTime>2016-06-07T03:03:59.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Log</tag>
+         
+        <tag>源码解析</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.qinglinyi.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.qinglinyi.com/posts/about-string/</loc>
     <lastmod>2016-04-20T08:44:28.000Z</lastmod>
     <data>
