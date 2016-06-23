@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>http://www.qinglinyi.com/posts/java-concurrency-0/</loc>
+    <lastmod>2016-06-23T07:07:03.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java并发(1)-基础概念</title>
+        <pubTime>2016-06-22T08:30:26.000Z</pubTime>
+        
+        <tag>Java基础</tag>
+         
+        <tag>并发</tag>
+         
+        <tag>多线程</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.qinglinyi.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.qinglinyi.com/posts/about-android-handler/</loc>
     <lastmod>2016-06-13T10:07:54.000Z</lastmod>
     <data>

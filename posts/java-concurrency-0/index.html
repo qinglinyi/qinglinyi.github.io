@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,Fragment," />
+  <meta name="keywords" content="Java基础,并发,多线程," />
 
 
 
@@ -82,25 +82,27 @@
 
 
 
-<meta name="description" content="最近做了一个操作Fragment的Argument的简便方式，使用注解在编译时生成操作Argument的代码，在Fragment注入获取代码，完成对Argument的操作。
-这样的轮子已经有了这个，再造的同时，顺便学习一下编译时注解，另外可以自定义自己的需求。
-项目地址在这里https://github.com/qinglinyi/FragmentArg
-使用123456789buildscrip">
+<meta name="description" content="前言这是将是一系列关于Java并发基础知识的文章。事实上，主要是《实战Java高并发程序设计》的读书笔记和网络资料以及对它们的整理。
+相关概念1.同步Synchronous和异步Asynchronous 同步和异步通常是用来形容一次方法调用。
+
+所谓同步，就是在发出一个”调用”时，在没有得到结果之前，该”调用”就不返回。但是一旦调用返回，就得到返回值了。换句话说，就是由”调用者”主动等待这个”调用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用注解操作Fragment Argument">
-<meta property="og:url" content="http://www.qinglinyi.com/posts/fragment-arg/index.html">
+<meta property="og:title" content="Java并发(1)-基础概念">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/java-concurrency-0/index.html">
 <meta property="og:site_name" content="青林亦">
-<meta property="og:description" content="最近做了一个操作Fragment的Argument的简便方式，使用注解在编译时生成操作Argument的代码，在Fragment注入获取代码，完成对Argument的操作。
-这样的轮子已经有了这个，再造的同时，顺便学习一下编译时注解，另外可以自定义自己的需求。
-项目地址在这里https://github.com/qinglinyi/FragmentArg
-使用123456789buildscrip">
-<meta property="og:updated_time" content="2016-04-17T06:33:35.000Z">
+<meta property="og:description" content="前言这是将是一系列关于Java并发基础知识的文章。事实上，主要是《实战Java高并发程序设计》的读书笔记和网络资料以及对它们的整理。
+相关概念1.同步Synchronous和异步Asynchronous 同步和异步通常是用来形容一次方法调用。
+
+所谓同步，就是在发出一个”调用”时，在没有得到结果之前，该”调用”就不返回。但是一旦调用返回，就得到返回值了。换句话说，就是由”调用者”主动等待这个”调用">
+<meta property="og:image" content="http://www.qinglinyi.com/images/concurrency/concurrency_byb.jpg">
+<meta property="og:updated_time" content="2016-06-23T07:07:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用注解操作Fragment Argument">
-<meta name="twitter:description" content="最近做了一个操作Fragment的Argument的简便方式，使用注解在编译时生成操作Argument的代码，在Fragment注入获取代码，完成对Argument的操作。
-这样的轮子已经有了这个，再造的同时，顺便学习一下编译时注解，另外可以自定义自己的需求。
-项目地址在这里https://github.com/qinglinyi/FragmentArg
-使用123456789buildscrip">
+<meta name="twitter:title" content="Java并发(1)-基础概念">
+<meta name="twitter:description" content="前言这是将是一系列关于Java并发基础知识的文章。事实上，主要是《实战Java高并发程序设计》的读书笔记和网络资料以及对它们的整理。
+相关概念1.同步Synchronous和异步Asynchronous 同步和异步通常是用来形容一次方法调用。
+
+所谓同步，就是在发出一个”调用”时，在没有得到结果之前，该”调用”就不返回。但是一旦调用返回，就得到返回值了。换句话说，就是由”调用者”主动等待这个”调用">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/concurrency/concurrency_byb.jpg">
 
 
 
@@ -118,7 +120,7 @@
   };
 </script>
 
-  <title> 使用注解操作Fragment Argument | 青林亦 </title>
+  <title> Java并发(1)-基础概念 | 青林亦 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +260,7 @@
             
             
               
-                使用注解操作Fragment Argument
+                Java并发(1)-基础概念
               
             
           </h1>
@@ -270,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-15T11:53:36+08:00" content="2016-04-15">
-              2016-04-15
+            <time itemprop="dateCreated" datetime="2016-06-22T16:30:26+08:00" content="2016-06-22">
+              2016-06-22
             </time>
           </span>
 
@@ -284,8 +286,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -304,7 +306,7 @@
 
           
           
-             <span id="/posts/fragment-arg/" class="leancloud_visitors" data-flag-title="使用注解操作Fragment Argument">
+             <span id="/posts/java-concurrency-0/" class="leancloud_visitors" data-flag-title="Java并发(1)-基础概念">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -326,16 +328,40 @@
       
 
       
-        <p>最近做了一个操作Fragment的Argument的简便方式，使用注解在编译时生成操作Argument的代码，在Fragment注入获取代码，完成对Argument的操作。</p>
-<p>这样的轮子已经有了<a href="https://github.com/sockeqwe/fragmentargs" target="_blank" rel="external">这个</a>，再造的同时，顺便学习一下编译时注解，另外可以自定义自己的需求。</p>
-<p>项目地址在这里<a href="https://github.com/qinglinyi/FragmentArg" target="_blank" rel="external">https://github.com/qinglinyi/FragmentArg</a></p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath <span class="string">'com.android.tools.build:gradle:2.0.0'</span></span><br><span class="line">        classpath <span class="string">'com.neenbedankt.gradle.plugins:android-apt:1.4'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.neenbedankt.android-apt'</span></span><br><span class="line">dependencies &#123;</span><br><span class="line">    <span class="function">compile <span class="title">fileTree</span><span class="params">(dir: <span class="string">'libs'</span>, include: [<span class="string">'*.jar'</span>])</span></span><br><span class="line">    compile 'com.qinglinyi.arg:arg-api:0.9.0'</span><br><span class="line">    apt 'com.qinglinyi.arg:arg-compiler:0.9.0'</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apt </span>&#123;</span><br><span class="line">    arguments &#123;</span><br><span class="line">        <span class="comment">// FragmentBuilder的包</span></span><br><span class="line">        argPackageName <span class="string">"com.qinglinyi.arg.sample"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Fragment</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@UseArg</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Arg</span></span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Arg</span></span><br><span class="line">    <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Arg</span></span><br><span class="line">    ArrayList&lt;String&gt; interests;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Arg</span></span><br><span class="line">    String[] friendNames;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        ArgInjector.inject(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-<p><strong>Activity</strong>两种方式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mFragment0 = FragmentBuilder.builder(<span class="keyword">new</span> MyFragment())</span><br><span class="line">               .age(<span class="number">15</span>)</span><br><span class="line">               .name(<span class="string">"张三"</span>)</span><br><span class="line">               .friendNames(<span class="keyword">new</span> String[]&#123;<span class="string">"李四"</span>, <span class="string">"王五"</span>&#125;)</span><br><span class="line">               .interests(list)</span><br><span class="line">               .build();</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mFragment1 = <span class="keyword">new</span> MyFragmentBuilder().age(<span class="number">15</span>)</span><br><span class="line">               .name(<span class="string">"李四"</span>)</span><br><span class="line">               .friendNames(<span class="keyword">new</span> String[]&#123;<span class="string">"张三"</span>, <span class="string">"王五"</span>&#125;)</span><br><span class="line">               .interests(list)</span><br><span class="line">               .build();</span><br></pre></td></tr></table></figure>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是将是一系列关于Java并发基础知识的文章。事实上，主要是《实战Java高并发程序设计》的读书笔记和网络资料以及对它们的整理。</p>
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="1-同步Synchronous和异步Asynchronous"><a href="#1-同步Synchronous和异步Asynchronous" class="headerlink" title="1.同步Synchronous和异步Asynchronous"></a>1.同步Synchronous和异步Asynchronous</h3><p> 同步和异步通常是用来形容一次方法调用。</p>
+<blockquote>
+<p>所谓同步，就是在发出一个”调用”时，在没有得到结果之前，该”调用”就不返回。但是一旦调用返回，就得到返回值了。<br>换句话说，就是由”调用者”主动等待这个”调用”的结果。</p>
+<p>而异步则是相反，”调用”在发出之后，这个调用就直接返回了，所以没有返回结果。换句话说，当一个异步过程调用发出后，调用者不会立刻得到结果。而是在”调用”发出后，”被调用者”通过状态、通知来通知调用者，或通过回调函数处理这个调用。</p>
+</blockquote>
+<p><em>来自&gt;知乎<a href="https://www.zhihu.com/question/19732473" target="_blank" rel="external">怎样理解阻塞非阻塞与同步异步的区别？</a></em></p>
+<h3 id="2-并发、并行"><a href="#2-并发、并行" class="headerlink" title="2.并发、并行"></a>2.并发、并行</h3><blockquote>
+<p>并发和并行的区别就是一个处理器同时处理多个任务和多个处理器或者是多核的处理器同时处理多个不同的任务。<br>前者是逻辑上的同时发生，而后者是物理上的同时发生。</p>
+<p>并发性(concurrency)，又称共行性，是指能处理多个同时性活动的能力，并发事件之间不一定要同一时刻发生。</p>
+<p>并行(parallelism)是指同时发生的两个并发事件，具有并发的含义，而并发则不一定并行。</p>
+<p>来个比喻：并发和并行的区别就是一个人同时吃三个馒头和三个人同时吃三个馒头。</p>
+</blockquote>
+<p><img src="/images/concurrency/concurrency_byb.jpg" alt="并发与并行示例"></p>
+<p><em>来自&gt; <a href="http://developer.51cto.com/art/200908/141553.htm" target="_blank" rel="external">并发和并行的区别：吃馒头的比喻</a></em></p>
+<h3 id="3-临界区"><a href="#3-临界区" class="headerlink" title="3. 临界区"></a>3. 临界区</h3><p>用来表示一种公共资源可以被多个线程使用，但是每次只允许一个线程使用它，一旦临界区资源被占用，其他资源想要访问它只能等待。</p>
+<h3 id="4-堵塞和非堵塞"><a href="#4-堵塞和非堵塞" class="headerlink" title="4. 堵塞和非堵塞"></a>4. 堵塞和非堵塞</h3><p>堵塞和非堵塞用来形容线程相互影响的一种状态，比如一个线程占用了临界区资源，那么其他所以线程需要使用这个资源并且等待，等待会导致线程挂起，这便是堵塞。非堵塞相反，表示线程没有被其他线程妨碍，会不断尝试向前执行。</p>
+<h3 id="5-死锁（Deadlock）、饥饿（Starvation）和活锁（Livelock）"><a href="#5-死锁（Deadlock）、饥饿（Starvation）和活锁（Livelock）" class="headerlink" title="5. 死锁（Deadlock）、饥饿（Starvation）和活锁（Livelock）"></a>5. 死锁（Deadlock）、饥饿（Starvation）和活锁（Livelock）</h3><p>死锁饥饿和活锁都是用来形容多线程的活跃性。</p>
+<ul>
+<li>死锁：是指两个或者两个以上的进程执行过程中，由于竞争资源或者由于彼此通信而造成的一种堵塞的现象，若无外力的作用，他们都将无法推进下去。</li>
+<li>饥饿：是指线程一直无法获取资源，导致一个堵塞。例如可能是因为优先级太低，而高优先级的线程一直抢占它需要的资源导致低级线程无法工作。</li>
+<li>活锁：是指任务或者执行者没有被阻塞，由于某些条件没有满足，导致一直重复尝试，失败，尝试，失败。</li>
+</ul>
+<h2 id="并发级别"><a href="#并发级别" class="headerlink" title="并发级别"></a>并发级别</h2><p>由于临界区的存在,多线程之间的并发必须受到控制。根据控制并发的策略,我们可以把并发的级别进行分类,大致上可以分为阻塞、无饥饿、无障碍、无锁、无等待几种。</p>
+<h3 id="1-堵塞（Blocking）"><a href="#1-堵塞（Blocking）" class="headerlink" title="1.堵塞（Blocking）"></a>1.堵塞（Blocking）</h3><p>一个线程是阻塞的,那么在其他线程释放资源之前,当前线程无法继续执行。</p>
+<h3 id="2-无饥饿（Starvation-Free）"><a href="#2-无饥饿（Starvation-Free）" class="headerlink" title="2.无饥饿（Starvation-Free）"></a>2.无饥饿（Starvation-Free）</h3><p>如果锁是公平的，满足所有的线程按照顺序排队（高优先级的线程不插队），那么所有的线程都有执行机会。</p>
+<h3 id="3-无障碍（Obstruction-Free）"><a href="#3-无障碍（Obstruction-Free）" class="headerlink" title="3.无障碍（Obstruction-Free）"></a>3.无障碍（Obstruction-Free）</h3><p>表示所有线程都可以访问临界区，为了保证数据安全，如果线程发生冲突就回滚。</p>
+<h3 id="4-无锁（Lock-Free）"><a href="#4-无锁（Lock-Free）" class="headerlink" title="4.无锁（Lock-Free）"></a>4.无锁（Lock-Free）</h3><p>在无锁的情况下，所有的线程都能尝试对临界区进行访问，但不同的是，无锁的并发保证必然有一个线程能够在有限步内完成操作离开临界区。</p>
+<h3 id="5-无等待（Wait-Free）"><a href="#5-无等待（Wait-Free）" class="headerlink" title="5.无等待（Wait-Free）"></a>5.无等待（Wait-Free）</h3><p>无锁只要求有一个线程可以在有限步内完成操作,而无等待则在无锁的基础上更进一步进行扩展。它要求所有的线程都必须在有限步内完成,这样就不会引起饥饿问题。如果限制这个步骤上限,还可以进一步分解为有界无等待和线程数无关的无等待几种,它们之间的区别只是对循环次数的限制不同。</p>
+<p>一种典型的无等待结构就是 RCU(Read-Copy-Update)。它的基本思想是,对数据的读可以不加控制。</p>
+<h2 id="原子性、可见性、有序性"><a href="#原子性、可见性、有序性" class="headerlink" title="原子性、可见性、有序性"></a>原子性、可见性、有序性</h2><p>Java内存模型是围绕着并发过程中如何处理原子性、可见性、有序性这三个特征来建立的，下面是这三个特性的实现原理：</p>
+<h3 id="1-原子性（Atomicity）"><a href="#1-原子性（Atomicity）" class="headerlink" title="1.原子性（Atomicity）"></a>1.原子性（Atomicity）</h3><p>原子性表示一个操作不可中断，即使在多个线程一起执行的时候，一个操作一旦开始就不会被其他线程干扰。</p>
+<h3 id="2-可见性（Visibility）"><a href="#2-可见性（Visibility）" class="headerlink" title="2.可见性（Visibility）"></a>2.可见性（Visibility）</h3><p>可见性是指当一个线程修改了某一个共享变量的值，其他线程是否能够立即知道这个修改。</p>
+<h3 id="3-有序性（Ordering）"><a href="#3-有序性（Ordering）" class="headerlink" title="3.有序性（Ordering）"></a>3.有序性（Ordering）</h3><p>有序性问题的原因是因为程序在执行时，可能会进行指令重排，重排后的指令与原指令的顺序未必一致。</p>
 
       
     </div>
@@ -356,9 +382,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Android/" rel="tag">#Android</a>
+            <a href="/tags/Java基础/" rel="tag">#Java基础</a>
           
-            <a href="/tags/Fragment/" rel="tag">#Fragment</a>
+            <a href="/tags/并发/" rel="tag">#并发</a>
+          
+            <a href="/tags/多线程/" rel="tag">#多线程</a>
           
         </div>
       
@@ -367,17 +395,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/publish-to-jcenter/" rel="next" title="Android Studio 发布项目到jcenter库">
-                <i class="fa fa-chevron-left"></i> Android Studio 发布项目到jcenter库
+              <a href="/posts/logger/" rel="next" title="Logger源码解析">
+                <i class="fa fa-chevron-left"></i> Logger源码解析
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/reflective-note/" rel="prev" title="Java反射--笔记">
-                Java反射--笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -509,7 +533,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-text">使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关概念"><span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-同步Synchronous和异步Asynchronous"><span class="nav-text">1.同步Synchronous和异步Asynchronous</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-并发、并行"><span class="nav-text">2.并发、并行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-临界区"><span class="nav-text">3. 临界区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-堵塞和非堵塞"><span class="nav-text">4. 堵塞和非堵塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-死锁（Deadlock）、饥饿（Starvation）和活锁（Livelock）"><span class="nav-text">5. 死锁（Deadlock）、饥饿（Starvation）和活锁（Livelock）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发级别"><span class="nav-text">并发级别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-堵塞（Blocking）"><span class="nav-text">1.堵塞（Blocking）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-无饥饿（Starvation-Free）"><span class="nav-text">2.无饥饿（Starvation-Free）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-无障碍（Obstruction-Free）"><span class="nav-text">3.无障碍（Obstruction-Free）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-无锁（Lock-Free）"><span class="nav-text">4.无锁（Lock-Free）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-无等待（Wait-Free）"><span class="nav-text">5.无等待（Wait-Free）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子性、可见性、有序性"><span class="nav-text">原子性、可见性、有序性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-原子性（Atomicity）"><span class="nav-text">1.原子性（Atomicity）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-可见性（Visibility）"><span class="nav-text">2.可见性（Visibility）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-有序性（Ordering）"><span class="nav-text">3.有序性（Ordering）</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
