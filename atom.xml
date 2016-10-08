@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.qinglinyi.com/"/>
-  <updated>2016-08-11T02:30:09.000Z</updated>
+  <updated>2016-10-08T06:32:11.000Z</updated>
   <id>http://www.qinglinyi.com/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ColorMatrix</title>
+    <link href="http://www.qinglinyi.com/posts/ColorMatrix/"/>
+    <id>http://www.qinglinyi.com/posts/ColorMatrix/</id>
+    <published>2016-09-28T01:56:11.000Z</published>
+    <updated>2016-10-08T06:32:11.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;一、简介&quot;&gt;&lt;a href=&quot;#一、简介&quot; class=&quot;headerlink&quot; title=&quot;一、简介&quot;&gt;&lt;/a&gt;一、简介&lt;/h2&gt;&lt;p&gt;ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[ a, b, c, d, e,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  f, g, h, i, j,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  k, l, m, n, o,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  p, q, r, s, t ]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当用于color [R, G, B, A]的时候，结果color将变成：&lt;/p&gt;
+&lt;figure class=&quot;highlight gherkin&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;R’ = a&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;R + b&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;G + c&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;B + d&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;A + e;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;G’ = f&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;R + g&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;G + h&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;B + i&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;A + j;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;B’ = k&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;R + l&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;G + m&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;B + n&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;A + o;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;A’ = p&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;R + q&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;G + r&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;B + s&lt;span class=&quot;keyword&quot;&gt;*&lt;/span&gt;A + t;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;并且得到的结果 color [R’, G’, B’, A’]的每一项的取值范围都是0~255。&lt;/p&gt;
+&lt;p&gt;如下一个例子ColorMatrix是倒置每一项颜色：&lt;/p&gt;
+&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[ &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;255&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;255&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;255&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt; ]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;二、主要方法&quot;&gt;&lt;a href=&quot;#二、主要方法&quot; class=&quot;headerlink&quot; title=&quot;二、主要方法&quot;&gt;&lt;/a&gt;二、主要方法&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;用于YUV和RGB转换的方法：setRGB2YUV()和setYUV2RGB()&lt;/li&gt;
+&lt;li&gt;用于设置饱和度的方法：setSaturation(float sat)，可以设置图片为黑白&lt;/li&gt;
+&lt;li&gt;用于调整颜色比例的方法：setScale(float rScale, float gScale, float bScale, float aScale)，可以调整R、G、B、A各项的比例&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;用于设置围绕一个颜色进行旋转（Set the rotation on a color axis by the specified values）：setRotate(int axis, float degrees)&lt;/p&gt;
+&lt;p&gt;1）&lt;em&gt;axis=0 Red&lt;/em&gt;、&lt;em&gt;axis=1 Green&lt;/em&gt;、&lt;em&gt;axis=2 Blue&lt;/em&gt;&lt;br&gt;2）&lt;em&gt;degrees&lt;/em&gt; 角度 0-360&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;三、栗子&quot;&gt;&lt;a href=&quot;#三、栗子&quot; class=&quot;headerlink&quot; title=&quot;三、栗子&quot;&gt;&lt;/a&gt;三、栗子&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/qinglinyi/ColorMatrixDemo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/qinglinyi/ColorMatrixDemo&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一、简介&quot;&gt;&lt;a href=&quot;#一、简介&quot; class=&quot;headerlink&quot; title=&quot;一、简介&quot;&gt;&lt;/a&gt;一、简介&lt;/h2&gt;&lt;p&gt;ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Java并发(2)-并发基础</title>

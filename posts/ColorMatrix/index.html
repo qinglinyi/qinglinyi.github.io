@@ -82,15 +82,25 @@
 
 
 
-<meta name="description" content="每天多一点点">
-<meta property="og:type" content="website">
-<meta property="og:title" content="青林亦">
-<meta property="og:url" content="http://www.qinglinyi.com/tags/Retrofit2/index.html">
+<meta name="description" content="一、简介ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：
+1234[ a, b, c, d, e,  f, g, h, i, j,  k, l, m, n, o,  p, q, r, s, t ]
+当用于color [R, G, B, A]的时候，结果color将变成：
+1234R’ = a*R + b*G + c*B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ColorMatrix">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/ColorMatrix/index.html">
 <meta property="og:site_name" content="青林亦">
-<meta property="og:description" content="每天多一点点">
+<meta property="og:description" content="一、简介ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：
+1234[ a, b, c, d, e,  f, g, h, i, j,  k, l, m, n, o,  p, q, r, s, t ]
+当用于color [R, G, B, A]的时候，结果color将变成：
+1234R’ = a*R + b*G + c*B">
+<meta property="og:updated_time" content="2016-10-08T06:32:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="青林亦">
-<meta name="twitter:description" content="每天多一点点">
+<meta name="twitter:title" content="ColorMatrix">
+<meta name="twitter:description" content="一、简介ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：
+1234[ a, b, c, d, e,  f, g, h, i, j,  k, l, m, n, o,  p, q, r, s, t ]
+当用于color [R, G, B, A]的时候，结果color将变成：
+1234R’ = a*R + b*G + c*B">
 
 
 
@@ -108,7 +118,7 @@
   };
 </script>
 
-  <title> 标签: Retrofit2 | 青林亦 </title>
+  <title> ColorMatrix | 青林亦 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -139,7 +149,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,46 +237,138 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        Retrofit2
-        <small>标签</small>
-      </h2>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ColorMatrix
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-28T09:56:11+08:00" content="2016-09-28">
+              2016-09-28
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/ColorMatrix/" class="leancloud_visitors" data-flag-title="ColorMatrix">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ a, b, c, d, e,</span><br><span class="line">  f, g, h, i, j,</span><br><span class="line">  k, l, m, n, o,</span><br><span class="line">  p, q, r, s, t ]</span><br></pre></td></tr></table></figure>
+<p>当用于color [R, G, B, A]的时候，结果color将变成：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">R’ = a<span class="keyword">*</span>R + b<span class="keyword">*</span>G + c<span class="keyword">*</span>B + d<span class="keyword">*</span>A + e;</span><br><span class="line">G’ = f<span class="keyword">*</span>R + g<span class="keyword">*</span>G + h<span class="keyword">*</span>B + i<span class="keyword">*</span>A + j;</span><br><span class="line">B’ = k<span class="keyword">*</span>R + l<span class="keyword">*</span>G + m<span class="keyword">*</span>B + n<span class="keyword">*</span>A + o;</span><br><span class="line">A’ = p<span class="keyword">*</span>R + q<span class="keyword">*</span>G + r<span class="keyword">*</span>B + s<span class="keyword">*</span>A + t;</span><br></pre></td></tr></table></figure>
+<p>并且得到的结果 color [R’, G’, B’, A’]的每一项的取值范围都是0~255。</p>
+<p>如下一个例子ColorMatrix是倒置每一项颜色：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>,</span><br><span class="line">  <span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>,</span><br><span class="line">  <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">255</span>,</span><br><span class="line">  <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span> ]</span><br></pre></td></tr></table></figure>
+<h2 id="二、主要方法"><a href="#二、主要方法" class="headerlink" title="二、主要方法"></a>二、主要方法</h2><ol>
+<li>用于YUV和RGB转换的方法：setRGB2YUV()和setYUV2RGB()</li>
+<li>用于设置饱和度的方法：setSaturation(float sat)，可以设置图片为黑白</li>
+<li>用于调整颜色比例的方法：setScale(float rScale, float gScale, float bScale, float aScale)，可以调整R、G、B、A各项的比例</li>
+<li><p>用于设置围绕一个颜色进行旋转（Set the rotation on a color axis by the specified values）：setRotate(int axis, float degrees)</p>
+<p>1）<em>axis=0 Red</em>、<em>axis=1 Green</em>、<em>axis=2 Blue</em><br>2）<em>degrees</em> 角度 0-360</p>
+</li>
+</ol>
+<h2 id="三、栗子"><a href="#三、栗子" class="headerlink" title="三、栗子"></a>三、栗子</h2><p><a href="https://github.com/qinglinyi/ColorMatrixDemo" target="_blank" rel="external">https://github.com/qinglinyi/ColorMatrixDemo</a></p>
 
-      <h1 class="post-title">
+      
+    </div>
+    
+    <div>
+      
         
-            <a class="post-title-link" href="/posts/retrofit/" itemprop="url">
-              
-                <span itemprop="name">Retrofit2 源码解析</span>
-              
-            </a>
+      
+    </div>
+
+    <div>
+      
         
-      </h1>
+      
+    </div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-03-08T12:22:29+08:00"
-              content="2016-03-08" >
-          03-08
-        </time>
-      </div>
+    <footer class="post-footer">
+      
 
-    </header>
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/java-concurrency-1/" rel="next" title="Java并发(2)-并发基础">
+                <i class="fa fa-chevron-left"></i> Java并发(2)-并发基础
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -274,6 +376,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -293,8 +399,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/header.jpg"
@@ -362,6 +477,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、简介"><span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要方法"><span class="nav-text">二、主要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、栗子"><span class="nav-text">三、栗子</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -458,6 +584,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
