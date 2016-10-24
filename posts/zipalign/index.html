@@ -91,7 +91,7 @@ zipalign是一个归档对齐工具，它为Android应用程序（APK）文件�
 <meta property="og:description" content="zipalignhttps://developer.android.com/studio/command-line/zipalign.html
 zipalign是一个归档对齐工具，它为Android应用程序（APK）文件提供重要的优化。 目的是确保所有未压缩数据以相对于文件开头的特定对齐开始。 具体来说，它会使APK中的所有未压缩数据（例如图像或raw）在4字节边界上对齐。 这允许使用mmap（）">
 <meta property="og:image" content="http://www.qinglinyi.com/images/zipalign/zipalign.png">
-<meta property="og:updated_time" content="2016-10-24T13:16:02.000Z">
+<meta property="og:updated_time" content="2016-10-24T13:27:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zipalign">
 <meta name="twitter:description" content="zipalignhttps://developer.android.com/studio/command-line/zipalign.html
@@ -319,7 +319,7 @@ zipalign是一个归档对齐工具，它为Android应用程序（APK）文件�
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">zipalign</span> <span class="selector-attr">[-f]</span> <span class="selector-attr">[-v]</span> &lt;<span class="selector-tag">alignment</span>&gt; <span class="selector-tag">infile</span><span class="selector-class">.apk</span> <span class="selector-tag">outfile</span><span class="selector-class">.apk</span></span><br></pre></td></tr></table></figure>
 <p>确认existing.apk的对齐方式：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zipalign -c -v <span class="tag">&lt;<span class="name">alignment</span>&gt;</span> existing.apk</span><br></pre></td></tr></table></figure>
-<p><alignment>是一个定义字节对齐边界的整数。 这必须总是4（提供32位对齐），否则它什么也不做。</alignment></p>
+<p>alignment是一个定义字节对齐边界的整数。 这必须总是4（提供32位对齐），否则它什么也不做。</p>
 <p>标示:</p>
 <ul>
 <li>-f : 覆盖输出的 outfile.zip</li>

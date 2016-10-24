@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.qinglinyi.com/"/>
-  <updated>2016-10-24T13:16:02.000Z</updated>
+  <updated>2016-10-24T13:27:05.000Z</updated>
   <id>http://www.qinglinyi.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.qinglinyi.com/posts/zipalign/"/>
     <id>http://www.qinglinyi.com/posts/zipalign/</id>
     <published>2016-10-24T06:26:07.000Z</published>
-    <updated>2016-10-24T13:16:02.000Z</updated>
+    <updated>2016-10-24T13:27:05.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;zipalign&quot;&gt;&lt;a href=&quot;#zipalign&quot; class=&quot;headerlink&quot; title=&quot;zipalign&quot;&gt;&lt;/a&gt;zipalign&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://developer.android.com/studio/command-line/zipalign.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.android.com/studio/command-line/zipalign.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;zipalign是一个归档对齐工具，它为Android应用程序（APK）文件提供重要的优化。 目的是确保所有未压缩数据以相对于文件开头的特定对齐开始。 具体来说，它会使APK中的所有未压缩数据（例如图像或raw）在4字节边界上对齐。 这允许使用mmap（）直接访问所有部分，即使它们包含具有对齐限制的二进制数据。 其优点是减少运行应用程序时消耗的RAM量。&lt;/p&gt;
@@ -38,7 +38,7 @@
 &lt;figure class=&quot;highlight css&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;selector-tag&quot;&gt;zipalign&lt;/span&gt; &lt;span class=&quot;selector-attr&quot;&gt;[-f]&lt;/span&gt; &lt;span class=&quot;selector-attr&quot;&gt;[-v]&lt;/span&gt; &amp;lt;&lt;span class=&quot;selector-tag&quot;&gt;alignment&lt;/span&gt;&amp;gt; &lt;span class=&quot;selector-tag&quot;&gt;infile&lt;/span&gt;&lt;span class=&quot;selector-class&quot;&gt;.apk&lt;/span&gt; &lt;span class=&quot;selector-tag&quot;&gt;outfile&lt;/span&gt;&lt;span class=&quot;selector-class&quot;&gt;.apk&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;确认existing.apk的对齐方式：&lt;/p&gt;
 &lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;zipalign -c -v &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;alignment&lt;/span&gt;&amp;gt;&lt;/span&gt; existing.apk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;alignment&gt;是一个定义字节对齐边界的整数。 这必须总是4（提供32位对齐），否则它什么也不做。&lt;/alignment&gt;&lt;/p&gt;
+&lt;p&gt;alignment是一个定义字节对齐边界的整数。 这必须总是4（提供32位对齐），否则它什么也不做。&lt;/p&gt;
 &lt;p&gt;标示:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;-f : 覆盖输出的 outfile.zip&lt;/li&gt;
