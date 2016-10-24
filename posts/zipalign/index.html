@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android," />
+  <meta name="keywords" content="Android" />
 
 
 
@@ -82,25 +82,21 @@
 
 
 
-<meta name="description" content="一、简介ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：
-1234[ a, b, c, d, e,  f, g, h, i, j,  k, l, m, n, o,  p, q, r, s, t ]
-当用于color [R, G, B, A]的时候，结果color将变成：
-1234R’ = a*R + b*G + c*B">
+<meta name="description" content="zipalignhttps://developer.android.com/studio/command-line/zipalign.html
+zipalign是一个归档对齐工具，它为Android应用程序（APK）文件提供重要的优化。 目的是确保所有未压缩数据以相对于文件开头的特定对齐开始。 具体来说，它会使APK中的所有未压缩数据（例如图像或raw）在4字节边界上对齐。 这允许使用mmap（）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ColorMatrix">
-<meta property="og:url" content="http://www.qinglinyi.com/posts/ColorMatrix/index.html">
+<meta property="og:title" content="zipalign">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/zipalign/index.html">
 <meta property="og:site_name" content="青林亦">
-<meta property="og:description" content="一、简介ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：
-1234[ a, b, c, d, e,  f, g, h, i, j,  k, l, m, n, o,  p, q, r, s, t ]
-当用于color [R, G, B, A]的时候，结果color将变成：
-1234R’ = a*R + b*G + c*B">
-<meta property="og:updated_time" content="2016-10-08T06:33:30.000Z">
+<meta property="og:description" content="zipalignhttps://developer.android.com/studio/command-line/zipalign.html
+zipalign是一个归档对齐工具，它为Android应用程序（APK）文件提供重要的优化。 目的是确保所有未压缩数据以相对于文件开头的特定对齐开始。 具体来说，它会使APK中的所有未压缩数据（例如图像或raw）在4字节边界上对齐。 这允许使用mmap（）">
+<meta property="og:image" content="http://www.qinglinyi.com/images/zipalign/zipalign.png">
+<meta property="og:updated_time" content="2016-10-24T09:17:11.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ColorMatrix">
-<meta name="twitter:description" content="一、简介ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：
-1234[ a, b, c, d, e,  f, g, h, i, j,  k, l, m, n, o,  p, q, r, s, t ]
-当用于color [R, G, B, A]的时候，结果color将变成：
-1234R’ = a*R + b*G + c*B">
+<meta name="twitter:title" content="zipalign">
+<meta name="twitter:description" content="zipalignhttps://developer.android.com/studio/command-line/zipalign.html
+zipalign是一个归档对齐工具，它为Android应用程序（APK）文件提供重要的优化。 目的是确保所有未压缩数据以相对于文件开头的特定对齐开始。 具体来说，它会使APK中的所有未压缩数据（例如图像或raw）在4字节边界上对齐。 这允许使用mmap（）">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/zipalign/zipalign.png">
 
 
 
@@ -118,7 +114,7 @@
   };
 </script>
 
-  <title> ColorMatrix | 青林亦 </title>
+  <title> zipalign | 青林亦 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -258,7 +254,7 @@
             
             
               
-                ColorMatrix
+                zipalign
               
             
           </h1>
@@ -270,8 +266,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-28T09:56:11+08:00" content="2016-09-28">
-              2016-09-28
+            <time itemprop="dateCreated" datetime="2016-10-24T14:26:07+08:00" content="2016-10-24">
+              2016-10-24
             </time>
           </span>
 
@@ -285,7 +281,7 @@
 
           
           
-             <span id="/posts/ColorMatrix/" class="leancloud_visitors" data-flag-title="ColorMatrix">
+             <span id="/posts/zipalign/" class="leancloud_visitors" data-flag-title="zipalign">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -307,22 +303,35 @@
       
 
       
-        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>ColorMatrix是一个4x5的矩阵，是用于转换Bitmap的颜色和透明度的组件。这个矩阵可以通过一个简单的数组设置，如下：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ a, b, c, d, e,</span><br><span class="line">  f, g, h, i, j,</span><br><span class="line">  k, l, m, n, o,</span><br><span class="line">  p, q, r, s, t ]</span><br></pre></td></tr></table></figure>
-<p>当用于color [R, G, B, A]的时候，结果color将变成：</p>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">R’ = a<span class="keyword">*</span>R + b<span class="keyword">*</span>G + c<span class="keyword">*</span>B + d<span class="keyword">*</span>A + e;</span><br><span class="line">G’ = f<span class="keyword">*</span>R + g<span class="keyword">*</span>G + h<span class="keyword">*</span>B + i<span class="keyword">*</span>A + j;</span><br><span class="line">B’ = k<span class="keyword">*</span>R + l<span class="keyword">*</span>G + m<span class="keyword">*</span>B + n<span class="keyword">*</span>A + o;</span><br><span class="line">A’ = p<span class="keyword">*</span>R + q<span class="keyword">*</span>G + r<span class="keyword">*</span>B + s<span class="keyword">*</span>A + t;</span><br></pre></td></tr></table></figure>
-<p>并且得到的结果 color [R’, G’, B’, A’]的每一项的取值范围都是0~255。</p>
-<p>如下一个例子ColorMatrix是倒置每一项颜色：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>,</span><br><span class="line">  <span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>,</span><br><span class="line">  <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">255</span>,</span><br><span class="line">  <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span> ]</span><br></pre></td></tr></table></figure>
-<h2 id="二、主要方法"><a href="#二、主要方法" class="headerlink" title="二、主要方法"></a>二、主要方法</h2><ol>
-<li>用于YUV和RGB转换的方法：setRGB2YUV()和setYUV2RGB()</li>
-<li>用于设置饱和度的方法：setSaturation(float sat)，可以设置图片为黑白</li>
-<li>用于调整颜色比例的方法：setScale(float rScale, float gScale, float bScale, float aScale)，可以调整R、G、B、A各项的比例</li>
-<li><p>用于设置围绕一个颜色进行旋转（Set the rotation on a color axis by the specified values）：setRotate(int axis, float degrees)</p>
-<p>1）<em>axis=0 Red</em>、<em>axis=1 Green</em>、<em>axis=2 Blue</em><br>2）<em>degrees</em> 角度 0-360</p>
-</li>
+        <h2 id="zipalign"><a href="#zipalign" class="headerlink" title="zipalign"></a>zipalign</h2><p><a href="https://developer.android.com/studio/command-line/zipalign.html" target="_blank" rel="external">https://developer.android.com/studio/command-line/zipalign.html</a></p>
+<p>zipalign是一个归档对齐工具，它为Android应用程序（APK）文件提供重要的优化。 目的是确保所有未压缩数据以相对于文件开头的特定对齐开始。 具体来说，它会使APK中的所有未压缩数据（例如图像或raw）在4字节边界上对齐。 这允许使用mmap（）直接访问所有部分，即使它们包含具有对齐限制的二进制数据。 其优点是减少运行应用程序时消耗的RAM量。</p>
+<p>此工具应始终用于在将APK文件分发给最终用户之前对齐。 Android构建工具可以为您处理此问题。 Android Studio会自动对齐您的APK。</p>
+<blockquote>
+<p>注意：您必须在应用程序构建过程中的两个特定点之一使用zipalign，具体取决于您使用的应用程序签名工具：</p>
+<ol>
+<li>如果您使用apksigner，zipalign只能在签署APK文件之前执行。 如果您使用apksigner签署APK，并对APK进行进一步更改，则其签名将失效。</li>
+<li>如果你使用jarsigner，zipalign只能在APK文件签名后才能执行。</li>
 </ol>
-<h2 id="三、栗子"><a href="#三、栗子" class="headerlink" title="三、栗子"></a>三、栗子</h2><p><a href="https://github.com/qinglinyi/ColorMatrixDemo" target="_blank" rel="external">https://github.com/qinglinyi/ColorMatrixDemo</a></p>
+</blockquote>
+<p><img src="/images/zipalign/zipalign.png" width="661" height="527" alt="apksigner"></p>
+<p>通过更改zip本地文件头部分中“额外”字段的大小进行调整。 “额外”字段中的现有数据可能会被此过程更改。<br>有关如何在构建应用程序时使用zipalign的更多信息，请阅读签名您的应用程序。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>对齐 infile.apk 并保存为 outfile.apk:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">zipalign</span> <span class="selector-attr">[-f]</span> <span class="selector-attr">[-v]</span> &lt;<span class="selector-tag">alignment</span>&gt; <span class="selector-tag">infile</span><span class="selector-class">.apk</span> <span class="selector-tag">outfile</span><span class="selector-class">.apk</span></span><br></pre></td></tr></table></figure>
+<p>确认existing.apk的对齐方式：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zipalign -c -v <span class="tag">&lt;<span class="name">alignment</span>&gt;</span> existing.apk</span><br></pre></td></tr></table></figure>
+<p><alignment>是一个定义字节对齐边界的整数。 这必须总是4（提供32位对齐），否则它什么也不做。</alignment></p>
+<p>标示:</p>
+<ul>
+<li>-f : 覆盖输出的 outfile.zip</li>
+<li>-v : 详细输出</li>
+<li>-p : outfile.zip应该对infile.zip中的所有共享对象文件使用相同的页面对齐</li>
+<li>-c : 检查给定的文件是否对齐</li>
+</ul>
+<p>使用</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">zipalign</span> <span class="selector-tag">-c</span> <span class="selector-tag">-v</span> 4 <span class="selector-tag">destination</span><span class="selector-class">.apk</span></span><br></pre></td></tr></table></figure>
+<p>检查结果:</p>
+ <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">       <span class="number">50</span> META-INF/MANIFEST<span class="selector-class">.MF</span> (OK - compressed)</span><br><span class="line">     <span class="number">467</span> META-INF/DABU<span class="selector-class">.SF</span> (OK - compressed)</span><br><span class="line">     <span class="number">985</span> META-INF/DABU<span class="selector-class">.RSA</span> (OK - compressed)</span><br><span class="line">    <span class="number">2142</span> res/drawable/ic_launcher<span class="selector-class">.png</span> (BAD - <span class="number">2</span>)</span><br><span class="line">    <span class="number">4391</span> res/layout/main<span class="selector-class">.xml</span> (OK - compressed)</span><br><span class="line">    <span class="number">4729</span> AndroidManifest<span class="selector-class">.xml</span> (OK - compressed)</span><br><span class="line">    <span class="number">5348</span> resources<span class="selector-class">.arsc</span> (OK)</span><br><span class="line">    <span class="number">6477</span> classes<span class="selector-class">.dex</span> (OK - compressed)</span><br><span class="line">Verification FAILED</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    <span class="number">49</span> AndroidManifest<span class="selector-class">.xml</span> (OK - compressed)</span><br><span class="line">     <span class="number">876</span> META-INF/CERT<span class="selector-class">.RSA</span> (OK - compressed)</span><br><span class="line">    <span class="number">1977</span> META-INF/CERT<span class="selector-class">.SF</span> (OK - compressed)</span><br><span class="line">   <span class="number">12956</span> META-INF/MANIFEST<span class="selector-class">.MF</span> (OK - compressed)</span><br><span class="line">   <span class="number">23893</span> classes<span class="selector-class">.dex</span> (OK - compressed)</span><br><span class="line"> ...</span><br><span class="line"> <span class="number">1035004</span> res/mipmap-hdpi-v4/ic_launcher<span class="selector-class">.png</span> (OK)</span><br><span class="line"> <span class="number">1038196</span> res/mipmap-mdpi-v4/ic_launcher<span class="selector-class">.png</span> (OK)</span><br><span class="line"> <span class="number">1040224</span> res/mipmap-xhdpi-v4/ic_launcher<span class="selector-class">.png</span> (OK)</span><br><span class="line">...</span><br><span class="line"> <span class="number">1201748</span> resources<span class="selector-class">.arsc</span> (OK)</span><br><span class="line">Verification succesful</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -341,28 +350,18 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag">#Android</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/java-concurrency-1/" rel="next" title="Java并发(2)-并发基础">
-                <i class="fa fa-chevron-left"></i> Java并发(2)-并发基础
+              <a href="/posts/ColorMatrix/" rel="next" title="ColorMatrix">
+                <i class="fa fa-chevron-left"></i> ColorMatrix
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/zipalign/" rel="prev" title="zipalign">
-                zipalign <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -494,7 +493,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、简介"><span class="nav-text">一、简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、主要方法"><span class="nav-text">二、主要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、栗子"><span class="nav-text">三、栗子</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#zipalign"><span class="nav-text">zipalign</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-text">使用</span></a></li></ol></div>
             
           </div>
         </section>

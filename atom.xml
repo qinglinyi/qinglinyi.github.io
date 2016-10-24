@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.qinglinyi.com/"/>
-  <updated>2016-10-08T06:33:30.000Z</updated>
+  <updated>2016-10-24T09:17:11.000Z</updated>
   <id>http://www.qinglinyi.com/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>zipalign</title>
+    <link href="http://www.qinglinyi.com/posts/zipalign/"/>
+    <id>http://www.qinglinyi.com/posts/zipalign/</id>
+    <published>2016-10-24T06:26:07.000Z</published>
+    <updated>2016-10-24T09:17:11.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;zipalign&quot;&gt;&lt;a href=&quot;#zipalign&quot; class=&quot;headerlink&quot; title=&quot;zipalign&quot;&gt;&lt;/a&gt;zipalign&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://developer.android.com/studio/command-line/zipalign.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.android.com/studio/command-line/zipalign.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;zipalign是一个归档对齐工具，它为Android应用程序（APK）文件提供重要的优化。 目的是确保所有未压缩数据以相对于文件开头的特定对齐开始。 具体来说，它会使APK中的所有未压缩数据（例如图像或raw）在4字节边界上对齐。 这允许使用mmap（）直接访问所有部分，即使它们包含具有对齐限制的二进制数据。 其优点是减少运行应用程序时消耗的RAM量。&lt;/p&gt;
+&lt;p&gt;此工具应始终用于在将APK文件分发给最终用户之前对齐。 Android构建工具可以为您处理此问题。 Android Studio会自动对齐您的APK。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意：您必须在应用程序构建过程中的两个特定点之一使用zipalign，具体取决于您使用的应用程序签名工具：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果您使用apksigner，zipalign只能在签署APK文件之前执行。 如果您使用apksigner签署APK，并对APK进行进一步更改，则其签名将失效。&lt;/li&gt;
+&lt;li&gt;如果你使用jarsigner，zipalign只能在APK文件签名后才能执行。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;/images/zipalign/zipalign.png&quot; width=&quot;661&quot; height=&quot;527&quot; alt=&quot;apksigner&quot;&gt;&lt;/p&gt;
+&lt;p&gt;通过更改zip本地文件头部分中“额外”字段的大小进行调整。 “额外”字段中的现有数据可能会被此过程更改。&lt;br&gt;有关如何在构建应用程序时使用zipalign的更多信息，请阅读签名您的应用程序。&lt;/p&gt;
+&lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;p&gt;对齐 infile.apk 并保存为 outfile.apk:&lt;/p&gt;
+&lt;figure class=&quot;highlight css&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;selector-tag&quot;&gt;zipalign&lt;/span&gt; &lt;span class=&quot;selector-attr&quot;&gt;[-f]&lt;/span&gt; &lt;span class=&quot;selector-attr&quot;&gt;[-v]&lt;/span&gt; &amp;lt;&lt;span class=&quot;selector-tag&quot;&gt;alignment&lt;/span&gt;&amp;gt; &lt;span class=&quot;selector-tag&quot;&gt;infile&lt;/span&gt;&lt;span class=&quot;selector-class&quot;&gt;.apk&lt;/span&gt; &lt;span class=&quot;selector-tag&quot;&gt;outfile&lt;/span&gt;&lt;span class=&quot;selector-class&quot;&gt;.apk&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;确认existing.apk的对齐方式：&lt;/p&gt;
+&lt;figure class=&quot;highlight xml&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;zipalign -c -v &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;alignment&lt;/span&gt;&amp;gt;&lt;/span&gt; existing.apk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;alignment&gt;是一个定义字节对齐边界的整数。 这必须总是4（提供32位对齐），否则它什么也不做。&lt;/alignment&gt;&lt;/p&gt;
+&lt;p&gt;标示:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-f : 覆盖输出的 outfile.zip&lt;/li&gt;
+&lt;li&gt;-v : 详细输出&lt;/li&gt;
+&lt;li&gt;-p : outfile.zip应该对infile.zip中的所有共享对象文件使用相同的页面对齐&lt;/li&gt;
+&lt;li&gt;-c : 检查给定的文件是否对齐&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;使用&lt;/p&gt;
+&lt;figure class=&quot;highlight css&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;selector-tag&quot;&gt;zipalign&lt;/span&gt; &lt;span class=&quot;selector-tag&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;selector-tag&quot;&gt;-v&lt;/span&gt; 4 &lt;span class=&quot;selector-tag&quot;&gt;destination&lt;/span&gt;&lt;span class=&quot;selector-class&quot;&gt;.apk&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;检查结果:&lt;/p&gt;
+ &lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;       &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; META-INF/MANIFEST&lt;span class=&quot;selector-class&quot;&gt;.MF&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;467&lt;/span&gt; META-INF/DABU&lt;span class=&quot;selector-class&quot;&gt;.SF&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;985&lt;/span&gt; META-INF/DABU&lt;span class=&quot;selector-class&quot;&gt;.RSA&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;2142&lt;/span&gt; res/drawable/ic_launcher&lt;span class=&quot;selector-class&quot;&gt;.png&lt;/span&gt; (BAD - &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;4391&lt;/span&gt; res/layout/main&lt;span class=&quot;selector-class&quot;&gt;.xml&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;4729&lt;/span&gt; AndroidManifest&lt;span class=&quot;selector-class&quot;&gt;.xml&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;5348&lt;/span&gt; resources&lt;span class=&quot;selector-class&quot;&gt;.arsc&lt;/span&gt; (OK)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;6477&lt;/span&gt; classes&lt;span class=&quot;selector-class&quot;&gt;.dex&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Verification FAILED&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;49&lt;/span&gt; AndroidManifest&lt;span class=&quot;selector-class&quot;&gt;.xml&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;number&quot;&gt;876&lt;/span&gt; META-INF/CERT&lt;span class=&quot;selector-class&quot;&gt;.RSA&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;1977&lt;/span&gt; META-INF/CERT&lt;span class=&quot;selector-class&quot;&gt;.SF&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;number&quot;&gt;12956&lt;/span&gt; META-INF/MANIFEST&lt;span class=&quot;selector-class&quot;&gt;.MF&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;number&quot;&gt;23893&lt;/span&gt; classes&lt;span class=&quot;selector-class&quot;&gt;.dex&lt;/span&gt; (OK - compressed)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; ...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;1035004&lt;/span&gt; res/mipmap-hdpi-v4/ic_launcher&lt;span class=&quot;selector-class&quot;&gt;.png&lt;/span&gt; (OK)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;1038196&lt;/span&gt; res/mipmap-mdpi-v4/ic_launcher&lt;span class=&quot;selector-class&quot;&gt;.png&lt;/span&gt; (OK)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;1040224&lt;/span&gt; res/mipmap-xhdpi-v4/ic_launcher&lt;span class=&quot;selector-class&quot;&gt;.png&lt;/span&gt; (OK)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;span class=&quot;number&quot;&gt;1201748&lt;/span&gt; resources&lt;span class=&quot;selector-class&quot;&gt;.arsc&lt;/span&gt; (OK)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Verification succesful&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;zipalign&quot;&gt;&lt;a href=&quot;#zipalign&quot; class=&quot;headerlink&quot; title=&quot;zipalign&quot;&gt;&lt;/a&gt;zipalign&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://developer.android.com/studio/
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>ColorMatrix</title>
