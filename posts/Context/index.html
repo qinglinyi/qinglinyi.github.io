@@ -1,0 +1,785 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="青林亦" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="1.闲言碎语一直想要系统的阅读Android源码，但是总是没能坚持，或许是打开方式不对。仔细想来，没必要一定从每个类的每个字段每个方法开始，没必要一定从底层开始，没必要一定从开机开始，没必要一定从启动开始。从一个点开始未必就不失为一个好的方式，用点连成线，用线连成面…。小范围跨度，低成本掌握，避免拖久必变，避免高坡度放弃，终能起到燎原之势！
+牢骚一把。
+进入主题，跟着老罗练内功☞Context的创">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Context的创建过程">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/Context/index.html">
+<meta property="og:site_name" content="青林亦">
+<meta property="og:description" content="1.闲言碎语一直想要系统的阅读Android源码，但是总是没能坚持，或许是打开方式不对。仔细想来，没必要一定从每个类的每个字段每个方法开始，没必要一定从底层开始，没必要一定从开机开始，没必要一定从启动开始。从一个点开始未必就不失为一个好的方式，用点连成线，用线连成面…。小范围跨度，低成本掌握，避免拖久必变，避免高坡度放弃，终能起到燎原之势！
+牢骚一把。
+进入主题，跟着老罗练内功☞Context的创">
+<meta property="og:image" content="http://www.qinglinyi.com/images/context/Context.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/context/Context_class.png">
+<meta property="og:updated_time" content="2016-10-29T03:44:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Context的创建过程">
+<meta name="twitter:description" content="1.闲言碎语一直想要系统的阅读Android源码，但是总是没能坚持，或许是打开方式不对。仔细想来，没必要一定从每个类的每个字段每个方法开始，没必要一定从底层开始，没必要一定从开机开始，没必要一定从启动开始。从一个点开始未必就不失为一个好的方式，用点连成线，用线连成面…。小范围跨度，低成本掌握，避免拖久必变，避免高坡度放弃，终能起到燎原之势！
+牢骚一把。
+进入主题，跟着老罗练内功☞Context的创">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/context/Context.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Context的创建过程 | 青林亦 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76ab47522bfa6c63d79e65cd88427dbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">青林亦</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">知其然知其所以然</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Context的创建过程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-28T10:30:17+08:00" content="2016-10-28">
+              2016-10-28
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/Context/" class="leancloud_visitors" data-flag-title="Context的创建过程">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-闲言碎语"><a href="#1-闲言碎语" class="headerlink" title="1.闲言碎语"></a>1.闲言碎语</h2><p>一直想要系统的阅读Android源码，但是总是没能坚持，或许是打开方式不对。仔细想来，没必要一定从每个类的每个字段每个方法开始，没必要一定从底层开始，没必要一定从开机开始，没必要一定从启动开始。从一个点开始未必就不失为一个好的方式，用点连成线，用线连成面…。小范围跨度，低成本掌握，避免拖久必变，避免高坡度放弃，终能起到燎原之势！</p>
+<p>牢骚一把。</p>
+<p>进入主题，跟着<a href="http://blog.csdn.net/luoshengyang/" target="_blank" rel="external">老罗</a>练内功☞Context的创建过程。</p>
+<p>ps:基于源码6.0</p>
+<p>ps:原尊在<a href="http://blog.csdn.net/luoshengyang/article/details/8201936" target="_blank" rel="external">这里</a>，写的很详细。</p>
+<h2 id="2-创建过程"><a href="#2-创建过程" class="headerlink" title="2.创建过程"></a>2.创建过程</h2><p><img src="/images/context/Context.png" width="1044" height="629" alt="Context"></p>
+<h3 id="Step1-ActivityThread-performLaunchActivity"><a href="#Step1-ActivityThread-performLaunchActivity" class="headerlink" title="Step1: ActivityThread.performLaunchActivity"></a>Step1: ActivityThread.performLaunchActivity</h3><p>Activity组件的启动过程中，ActivityThread类的performLaunchActivity()方法会创建一个Activity实例，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> Activity <span class="title">performLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">   ActivityInfo aInfo = r.activityInfo;</span><br><span class="line">   ...</span><br><span class="line">   ComponentName component = r.intent.getComponent();</span><br><span class="line">   ...</span><br><span class="line">   Activity activity = <span class="keyword">null</span>;</span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">       java.lang.ClassLoader cl = r.packageInfo.getClassLoader();</span><br><span class="line">       activity = mInstrumentation.newActivity(</span><br><span class="line">               cl, component.getClassName(), r.intent);</span><br><span class="line">       ...</span><br><span class="line">   &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">       ...</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">       Application app = r.packageInfo.makeApplication(<span class="keyword">false</span>, mInstrumentation);</span><br><span class="line">       ...</span><br><span class="line">       <span class="keyword">if</span> (activity != <span class="keyword">null</span>) &#123;</span><br><span class="line">           Context appContext = createBaseContextForActivity(r, activity);</span><br><span class="line">           CharSequence title = r.activityInfo.loadLabel(appContext.getPackageManager());</span><br><span class="line">           Configuration config = <span class="keyword">new</span> Configuration(mCompatConfiguration);</span><br><span class="line">           ...</span><br><span class="line">           activity.attach(appContext, <span class="keyword">this</span>, getInstrumentation(), r.token,</span><br><span class="line">                   r.ident, app, r.intent, r.activityInfo, title, r.parent,</span><br><span class="line">                   r.embeddedID, r.lastNonConfigurationInstances, config,</span><br><span class="line">                   r.referrer, r.voiceInteractor);</span><br><span class="line">           ...</span><br><span class="line">           <span class="keyword">if</span> (r.isPersistable()) &#123;</span><br><span class="line">               mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               mInstrumentation.callActivityOnCreate(activity, r.state);</span><br><span class="line">           &#125;</span><br><span class="line">           ...</span><br><span class="line">       &#125;</span><br><span class="line">       ...</span><br><span class="line">   &#125; <span class="keyword">catch</span> (SuperNotCalledException e) &#123;</span><br><span class="line">       ...</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">       ...</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> activity;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/Java/android/app/ActivityThread.java中。</p>
+</blockquote>
+<p><em>这个方法中：</em></p>
+<ul>
+<li>通过mInstrumentation创建一个Activity实例。但是这个实例并没有初始化。初始化工作在activity.attach方法里进行。</li>
+<li>通过方法createBaseContextForActivity()创建一个Context实例。这个方法中使用ContextImpl.createActivityContext方法生成ContextImpl实例，并将这个实例的outerContext设置为activity，将activity和这个ContextImpl实例关联，ContextImpl类里面的很多工作是通过这个outerContext完成，这样子也就是通过这个activity来完成。</li>
+<li>通过activity.attach对activity进行初始化，将前面所创建的ContextImpl对象appContext以及Application对象app和Configuration对象config保存在它的内部。因为已经设置了Context，所以activity就可以访问它运行的上下文信息。activity–&gt;appContext–&gt;activity。</li>
+<li>通过mInstrumentation的callActivityOnCreate方法会启动activity（调用OnCreate）。</li>
+</ul>
+<h3 id="Step2-Instrumentation-newActivity"><a href="#Step2-Instrumentation-newActivity" class="headerlink" title="Step2: Instrumentation.newActivity"></a>Step2: Instrumentation.newActivity</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Activity <span class="title">newActivity</span><span class="params">(ClassLoader cl, String className,Intent intent)</span></span><br><span class="line">		<span class="keyword">throws</span> InstantiationException,IllegalAccessException,</span><br><span class="line">		ClassNotFoundException </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (Activity)cl.loadClass(className).newInstance();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/app/Instrumentation.java中。</p>
+</blockquote>
+<p>在newActivity方法中，使用ClassLoader加载对应className的类，并通过newInstance实例化对象，得到的className的类（为Activity子类）的实例。</p>
+<h3 id="Step3-new-Activity"><a href="#Step3-new-Activity" class="headerlink" title="Step3: new Activity"></a>Step3: new Activity</h3><p>Activity子类实例化的时候，会调用系统提供的默认构造方法，同事调用父类的构造函数。但是，并没有执行实质的初始化工作，这个初始化工作要到attach中完成。</p>
+<h3 id="Step4-ActivityThread-createBaseContextForActivity"><a href="#Step4-ActivityThread-createBaseContextForActivity" class="headerlink" title="Step4: ActivityThread.createBaseContextForActivity"></a>Step4: ActivityThread.createBaseContextForActivity</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Context <span class="title">createBaseContextForActivity</span><span class="params">(ActivityClientRecord r, <span class="keyword">final</span> Activity activity)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	ContextImpl appContext = ContextImpl.createActivityContext(<span class="keyword">this</span>, r.packageInfo, displayId, r.overrideConfig);</span><br><span class="line">	appContext.setOuterContext(activity);</span><br><span class="line">	Context baseContext = appContext;</span><br><span class="line">	...</span><br><span class="line">	baseContext = appContext.createDisplayContext(display);</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">return</span> baseContext;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/Java/android/app/ActivityThread.java中。</p>
+</blockquote>
+<p>activity虽然创建，但是还需要设置Context。通过ActivityThread的createBaseContextForActivity创建一个ContextImpl的实例appContext。通过setOuterContext方法将activity设置为这个实例的OuterContext，同时将这个实例设置给Activity（见Step8）。这样，将Context和Activity进行关联，Activity有个成员mBase（来自ContextWrapper）指向appContext，ContextImpl有个成员mOuterContext指向activity。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">activity<span class="selector-class">.mBase</span> --&gt; appContext</span><br><span class="line">appContext<span class="selector-class">.mOuterContext</span> --&gt; activity</span><br></pre></td></tr></table></figure>
+<h3 id="Step5-createActivityContext"><a href="#Step5-createActivityContext" class="headerlink" title="Step5: createActivityContext"></a>Step5: createActivityContext</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> ContextImpl <span class="title">createActivityContext</span><span class="params">(ActivityThread mainThread,</span><br><span class="line">		LoadedApk packageInfo, <span class="keyword">int</span> displayId, Configuration overrideConfiguration)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span> (packageInfo == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"packageInfo"</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> ContextImpl(<span class="keyword">null</span>, mainThread, packageInfo, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">false</span>,</span><br><span class="line">		<span class="keyword">null</span>, overrideConfiguration, displayId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">ContextImpl</span><span class="params">(ContextImpl container, ActivityThread mainThread,</span><br><span class="line">	LoadedApk packageInfo, IBinder activityToken, UserHandle user, <span class="keyword">boolean</span></span><br><span class="line">	restricted, Display display, Configuration overrideConfiguration, </span><br><span class="line">	<span class="keyword">int</span> createDisplayWithId)</span> </span>&#123;</span><br><span class="line">	mOuterContext = <span class="keyword">this</span>;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/Java/android/app/ContextImpl.java中。</p>
+</blockquote>
+<p>ContextImpl在初始化的时候，mOuterContext指向的是自己，只有通过setOuterContext之后才指向activity(见下面Step6)。</p>
+<h3 id="Step6-setOuterContext"><a href="#Step6-setOuterContext" class="headerlink" title="Step6: setOuterContext"></a>Step6: setOuterContext</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ContextImpl</span> <span class="keyword">extends</span> <span class="title">Context</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> Context mOuterContext;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setOuterContext</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		mOuterContext = context;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/Java/android/app/ContextImpl.java中。</p>
+</blockquote>
+<p>如此，mOuterContext指向Activity。</p>
+<h3 id="Step7-Activity-attach"><a href="#Step7-Activity-attach" class="headerlink" title="Step7: Activity attach"></a>Step7: Activity attach</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(Context context, ActivityThread aThread,</span><br><span class="line">	Instrumentation instr, IBinder token, <span class="keyword">int</span> ident,</span><br><span class="line">	Application application, Intent intent, ActivityInfo info,</span><br><span class="line">	CharSequence title, Activity parent, String id,</span><br><span class="line">	NonConfigurationInstances lastNonConfigurationInstances,</span><br><span class="line">	Configuration config, String referrer, IVoiceInteractor voiceInteractor)</span></span>&#123;</span><br><span class="line">	attachBaseContext(context);</span><br><span class="line">	mFragments.attachHost(<span class="keyword">null</span> <span class="comment">/*parent*/</span>);</span><br><span class="line"></span><br><span class="line">	mWindow = <span class="keyword">new</span> PhoneWindow(<span class="keyword">this</span>);</span><br><span class="line">	mWindow.setCallback(<span class="keyword">this</span>);</span><br><span class="line">	mWindow.setOnWindowDismissedCallback(<span class="keyword">this</span>);</span><br><span class="line">	mWindow.getLayoutInflater().setPrivateFactory(<span class="keyword">this</span>);</span><br><span class="line">	<span class="keyword">if</span> (info.softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED) &#123;</span><br><span class="line">		mWindow.setSoftInputMode(info.softInputMode);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">	mApplication = application;</span><br><span class="line">	...</span><br><span class="line">	mWindow.setWindowManager(</span><br><span class="line">		(WindowManager)context.getSystemService(Context.WINDOW_SERVICE),</span><br><span class="line">		mToken, mComponent.flattenToString(),</span><br><span class="line">		(info.flags &amp; ActivityInfo.FLAG_HARDWARE_ACCELERATED) != <span class="number">0</span>);</span><br><span class="line"> 	...</span><br><span class="line"> 	mWindowManager = mWindow.getWindowManager();</span><br><span class="line"> 	mCurrentConfig = config;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/app/Activity.java中。</p>
+</blockquote>
+<p><em>这个方法：</em></p>
+<ul>
+<li>用attachBaseContext方法保存了context。</li>
+<li>创建了一个PhoneWindow实例赋值给mWindow，并setCallback，setOnWindowDismissedCallback。</li>
+<li>用mApplication保存application。</li>
+<li>设置mWindow的WindowManager。</li>
+<li>用mWindowManager保存这个WindowManager。</li>
+<li>用mCurrentConfig保存config</li>
+</ul>
+<p><em>其中：</em></p>
+<blockquote>
+<p>这个PhoneWindow是用来描述当前正在启动的应用程序窗口的。这个应用程序窗口在运行的过程中，会接收到一些事件，例如，键盘、触摸屏事件等，这些事件需要转发给与它所关联的Activity组件处理，这个转发操作是通过一个Window.Callback接口来实现的。由于Activity类实现了Window.Callback接口，因此，函数就可以将当前正在启动的Activity组件所实现的一个Window.Callback接口设置到前面创建的一个PhoneWindow里面去，这是通过调用Window类的成员函数setCallback来实现的。</p>
+</blockquote>
+<p>ps:Window应属另一个点了，静候佳音…</p>
+<h3 id="Step8-ContextThemeWrapper-attachBaseConext"><a href="#Step8-ContextThemeWrapper-attachBaseConext" class="headerlink" title="Step8:  ContextThemeWrapper.attachBaseConext"></a>Step8:  ContextThemeWrapper.attachBaseConext</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">attachBaseContext</span><span class="params">(Context newBase)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>.attachBaseContext(newBase);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/view/ContextThemeWrapper.java中。</p>
+</blockquote>
+<h3 id="Step-9-ContextWrapper-attachBaseConext"><a href="#Step-9-ContextWrapper-attachBaseConext" class="headerlink" title="Step 9: ContextWrapper.attachBaseConext"></a>Step 9: ContextWrapper.attachBaseConext</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContextWrapper</span> <span class="keyword">extends</span> <span class="title">Context</span> </span>&#123;</span><br><span class="line">	Context mBase;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">attachBaseContext</span><span class="params">(Context base)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (mBase != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Base context already set"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		mBase = base;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/content/ContextWrapper.java 中。</p>
+</blockquote>
+<h3 id="Step-10-Instrumentation-callActivityOnCreate"><a href="#Step-10-Instrumentation-callActivityOnCreate" class="headerlink" title="Step 10: Instrumentation.callActivityOnCreate"></a>Step 10: Instrumentation.callActivityOnCreate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">callActivityOnCreate</span><span class="params">(Activity activity, Bundle icicle,</span><br><span class="line">		PersistableBundle persistentState)</span> </span>&#123;</span><br><span class="line">	prePerformCreate(activity);</span><br><span class="line">	activity.performCreate(icicle, persistentState);</span><br><span class="line">	postPerformCreate(activity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/app/Instrumentation.java中。</p>
+</blockquote>
+<h3 id="Step-11-Activity-performCreate"><a href="#Step-11-Activity-performCreate" class="headerlink" title="Step 11: Activity.performCreate"></a>Step 11: Activity.performCreate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">performCreate</span><span class="params">(Bundle icicle, PersistableBundle persistentState)</span> </span>&#123;</span><br><span class="line">	onCreate(icicle, persistentState);</span><br><span class="line">	mActivityTransitionState.readState(icicle);</span><br><span class="line">	performCreateCommon();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/app/Activity.java中。</p>
+</blockquote>
+<h3 id="Step-12-Activity-onCreate"><a href="#Step-12-Activity-onCreate" class="headerlink" title="Step 12: Activity.onCreate"></a>Step 12: Activity.onCreate</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState,</span><br><span class="line">		@Nullable PersistableBundle persistentState)</span> </span>&#123;</span><br><span class="line">	onCreate(savedInstanceState);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/app/Activity.java中。</p>
+</blockquote>
+<h3 id="Step-13-Activity-onCreate"><a href="#Step-13-Activity-onCreate" class="headerlink" title="Step 13: Activity.onCreate"></a>Step 13: Activity.onCreate</h3><p>我们所熟悉的onCreate方法。（略）</p>
+<h2 id="3-类关系"><a href="#3-类关系" class="headerlink" title="3.类关系"></a>3.类关系</h2><p>通过上面我们调用过程我们知道ContextImpl和Activity的关系，下面我们在看看它们的类关系：</p>
+<p><img src="/images/context/Context_class.png" width="733" height="448" alt="Context_class"></p>
+<blockquote>
+<p> 这个类图在设计模式里面就可以称为装饰模式。Activity组件通过其父类ContextWrapper的成员变量mBase来引用了一个ContextImpl对象，这样，Activity组件以后就可以通过这个ContextImpl对象来执行一些具体的操作。同时，ContextImpl类又通过自己的成员变量mOuterContext来引用了与它关联的一个Activity组件，这样，ContextImpl类也可以将一些操作转发给Activity组件来处理。</p>
+</blockquote>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/zipalign/" rel="next" title="zipalign">
+                <i class="fa fa-chevron-left"></i> zipalign
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="青林亦" />
+          <p class="site-author-name" itemprop="name">青林亦</p>
+          <p class="site-description motion-element" itemprop="description">知其然知其所以然</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinglinyi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-闲言碎语"><span class="nav-text">1.闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-创建过程"><span class="nav-text">2.创建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-ActivityThread-performLaunchActivity"><span class="nav-text">Step1: ActivityThread.performLaunchActivity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-Instrumentation-newActivity"><span class="nav-text">Step2: Instrumentation.newActivity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step3-new-Activity"><span class="nav-text">Step3: new Activity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step4-ActivityThread-createBaseContextForActivity"><span class="nav-text">Step4: ActivityThread.createBaseContextForActivity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step5-createActivityContext"><span class="nav-text">Step5: createActivityContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step6-setOuterContext"><span class="nav-text">Step6: setOuterContext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step7-Activity-attach"><span class="nav-text">Step7: Activity attach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step8-ContextThemeWrapper-attachBaseConext"><span class="nav-text">Step8:  ContextThemeWrapper.attachBaseConext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-9-ContextWrapper-attachBaseConext"><span class="nav-text">Step 9: ContextWrapper.attachBaseConext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-10-Instrumentation-callActivityOnCreate"><span class="nav-text">Step 10: Instrumentation.callActivityOnCreate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-11-Activity-performCreate"><span class="nav-text">Step 11: Activity.performCreate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-12-Activity-onCreate"><span class="nav-text">Step 12: Activity.onCreate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-13-Activity-onCreate"><span class="nav-text">Step 13: Activity.onCreate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-类关系"><span class="nav-text">3.类关系</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">青林亦</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6soJuefioBwsV3O9Ra2uc0UC-MdYXbMMI", "oFp2PCvNprv3Q9bufDMCYJa0");</script>
+  <script>AV.useAVCloudUS();</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
