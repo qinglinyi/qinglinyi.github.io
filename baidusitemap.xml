@@ -4,8 +4,32 @@
 
     
   <url>
+    <loc>http://www.qinglinyi.com/posts/retrofit/</loc>
+    <lastmod>2016-10-29T03:52:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>Retrofit2 源码解析</title>
+        <pubTime>2016-03-08T04:22:29.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Retrofit2</tag>
+         
+        <tag>Retrofit</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.qinglinyi.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.qinglinyi.com/posts/Context/</loc>
-    <lastmod>2016-10-29T03:44:09.000Z</lastmod>
+    <lastmod>2016-10-29T03:52:01.000Z</lastmod>
     <data>
         <display>
         <title>Context的创建过程</title>
@@ -15,6 +39,51 @@
          
          
            
+             
+              <breadCrumb title="Android" url="http://www.qinglinyi.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.qinglinyi.com/posts/ColorMatrix/</loc>
+    <lastmod>2016-10-29T03:51:56.000Z</lastmod>
+    <data>
+        <display>
+        <title>ColorMatrix</title>
+        <pubTime>2016-09-28T01:56:11.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.qinglinyi.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.qinglinyi.com/posts/about-android-handler/</loc>
+    <lastmod>2016-10-29T03:51:39.000Z</lastmod>
+    <data>
+        <display>
+        <title>Android Handler消息机制</title>
+        <pubTime>2016-05-16T08:51:51.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Handler</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.qinglinyi.com/categories/Android/"/>
+          
         </display>
     </data>
     </url>
@@ -27,23 +96,6 @@
         <display>
         <title>zipalign</title>
         <pubTime>2016-10-24T06:26:07.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.qinglinyi.com/posts/ColorMatrix/</loc>
-    <lastmod>2016-10-08T06:33:30.000Z</lastmod>
-    <data>
-        <display>
-        <title>ColorMatrix</title>
-        <pubTime>2016-09-28T01:56:11.000Z</pubTime>
         
         <tag>Android</tag>
          
@@ -97,25 +149,6 @@
              
               <breadCrumb title="Java" url="http://www.qinglinyi.com/categories/Java/"/>
           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.qinglinyi.com/posts/about-android-handler/</loc>
-    <lastmod>2016-06-13T10:07:54.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android Handler消息机制</title>
-        <pubTime>2016-05-16T08:51:51.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Handler</tag>
-         
-         
-           
         </display>
     </data>
     </url>
@@ -300,30 +333,6 @@
         <tag>Android</tag>
          
         <tag>Fragment</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.qinglinyi.com/categories/Android/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.qinglinyi.com/posts/retrofit/</loc>
-    <lastmod>2016-04-17T06:33:20.000Z</lastmod>
-    <data>
-        <display>
-        <title>Retrofit2 源码解析</title>
-        <pubTime>2016-03-08T04:22:29.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Retrofit2</tag>
-         
-        <tag>Retrofit</tag>
          
          
            

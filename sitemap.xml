@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.qinglinyi.com/posts/retrofit/</loc>
+    
+    <lastmod>2016-10-29T03:52:12.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.qinglinyi.com/posts/Context/</loc>
     
-    <lastmod>2016-10-29T03:44:09.000Z</lastmod>
+    <lastmod>2016-10-29T03:52:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.qinglinyi.com/posts/ColorMatrix/</loc>
+    
+    <lastmod>2016-10-29T03:51:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.qinglinyi.com/posts/about-android-handler/</loc>
+    
+    <lastmod>2016-10-29T03:51:39.000Z</lastmod>
     
   </url>
   
@@ -12,13 +33,6 @@
     <loc>http://www.qinglinyi.com/posts/zipalign/</loc>
     
     <lastmod>2016-10-25T03:01:37.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.qinglinyi.com/posts/ColorMatrix/</loc>
-    
-    <lastmod>2016-10-08T06:33:30.000Z</lastmod>
     
   </url>
   
@@ -33,13 +47,6 @@
     <loc>http://www.qinglinyi.com/posts/java-concurrency-0/</loc>
     
     <lastmod>2016-06-23T07:07:03.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.qinglinyi.com/posts/about-android-handler/</loc>
-    
-    <lastmod>2016-06-13T10:07:54.000Z</lastmod>
     
   </url>
   
@@ -110,13 +117,6 @@
     <loc>http://www.qinglinyi.com/posts/fragment-arg/</loc>
     
     <lastmod>2016-04-17T06:33:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.qinglinyi.com/posts/retrofit/</loc>
-    
-    <lastmod>2016-04-17T06:33:20.000Z</lastmod>
     
   </url>
   
