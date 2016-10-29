@@ -127,7 +127,7 @@
     <link href="http://www.qinglinyi.com/posts/zipalign/"/>
     <id>http://www.qinglinyi.com/posts/zipalign/</id>
     <published>2016-10-24T06:26:07.000Z</published>
-    <updated>2016-10-25T03:01:37.000Z</updated>
+    <updated>2016-10-29T03:54:56.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;zipalign是Android构建过程的一个环节，本文主要是翻译官网关于zipalign的介绍，并且配图。&lt;/p&gt;
 &lt;h2 id=&quot;zipalign&quot;&gt;&lt;a href=&quot;#zipalign&quot; class=&quot;headerlink&quot; title=&quot;zipalign&quot;&gt;&lt;/a&gt;zipalign&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://developer.android.com/studio/command-line/zipalign.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.android.com/studio/command-line/zipalign.html&lt;/a&gt;&lt;/p&gt;
@@ -172,6 +172,8 @@
 &lt;h2 id=&quot;zip
     
     </summary>
+    
+      <category term="Android" scheme="http://www.qinglinyi.com/categories/Android/"/>
     
     
       <category term="Android" scheme="http://www.qinglinyi.com/tags/Android/"/>

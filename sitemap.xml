@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.qinglinyi.com/posts/zipalign/</loc>
+    
+    <lastmod>2016-10-29T03:54:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.qinglinyi.com/posts/retrofit/</loc>
     
     <lastmod>2016-10-29T03:52:12.000Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>http://www.qinglinyi.com/posts/about-android-handler/</loc>
     
     <lastmod>2016-10-29T03:51:39.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.qinglinyi.com/posts/zipalign/</loc>
-    
-    <lastmod>2016-10-25T03:01:37.000Z</lastmod>
     
   </url>
   
