@@ -1,0 +1,788 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="青林亦" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="本文简单介绍Window的创建过程。基于源码6.0，主要参考这里。
+1.创建过程
+Step1:  Activity.attach12345678910111213141516171819202122232425262728final void attach(Context context, ActivityThread aThread,       Instrumentation instr, I">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Window">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/Window/index.html">
+<meta property="og:site_name" content="青林亦">
+<meta property="og:description" content="本文简单介绍Window的创建过程。基于源码6.0，主要参考这里。
+1.创建过程
+Step1:  Activity.attach12345678910111213141516171819202122232425262728final void attach(Context context, ActivityThread aThread,       Instrumentation instr, I">
+<meta property="og:image" content="http://www.qinglinyi.com/images/window/Window.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/window/Window2.png">
+<meta property="og:updated_time" content="2016-11-03T10:04:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Window">
+<meta name="twitter:description" content="本文简单介绍Window的创建过程。基于源码6.0，主要参考这里。
+1.创建过程
+Step1:  Activity.attach12345678910111213141516171819202122232425262728final void attach(Context context, ActivityThread aThread,       Instrumentation instr, I">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/window/Window.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Window | 青林亦 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76ab47522bfa6c63d79e65cd88427dbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">青林亦</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">知其然知其所以然</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Window
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-31T15:35:46+08:00" content="2016-10-31">
+              2016-10-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/Window/" class="leancloud_visitors" data-flag-title="Window">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文简单介绍Window的创建过程。基于源码6.0，主要参考<a href="http://blog.csdn.net/luoshengyang/article/details/8223770" target="_blank" rel="external">这里</a>。</p>
+<h2 id="1-创建过程"><a href="#1-创建过程" class="headerlink" title="1.创建过程"></a>1.创建过程</h2><p><img src="/images/window/Window.png" width="816" height="612" alt="Window"></p>
+<h3 id="Step1-Activity-attach"><a href="#Step1-Activity-attach" class="headerlink" title="Step1:  Activity.attach"></a>Step1:  Activity.attach</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(Context context, ActivityThread aThread,</span><br><span class="line">       Instrumentation instr, IBinder token, <span class="keyword">int</span> ident,</span><br><span class="line">       Application application, Intent intent, ActivityInfo info,</span><br><span class="line">       CharSequence title, Activity parent, String id,</span><br><span class="line">       NonConfigurationInstances lastNonConfigurationInstances,</span><br><span class="line">       Configuration config, String referrer, IVoiceInteractor voiceInteractor)</span> </span>&#123;</span><br><span class="line">   ...</span><br><span class="line">   mWindow = <span class="keyword">new</span> PhoneWindow(<span class="keyword">this</span>);</span><br><span class="line">   mWindow.setCallback(<span class="keyword">this</span>);</span><br><span class="line">   mWindow.setOnWindowDismissedCallback(<span class="keyword">this</span>);</span><br><span class="line">   mWindow.getLayoutInflater().setPrivateFactory(<span class="keyword">this</span>);</span><br><span class="line">   <span class="keyword">if</span> (info.softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED) &#123;</span><br><span class="line">       mWindow.setSoftInputMode(info.softInputMode);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (info.uiOptions != <span class="number">0</span>) &#123;</span><br><span class="line">       mWindow.setUiOptions(info.uiOptions);</span><br><span class="line">   &#125;</span><br><span class="line">  ...</span><br><span class="line">   mWindow.setWindowManager(</span><br><span class="line">           (WindowManager)context.getSystemService(Context.WINDOW_SERVICE),</span><br><span class="line">           mToken, mComponent.flattenToString(),</span><br><span class="line">           (info.flags &amp; ActivityInfo.FLAG_HARDWARE_ACCELERATED) != <span class="number">0</span>);</span><br><span class="line">   <span class="keyword">if</span> (mParent != <span class="keyword">null</span>) &#123;</span><br><span class="line">       mWindow.setContainer(mParent.getWindow());</span><br><span class="line">   &#125;</span><br><span class="line">   mWindowManager = mWindow.getWindowManager();</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/Java/android/app/Activity.java中。</p>
+</blockquote>
+<p>在attach方法中，创建PhoneWindow对象并且保存在Activity类的成员变量mWindow中。然后方法setCallback、setOnWindowDismissedCallback、setSoftInputMode和setWindowManager来设置窗口回调接口、窗口消失回调接口、软键盘输入区域的显示模式和窗口管理器。</p>
+<h3 id="Step2-PhoneWindow-new"><a href="#Step2-PhoneWindow-new" class="headerlink" title="Step2: PhoneWindow.new"></a>Step2: PhoneWindow.new</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhoneWindow</span> <span class="keyword">extends</span> <span class="title">Window</span> <span class="keyword">implements</span> <span class="title">MenuBuilder</span>.<span class="title">Callback</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> LayoutInflater mLayoutInflater;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> DecorView mDecor;</span><br><span class="line">	<span class="keyword">private</span> ViewGroup mContentParent;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">PhoneWindow</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(context);</span><br><span class="line">		mLayoutInflater = LayoutInflater.from(context);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/com/android/internal/policy/PhoneWindow.java中。</p>
+<p>调用LayoutInflater的静态成员函数from创建一个LayoutInflater实例，并且保存在成员变量mLayoutInflater中。这样，PhoneWindow类以后就可以通过成员变量mLayoutInflater来创建应用程序窗口的视图，这个视图使用类型为DecorView的成员变量mDecor来描述。PhoneWindow类还有另外一个类型为ViewGroup的成员变量mContentParent，用来描述一个视图容器，这个容器存放的就是成员变量mDecor所描述的视图的内容，不过这个容器也有可能指向的是mDecor本身。</p>
+</blockquote>
+<p>Window的构造很简单，只是初始化一个Context。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Window</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Context mContext;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> mFeatures;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Window</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">		mContext = context;</span><br><span class="line">		mFeatures = mLocalFeatures = getDefaultFeatures(context);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在frameworks/base/core/java/android/view/Window.java中。</p>
+</blockquote>
+<p>这个Context来自Activity，这样Window可以访问Activity的相关资源。使用getDefaultFeatures<br>方法设置默认的Features，这些Features将在requestFeature()中使用到，用来设置Window的一些现实特征，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Flag for the "options panel" feature.  This is enabled by default. */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_OPTIONS_PANEL = <span class="number">0</span>;</span><br><span class="line"><span class="comment">/** Flag for the "no title" feature, turning off the title at the top</span><br><span class="line">*  of the screen. */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_NO_TITLE = <span class="number">1</span>;</span><br><span class="line"><span class="comment">/** Flag for the progress indicator feature */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_PROGRESS = <span class="number">2</span>;</span><br><span class="line"><span class="comment">/** Flag for having an icon on the left side of the title bar */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_LEFT_ICON = <span class="number">3</span>;</span><br><span class="line"><span class="comment">/** Flag for having an icon on the right side of the title bar */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_RIGHT_ICON = <span class="number">4</span>;</span><br><span class="line"><span class="comment">/** Flag for indeterminate progress */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_INDETERMINATE_PROGRESS = <span class="number">5</span>;</span><br><span class="line"><span class="comment">/** Flag for the context menu.  This is enabled by default. */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_CONTEXT_MENU = <span class="number">6</span>;</span><br><span class="line"><span class="comment">/** Flag for custom title. You cannot combine this feature with other title features. */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_CUSTOM_TITLE = <span class="number">7</span>;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Flag for enabling the Action Bar.</span><br><span class="line">* This is enabled by default for some devices. The Action Bar</span><br><span class="line">* replaces the title bar and provides an alternate location</span><br><span class="line">* for an on-screen menu button on some devices.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_ACTION_BAR = <span class="number">8</span>;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Flag for requesting an Action Bar that overlays window content.</span><br><span class="line">* Normally an Action Bar will sit in the space above window content, but if this</span><br><span class="line">* feature is requested along with &#123;<span class="doctag">@link</span> #FEATURE_ACTION_BAR&#125; it will be layered over</span><br><span class="line">* the window content itself. This is useful if you would like your app to have more control</span><br><span class="line">* over how the Action Bar is displayed, such as letting application content scroll beneath</span><br><span class="line">* an Action Bar with a transparent background or otherwise displaying a transparent/translucent</span><br><span class="line">* Action Bar over application content.</span><br><span class="line">*</span><br><span class="line">* &lt;p&gt;This mode is especially useful with &#123;<span class="doctag">@link</span> View#SYSTEM_UI_FLAG_FULLSCREEN</span><br><span class="line">* View.SYSTEM_UI_FLAG_FULLSCREEN&#125;, which allows you to seamlessly hide the</span><br><span class="line">* action bar in conjunction with other screen decorations.</span><br><span class="line">*</span><br><span class="line">* &lt;p&gt;As of &#123;<span class="doctag">@link</span> android.os.Build.VERSION_CODES#JELLY_BEAN&#125;, when an</span><br><span class="line">* ActionBar is in this mode it will adjust the insets provided to</span><br><span class="line">* &#123;<span class="doctag">@link</span> View#fitSystemWindows(android.graphics.Rect) View.fitSystemWindows(Rect)&#125;</span><br><span class="line">* to include the content covered by the action bar, so you can do layout within</span><br><span class="line">* that space.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_ACTION_BAR_OVERLAY = <span class="number">9</span>;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Flag for specifying the behavior of action modes when an Action Bar is not present.</span><br><span class="line">* If overlay is enabled, the action mode UI will be allowed to cover existing window content.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_ACTION_MODE_OVERLAY = <span class="number">10</span>;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Flag for requesting a decoration-free window that is dismissed by swiping from the left.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_SWIPE_TO_DISMISS = <span class="number">11</span>;</span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Flag for requesting that window content changes should be animated using a</span><br><span class="line">* TransitionManager.</span><br><span class="line">*</span><br><span class="line">* &lt;p&gt;The TransitionManager is set using</span><br><span class="line">* &#123;<span class="doctag">@link</span> #setTransitionManager(android.transition.TransitionManager)&#125;. If none is set,</span><br><span class="line">* a default TransitionManager will be used.&lt;/p&gt;</span><br><span class="line">*</span><br><span class="line">* <span class="doctag">@see</span> #setContentView</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_CONTENT_TRANSITIONS = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Enables Activities to run Activity Transitions either through sending or receiving</span><br><span class="line">* ActivityOptions bundle created with</span><br><span class="line">* &#123;<span class="doctag">@link</span> android.app.ActivityOptions#makeSceneTransitionAnimation(android.app.Activity,</span><br><span class="line">* android.util.Pair[])&#125; or &#123;<span class="doctag">@link</span> android.app.ActivityOptions#makeSceneTransitionAnimation(</span><br><span class="line">* android.app.Activity, View, String)&#125;.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEATURE_ACTIVITY_TRANSITIONS = <span class="number">13</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Step3-Window-setCallback"><a href="#Step3-Window-setCallback" class="headerlink" title="Step3: Window.setCallback"></a>Step3: Window.setCallback</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Window</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> Callback mCallback;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCallback</span><span class="params">(Callback callback)</span> </span>&#123;</span><br><span class="line">		mCallback = callback;</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/view/Window.java中。</p>
+</blockquote>
+<p>设置Callback，这个方法在PhoneWindow的父类Window中，用来拦截键盘时间和其他触摸操作等。这个Callback在Activity中实现。</p>
+<h3 id="Step4-Window-setOnWindowDismissedCallback"><a href="#Step4-Window-setOnWindowDismissedCallback" class="headerlink" title="Step4: Window.setOnWindowDismissedCallback"></a>Step4: Window.setOnWindowDismissedCallback</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Window</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> OnWindowDismissedCallback mOnWindowDismissedCallback;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setOnWindowDismissedCallback</span><span class="params">(OnWindowDismissedCallback dcb)</span> </span>&#123;</span><br><span class="line">		mOnWindowDismissedCallback = dcb;</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/view/Window.java中。</p>
+</blockquote>
+<p>这个OnWindowDismissedCallback会在Window gone的时候调用，这个回调也是在Activity中实现。</p>
+<h3 id="Step5-Window-setSoftInputMode"><a href="#Step5-Window-setSoftInputMode" class="headerlink" title="Step5: Window.setSoftInputMode"></a>Step5: Window.setSoftInputMode</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Window</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">boolean</span> mHasSoftInputMode = <span class="keyword">false</span>;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSoftInputMode</span><span class="params">(<span class="keyword">int</span> mode)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">final</span> WindowManager.LayoutParams attrs = getAttributes();</span><br><span class="line">		<span class="keyword">if</span> (mode != WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED) &#123;</span><br><span class="line">		  attrs.softInputMode = mode;</span><br><span class="line">		  mHasSoftInputMode = <span class="keyword">true</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		  mHasSoftInputMode = <span class="keyword">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		dispatchWindowAttributesChanged(attrs);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/view/Window.java中。</p>
+</blockquote>
+<p>setSoftInputMode用来设置应用程序窗口的软键盘输入区域的显示模式。取值如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Visibility state for &#123;<span class="doctag">@link</span> #softInputMode&#125;: no state has been specified.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_STATE_UNSPECIFIED = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Visibility state for &#123;<span class="doctag">@link</span> #softInputMode&#125;: please don't change the state of</span><br><span class="line">* the soft input area.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_STATE_UNCHANGED = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Visibility state for &#123;<span class="doctag">@link</span> #softInputMode&#125;: please hide any soft input</span><br><span class="line">* area when normally appropriate (when the user is navigating</span><br><span class="line">* forward to your window).</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_STATE_HIDDEN = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Visibility state for &#123;<span class="doctag">@link</span> #softInputMode&#125;: please always hide any</span><br><span class="line">* soft input area when this window receives focus.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_STATE_ALWAYS_HIDDEN = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Visibility state for &#123;<span class="doctag">@link</span> #softInputMode&#125;: please show the soft</span><br><span class="line">* input area when normally appropriate (when the user is navigating</span><br><span class="line">* forward to your window).</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_STATE_VISIBLE = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Visibility state for &#123;<span class="doctag">@link</span> #softInputMode&#125;: please always make the</span><br><span class="line">* soft input area visible when this window receives input focus.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_STATE_ALWAYS_VISIBLE = <span class="number">5</span>;</span><br><span class="line">...</span><br><span class="line"><span class="comment">/** Adjustment option for &#123;<span class="doctag">@link</span> #softInputMode&#125;: nothing specified.</span><br><span class="line">* The system will try to pick one or</span><br><span class="line">* the other depending on the contents of the window.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_ADJUST_UNSPECIFIED = <span class="number">0x00</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Adjustment option for &#123;<span class="doctag">@link</span> #softInputMode&#125;: set to allow the</span><br><span class="line">* window to be resized when an input</span><br><span class="line">* method is shown, so that its contents are not covered by the input</span><br><span class="line">* method.  This can &lt;em&gt;not&lt;/em&gt; be combined with</span><br><span class="line">* &#123;<span class="doctag">@link</span> #SOFT_INPUT_ADJUST_PAN&#125;; if</span><br><span class="line">* neither of these are set, then the system will try to pick one or</span><br><span class="line">* the other depending on the contents of the window. If the window's</span><br><span class="line">* layout parameter flags include &#123;<span class="doctag">@link</span> #FLAG_FULLSCREEN&#125;, this</span><br><span class="line">* value for &#123;<span class="doctag">@link</span> #softInputMode&#125; will be ignored; the window will</span><br><span class="line">* not resize, but will stay fullscreen.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_ADJUST_RESIZE = <span class="number">0x10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Adjustment option for &#123;<span class="doctag">@link</span> #softInputMode&#125;: set to have a window</span><br><span class="line">* pan when an input method is</span><br><span class="line">* shown, so it doesn't need to deal with resizing but just panned</span><br><span class="line">* by the framework to ensure the current input focus is visible.  This</span><br><span class="line">* can &lt;em&gt;not&lt;/em&gt; be combined with &#123;<span class="doctag">@link</span> #SOFT_INPUT_ADJUST_RESIZE&#125;; if</span><br><span class="line">* neither of these are set, then the system will try to pick one or</span><br><span class="line">* the other depending on the contents of the window.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_ADJUST_PAN = <span class="number">0x20</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** Adjustment option for &#123;<span class="doctag">@link</span> #softInputMode&#125;: set to have a window</span><br><span class="line">* not adjust for a shown input method.  The window will not be resized,</span><br><span class="line">* and it will not be panned to make its focus visible.</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SOFT_INPUT_ADJUST_NOTHING = <span class="number">0x30</span>;</span><br><span class="line">...</span><br><span class="line"><span class="comment">/**</span><br><span class="line">* Desired operating mode for any soft input area.  May be any combination</span><br><span class="line">* of:</span><br><span class="line">*</span><br><span class="line">* &lt;ul&gt;</span><br><span class="line">* &lt;li&gt; One of the visibility states</span><br><span class="line">* &#123;<span class="doctag">@link</span> #SOFT_INPUT_STATE_UNSPECIFIED&#125;, &#123;<span class="doctag">@link</span> #SOFT_INPUT_STATE_UNCHANGED&#125;,</span><br><span class="line">* &#123;<span class="doctag">@link</span> #SOFT_INPUT_STATE_HIDDEN&#125;, &#123;<span class="doctag">@link</span> #SOFT_INPUT_STATE_ALWAYS_VISIBLE&#125;, or</span><br><span class="line">* &#123;<span class="doctag">@link</span> #SOFT_INPUT_STATE_VISIBLE&#125;.</span><br><span class="line">* &lt;li&gt; One of the adjustment options</span><br><span class="line">* &#123;<span class="doctag">@link</span> #SOFT_INPUT_ADJUST_UNSPECIFIED&#125;,</span><br><span class="line">* &#123;<span class="doctag">@link</span> #SOFT_INPUT_ADJUST_RESIZE&#125;, or</span><br><span class="line">* &#123;<span class="doctag">@link</span> #SOFT_INPUT_ADJUST_PAN&#125;.</span><br><span class="line">* &lt;/ul&gt;</span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line">* &lt;p&gt;This flag can be controlled in your theme through the</span><br><span class="line">* &#123;<span class="doctag">@link</span> android.R.attr#windowSoftInputMode&#125; attribute.&lt;/p&gt;</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">int</span> softInputMode;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ol>
+<li>SOFT_INPUT_STATE_UNSPECIFIED：没有指定软键盘输入区域的显示状态。</li>
+<li>SOFT_INPUT_STATE_UNCHANGED：不要改变软键盘输入区域的显示状态。</li>
+<li>SOFT_INPUT_STATE_HIDDEN：在合适的时候隐藏软键盘输入区域，例如，当用户导航到当前窗口时。</li>
+<li>SOFT_INPUT_STATE_ALWAYS_HIDDEN：当窗口获得焦点时，总是隐藏软键盘输入区域。</li>
+<li>SOFT_INPUT_STATE_VISIBLE：在合适的时候显示软键盘输入区域，例如，当用户导航到当前窗口时。</li>
+<li>SOFT_INPUT_STATE_ALWAYS_VISIBLE：当窗口获得焦点时，总是显示软键盘输入区域。</li>
+</ol>
+</blockquote>
+<hr>
+<ul>
+<li>[ ]  等待详细介绍</li>
+</ul>
+<hr>
+<h3 id="Step5-Window-setWindowManager"><a href="#Step5-Window-setWindowManager" class="headerlink" title="Step5: Window.setWindowManager"></a>Step5: Window.setWindowManager</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Window</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> WindowManager mWindowManager;</span><br><span class="line">	<span class="keyword">private</span> IBinder mAppToken;</span><br><span class="line">	<span class="keyword">private</span> String mAppName;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">boolean</span> mHardwareAccelerated;</span><br><span class="line">	...</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWindowManager</span><span class="params">(WindowManager wm, IBinder appToken, </span><br><span class="line">		String appName,<span class="keyword">boolean</span> hardwareAccelerated)</span> </span>&#123;</span><br><span class="line">		mAppToken = appToken;</span><br><span class="line">		mAppName = appName;</span><br><span class="line">		mHardwareAccelerated = hardwareAccelerated</span><br><span class="line">		 || SystemProperties.getBoolean(PROPERTY_HARDWARE_UI, <span class="keyword">false</span>);</span><br><span class="line">		<span class="keyword">if</span> (wm == <span class="keyword">null</span>) &#123;</span><br><span class="line">			wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);</span><br><span class="line">		&#125;</span><br><span class="line">		mWindowManager = ((WindowManagerImpl)wm).createLocalWindowManager(<span class="keyword">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/view/Window.java中。</p>
+</blockquote>
+<p>从Activity的attach方法setWindowManager,传进来一个默认的WindowManager(WindowManagerImpl，来自SystemService<br>)，调用这个WindowManager的createLocalWindowManager方法生成新的WindowManager对象保存到Window的成员mWindowManager。</p>
+<p>并且在Activity中也使用成员mWindowManager保存这个Window生成的WindowManger（见Step1）。</p>
+<blockquote>
+<p>参数appToken用来描述当前正在处理的窗口是与哪一个Activity组件关联的，它是一个Binder代理对象，引用了在ActivityManagerService这一侧所创建的一个类型为ActivityRecord的Binder本地对象。<br>参数appName用来描述当前正在处理的窗口所关联的Activity组件的名称，这个名称会被保存在Window类的成员变量mAppName中。</p>
+</blockquote>
+<h3 id="Step6-WindowManagerImpl-createLocalWindowManager"><a href="#Step6-WindowManagerImpl-createLocalWindowManager" class="headerlink" title="Step6: WindowManagerImpl.createLocalWindowManager"></a>Step6: WindowManagerImpl.createLocalWindowManager</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">WindowManagerImpl</span> <span class="keyword">implements</span> <span class="title">WindowManager</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> WindowManagerGlobal mGlobal = WindowManagerGlobal.getInstance();</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Display mDisplay;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Window mParentWindow;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">WindowManagerImpl</span><span class="params">(Display display, Window parentWindow)</span> </span>&#123;</span><br><span class="line">		mDisplay = display;</span><br><span class="line">		mParentWindow = parentWindow;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> WindowManagerImpl <span class="title">createLocalWindowManager</span><span class="params">(Window parentWindow)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> WindowManagerImpl(mDisplay, parentWindow);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个函数定义在文件frameworks/base/core/java/android/view/WindowManagerImpl.java中。</p>
+</blockquote>
+<p>WindowManagerGlobal是提供与上下文无关的系统窗口管理，只用于内部实现全局函数。</p>
+<p>WindowManagerGlobal是一个单例，并且是窗口管理的真正现实类，不过在一般情况下，我们不直接使用使用它，而是通过已经绑定了上下文的WindowManager（WindowManagerImpl）来管理窗口。</p>
+<p>所以，理所当然，WindowManager的实现类WindowManagerImpl里面需要有WindowManagerGlobal的实例，来真正处理窗口管理。</p>
+<p>Display是用来描述全局的屏幕属性的，提供逻辑显示区域大小、密度的相关信息。</p>
+<p>成员mParentWindow就是前面PhoneWindow实例，在创建WindowManager的时候传入的（见Step5）。</p>
+<h2 id="2-类关系"><a href="#2-类关系" class="headerlink" title="2.类关系"></a>2.类关系</h2><p><img src="/images/window/Window2.png" width="809" height="603" alt="Window"></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Context/" rel="next" title="Context的创建过程">
+                <i class="fa fa-chevron-left"></i> Context的创建过程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="青林亦" />
+          <p class="site-author-name" itemprop="name">青林亦</p>
+          <p class="site-description motion-element" itemprop="description">知其然知其所以然</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinglinyi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-创建过程"><span class="nav-text">1.创建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step1-Activity-attach"><span class="nav-text">Step1:  Activity.attach</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step2-PhoneWindow-new"><span class="nav-text">Step2: PhoneWindow.new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step3-Window-setCallback"><span class="nav-text">Step3: Window.setCallback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step4-Window-setOnWindowDismissedCallback"><span class="nav-text">Step4: Window.setOnWindowDismissedCallback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step5-Window-setSoftInputMode"><span class="nav-text">Step5: Window.setSoftInputMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step5-Window-setWindowManager"><span class="nav-text">Step5: Window.setWindowManager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step6-WindowManagerImpl-createLocalWindowManager"><span class="nav-text">Step6: WindowManagerImpl.createLocalWindowManager</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-类关系"><span class="nav-text">2.类关系</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">青林亦</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6soJuefioBwsV3O9Ra2uc0UC-MdYXbMMI", "oFp2PCvNprv3Q9bufDMCYJa0");</script>
+  <script>AV.useAVCloudUS();</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
