@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.qinglinyi.com/"/>
-  <updated>2016-12-16T07:49:54.000Z</updated>
+  <updated>2016-12-16T08:00:00.000Z</updated>
   <id>http://www.qinglinyi.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.qinglinyi.com/posts/byteCode/"/>
     <id>http://www.qinglinyi.com/posts/byteCode/</id>
     <published>2016-12-14T02:12:55.000Z</published>
-    <updated>2016-12-16T07:49:54.000Z</updated>
+    <updated>2016-12-16T08:00:00.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;1-Class-文件结构&quot;&gt;&lt;a href=&quot;#1-Class-文件结构&quot; class=&quot;headerlink&quot; title=&quot;1. Class 文件结构&quot;&gt;&lt;/a&gt;1. Class 文件结构&lt;/h2&gt;&lt;p&gt;Class文件是一组以8字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在Class文件中，中间没有分隔符。如果遇到需要占用超过8个字节的数据项目时，会按照高位在前（big-endian order，大端序）的方式分割成若干个8位字节进行存储。&lt;/p&gt;
 &lt;p&gt;Class文件格式采用一种类似于C语言结构体的伪结构来存储，这种伪结构中只有两种数据类型：无符号数和表。&lt;/p&gt;
@@ -406,7 +406,7 @@
 &lt;p&gt;attribute_length:00 00 00 02为2，属性长度为2（SourceFile的长度就是2）。&lt;br&gt;sourcefile_index:00 13为13（十进制19）对应：&lt;/p&gt;
 &lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#19 = Utf8               ByteCodeSample.java&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;em&gt;ps: 属性还有其他类型，暂略。。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;ps: 还有其他内容，请看参考&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;ps: 更多详细内容，请看参考&lt;/em&gt;&lt;/p&gt;
 &lt;h2 id=&quot;18-参考&quot;&gt;&lt;a href=&quot;#18-参考&quot; class=&quot;headerlink&quot; title=&quot;18. 参考&quot;&gt;&lt;/a&gt;18. 参考&lt;/h2&gt;&lt;p&gt;1.&lt;a href=&quot;http://blog.csdn.net/dc_726/article/details/7944154&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;学会阅读Java字节码&lt;/a&gt;&lt;br&gt;2.《深入理解Java虚拟机：JVM高级特性与最佳实践 第2版》&lt;br&gt;3.&lt;a href=&quot;https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.10&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;java文档&lt;/a&gt;&lt;/p&gt;
 </content>
     

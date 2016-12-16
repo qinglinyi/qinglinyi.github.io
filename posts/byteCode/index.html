@@ -101,7 +101,7 @@ Class文件格式采用一种类似于C语言结构体的伪结构来存储，�
 <meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/field_info.png">
 <meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/field_info2.png">
 <meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/methodinfo.png">
-<meta property="og:updated_time" content="2016-12-16T07:49:54.000Z">
+<meta property="og:updated_time" content="2016-12-16T08:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识Java字节码">
 <meta name="twitter:description" content="1. Class 文件结构Class文件是一组以8字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在Class文件中，中间没有分隔符。如果遇到需要占用超过8个字节的数据项目时，会按照高位在前（big-endian order，大端序）的方式分割成若干个8位字节进行存储。
@@ -717,7 +717,7 @@ Class文件格式采用一种类似于C语言结构体的伪结构来存储，�
 <p>attribute_length:00 00 00 02为2，属性长度为2（SourceFile的长度就是2）。<br>sourcefile_index:00 13为13（十进制19）对应：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#19 = Utf8               ByteCodeSample.java</span><br></pre></td></tr></table></figure>
 <p><em>ps: 属性还有其他类型，暂略。。</em></p>
-<p><em>ps: 还有其他内容，请看参考</em></p>
+<p><em>ps: 更多详细内容，请看参考</em></p>
 <h2 id="18-参考"><a href="#18-参考" class="headerlink" title="18. 参考"></a>18. 参考</h2><p>1.<a href="http://blog.csdn.net/dc_726/article/details/7944154" target="_blank" rel="external">学会阅读Java字节码</a><br>2.《深入理解Java虚拟机：JVM高级特性与最佳实践 第2版》<br>3.<a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.10" target="_blank" rel="external">java文档</a></p>
 
       
