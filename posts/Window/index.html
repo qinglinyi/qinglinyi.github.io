@@ -94,7 +94,7 @@ Step1:  Activity.attach12345678910111213141516171819202122232425262728final void
 Step1:  Activity.attach12345678910111213141516171819202122232425262728final void attach(Context context, ActivityThread aThread,       Instrumentation instr, I">
 <meta property="og:image" content="http://www.qinglinyi.com/images/window/Window.png">
 <meta property="og:image" content="http://www.qinglinyi.com/images/window/Window2.png">
-<meta property="og:updated_time" content="2016-11-03T10:04:06.000Z">
+<meta property="og:updated_time" content="2016-12-14T04:05:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Window">
 <meta name="twitter:description" content="本文简单介绍Window的创建过程。基于源码6.0，主要参考这里。
@@ -394,7 +394,7 @@ Step1:  Activity.attach12345678910111213141516171819202122232425262728final void
 <p>所以，理所当然，WindowManager的实现类WindowManagerImpl里面需要有WindowManagerGlobal的实例，来真正处理窗口管理。</p>
 <p>Display是用来描述全局的屏幕属性的，提供逻辑显示区域大小、密度的相关信息。</p>
 <p>成员mParentWindow就是前面PhoneWindow实例，在创建WindowManager的时候传入的（见Step5）。</p>
-<h2 id="2-类关系"><a href="#2-类关系" class="headerlink" title="2.类关系"></a>2.类关系</h2><p><img src="/images/window/Window2.png" width="809" height="603" alt="Window"></p>
+<h2 id="2-类关系"><a href="#2-类关系" class="headerlink" title="2.类关系"></a>2.类关系</h2><p><img src="/images/window/Window2.png" width="748" height="603" alt="Window"></p>
 
       
     </div>
@@ -431,6 +431,10 @@ Step1:  Activity.attach12345678910111213141516171819202122232425262728final void
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/byteCode/" rel="prev" title="初识Java字节码">
+                初识Java字节码 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -498,7 +502,7 @@ Step1:  Activity.attach12345678910111213141516171819202122232425262728final void
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

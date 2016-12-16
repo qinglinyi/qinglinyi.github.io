@@ -1,0 +1,1112 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/v/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+<link href="/v/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="青林亦" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="1. Class 文件结构Class文件是一组以8字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在Class文件中，中间没有分隔符。如果遇到需要占用超过8个字节的数据项目时，会按照高位在前（big-endian order，大端序）的方式分割成若干个8位字节进行存储。
+Class文件格式采用一种类似于C语言结构体的伪结构来存储，这种伪结构中只有两种数据类型：无符号数和表。
+无符号数就是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识Java字节码">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/byteCode/index.html">
+<meta property="og:site_name" content="青林亦">
+<meta property="og:description" content="1. Class 文件结构Class文件是一组以8字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在Class文件中，中间没有分隔符。如果遇到需要占用超过8个字节的数据项目时，会按照高位在前（big-endian order，大端序）的方式分割成若干个8位字节进行存储。
+Class文件格式采用一种类似于C语言结构体的伪结构来存储，这种伪结构中只有两种数据类型：无符号数和表。
+无符号数就是">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/Class_file.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/java_package.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/class_byte_code.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/class_byte_code_info_1.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/class_byte_code_info_2.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/constant_pool.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/field_info.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/field_info2.png">
+<meta property="og:image" content="http://www.qinglinyi.com/images/bytecode/methodinfo.png">
+<meta property="og:updated_time" content="2016-12-16T07:49:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识Java字节码">
+<meta name="twitter:description" content="1. Class 文件结构Class文件是一组以8字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在Class文件中，中间没有分隔符。如果遇到需要占用超过8个字节的数据项目时，会按照高位在前（big-endian order，大端序）的方式分割成若干个8位字节进行存储。
+Class文件格式采用一种类似于C语言结构体的伪结构来存储，这种伪结构中只有两种数据类型：无符号数和表。
+无符号数就是">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/bytecode/Class_file.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 初识Java字节码 | 青林亦 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?76ab47522bfa6c63d79e65cd88427dbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">青林亦</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">知其然知其所以然</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                初识Java字节码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-14T10:12:55+08:00" content="2016-12-14">
+              2016-12-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/byteCode/" class="leancloud_visitors" data-flag-title="初识Java字节码">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-Class-文件结构"><a href="#1-Class-文件结构" class="headerlink" title="1. Class 文件结构"></a>1. Class 文件结构</h2><p>Class文件是一组以8字节为基础单位的二进制流，各个数据项目严格按照顺序紧凑排列在Class文件中，中间没有分隔符。如果遇到需要占用超过8个字节的数据项目时，会按照高位在前（big-endian order，大端序）的方式分割成若干个8位字节进行存储。</p>
+<p>Class文件格式采用一种类似于C语言结构体的伪结构来存储，这种伪结构中只有两种数据类型：无符号数和表。</p>
+<p>无符号数就是u1、u2、u4、u8来分别代表1个、2个、4个、8个字节。无符号数可以用来描述数字、索引引用、数量值或者按照UTF-8编码构成字符串值。</p>
+<p>表是由多个无符号数或其他表作为数据项构成的复合数据类型，以“_info”结尾。在表开始位置，通常会使用一个前置的容量计数器，因为表通常要描述数量不定的多个数据。</p>
+<p>下图（表）就是我们来看看Class文件的结构：</p>
+<p><img src="/images/bytecode/Class_file.png" width="809" height="867" alt="Class文件结构"></p>
+<p>然后，我们通过一个简单例子来认识一下Class文件结构。</p>
+<h2 id="2-简单例子"><a href="#2-简单例子" class="headerlink" title="2. 简单例子"></a>2. 简单例子</h2><p>java代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.qinglinyi.demo;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ByteCodeSample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String msg = <span class="string">"hello world"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>文件位置：</p>
+<p><img src="/images/bytecode/java_package.png" width="600" alt="java文件位置"></p>
+<p>编译之后生成ByteCodeSample.class，使用sublime打开可以看到这些二进制流：</p>
+<p><img src="/images/bytecode/class_byte_code.png" width="300" height="300" alt="class文件二进制流"></p>
+<p>使用javap之后：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  Last modified Nov 16, 2016; size 585 bytes</span><br><span class="line">  MD5 checksum 05f97704a322e75b8e3635f42ddf83c8</span><br><span class="line">  Compiled from "ByteCodeSample.java"</span><br><span class="line">public class com.qinglinyi.demo.ByteCodeSample</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 52</span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #7.#20         // java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">   #2 = String             #21            // hello world</span><br><span class="line">   #3 = Fieldref           #6.#22         // com/qinglinyi/demo/ByteCodeSample.msg:Ljava/lang/String;</span><br><span class="line">   #4 = Fieldref           #23.#24        // java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">   #5 = Methodref          #25.#26        // java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">   #6 = Class              #27            // com/qinglinyi/demo/ByteCodeSample</span><br><span class="line">   #7 = Class              #28            // java/lang/Object</span><br><span class="line">   #8 = Utf8               msg</span><br><span class="line">   #9 = Utf8               Ljava/lang/String;</span><br><span class="line">  #10 = Utf8               &lt;init&gt;</span><br><span class="line">  #11 = Utf8               ()V</span><br><span class="line">  #12 = Utf8               Code</span><br><span class="line">  #13 = Utf8               LineNumberTable</span><br><span class="line">  #14 = Utf8               LocalVariableTable</span><br><span class="line">  #15 = Utf8               this</span><br><span class="line">  #16 = Utf8               Lcom/qinglinyi/demo/ByteCodeSample;</span><br><span class="line">  #17 = Utf8               say</span><br><span class="line">  #18 = Utf8               SourceFile</span><br><span class="line">  #19 = Utf8               ByteCodeSample.java</span><br><span class="line">  #20 = NameAndType        #10:#11        // "&lt;init&gt;":()V</span><br><span class="line">  #21 = Utf8               hello world</span><br><span class="line">  #22 = NameAndType        #8:#9          // msg:Ljava/lang/String;</span><br><span class="line">  #23 = Class              #29            // java/lang/System</span><br><span class="line">  #24 = NameAndType        #30:#31        // out:Ljava/io/PrintStream;</span><br><span class="line">  #25 = Class              #32            // java/io/PrintStream</span><br><span class="line">  #26 = NameAndType        #33:#34        // println:(Ljava/lang/String;)V</span><br><span class="line">  #27 = Utf8               com/qinglinyi/demo/ByteCodeSample</span><br><span class="line">  #28 = Utf8               java/lang/Object</span><br><span class="line">  #29 = Utf8               java/lang/System</span><br><span class="line">  #30 = Utf8               out</span><br><span class="line">  #31 = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #32 = Utf8               java/io/PrintStream</span><br><span class="line">  #33 = Utf8               println</span><br><span class="line">  #34 = Utf8               (Ljava/lang/String;)V</span><br><span class="line">&#123;</span><br><span class="line">  public com.qinglinyi.demo.ByteCodeSample();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">         4: aload_0</span><br><span class="line">         5: ldc           #2                  // String hello world</span><br><span class="line">         7: putfield      #3                  // Field msg:Ljava/lang/String;</span><br><span class="line">        10: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 4: 0</span><br><span class="line">        line 6: 4</span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            0      11     0  this   Lcom/qinglinyi/demo/ByteCodeSample;</span><br><span class="line"></span><br><span class="line">  public void say();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">         3: aload_0</span><br><span class="line">         4: getfield      #3                  // Field msg:Ljava/lang/String;</span><br><span class="line">         7: invokevirtual #5                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">        10: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 9: 0</span><br><span class="line">        line 10: 10</span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            0      11     0  this   Lcom/qinglinyi/demo/ByteCodeSample;</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: "ByteCodeSample.java"</span><br></pre></td></tr></table></figure>
+<p>对这个二进制进行分析，找出对应的数据项：</p>
+<p><img src="/images/bytecode/class_byte_code_info_1.png" alt="class文件二进制流介绍"></p>
+<p><img src="/images/bytecode/class_byte_code_info_2.png" alt="class文件二进制流介绍"></p>
+<p>接着，我们逐项分析</p>
+<h2 id="3-魔数（u4-magic）"><a href="#3-魔数（u4-magic）" class="headerlink" title="3. 魔数（u4: magic）"></a>3. 魔数（u4: magic）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ca fe ba be</span><br></pre></td></tr></table></figure>
+<p>用来标记这个文件是否是一个Class文件。</p>
+<h2 id="4-版本（u2-minor-version，u2-major-version）"><a href="#4-版本（u2-minor-version，u2-major-version）" class="headerlink" title="4. 版本（u2: minor_version，u2: major_version）"></a>4. 版本（u2: minor_version，u2: major_version）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">34</span></span><br></pre></td></tr></table></figure>
+<p>次版本号（minor_version）= 0（十进制）<br>主版本号（major_version）= 52（十进制）</p>
+<p>所以这个Class文件的格式版本号为52.0</p>
+<h2 id="5-常量池计数器-（u2-constant-pool-count）"><a href="#5-常量池计数器-（u2-constant-pool-count）" class="headerlink" title="5. 常量池计数器 （u2: constant_pool_count）"></a>5. 常量池计数器 （u2: constant_pool_count）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">23</span></span><br></pre></td></tr></table></figure>
+<p>标记常量池表的数量，值等于constant_pool表中的成员数加1。本例中值为23（对应的十进制为35）</p>
+<h2 id="6-常量池（cp-info-constant-pool）"><a href="#6-常量池（cp-info-constant-pool）" class="headerlink" title="6. 常量池（cp_info: constant_pool）"></a>6. 常量池（cp_info: constant_pool）</h2><p>所有的常量池项都具有如下通用格式: </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cp_info &#123;</span><br><span class="line">	u1 tag;</span><br><span class="line">	u1 info[]; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常量池中，每个cp_info项的格式必须相同，它们都以一个表示cp_info类型的单字节 “tag”项开头。后面 info[]项的内容tag由的类型所决定。每个tag项必须跟随2个或更多的字节，这些字节用于给定这个常量的信息，附加字节的信息格式由tag的值决定。 </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CONSTANT_Class</td>
+<td style="text-align:center">7</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_Fieldref</td>
+<td style="text-align:center">9</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_Methodref</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_InterfaceMethodref</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_String</td>
+<td style="text-align:center">8</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_Integer</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_Float</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_Long</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_Double</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_NameAndType</td>
+<td style="text-align:center">12</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_Utf8</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_MethodHandle</td>
+<td style="text-align:center">15</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_MethodType</td>
+<td style="text-align:center">16</td>
+</tr>
+<tr>
+<td style="text-align:center">CONSTANT_InvokeDynamic</td>
+<td style="text-align:center">18</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/bytecode/constant_pool.png" alt="class常量池"></p>
+<p>我们来看两个：</p>
+<h3 id="6-1-CONSTANT-Methodref例子"><a href="#6-1-CONSTANT-Methodref例子" class="headerlink" title="6.1 CONSTANT_Methodref例子"></a>6.1 CONSTANT_Methodref例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>a <span class="number">00</span> <span class="number">07</span> <span class="number">00</span> <span class="number">14</span></span><br></pre></td></tr></table></figure>
+<p>u1:tag =&gt; 0a =&gt; CONSTANT_Methodref(10)</p>
+<p>CONSTANT_Methodref结构为：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">CONSTANT_Methodref_info</span> &#123;</span><br><span class="line">  <span class="attribute">u1</span> tag;</span><br><span class="line">  <span class="attribute">u2</span> class_index;</span><br><span class="line">  <span class="attribute">u2</span> name_and_type_index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么对应的：</p>
+<p>u2:class_index =&gt; 00 07 =&gt; 指向常量表弟7项类型为CONSTANT_Class的常量 =&gt; java/lang/Object</p>
+<p>u2:name_and_type_index =&gt; 00 14 =&gt; 指向常量表弟20项类型为CONSTANT_NameAndType的常量 =&gt; “<init>“:()V</init></p>
+<h3 id="6-2-CONSTANT-Utf8例子"><a href="#6-2-CONSTANT-Utf8例子" class="headerlink" title="6.2 CONSTANT_Utf8例子"></a>6.2 CONSTANT_Utf8例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">01</span> <span class="number">00</span> <span class="number">12</span> <span class="number">4</span>c <span class="number">6</span>a <span class="number">61</span> <span class="number">76</span> <span class="number">61</span> <span class="number">2f</span> <span class="number">6</span>c <span class="number">61</span> <span class="number">6</span>e <span class="number">67</span> <span class="number">2f</span> <span class="number">53</span> <span class="number">74</span> <span class="number">72</span> <span class="number">69</span> <span class="number">6</span>e <span class="number">67</span> <span class="number">3</span>b</span><br></pre></td></tr></table></figure>
+<p>u1:tag =&gt; 01 =&gt; CONSTANT_Utf8(1)</p>
+<p>CONSTANT_Utf8的结构为</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CONSTANT_Utf8_info &#123;</span><br><span class="line">    u1 tag<span class="comment">;</span></span><br><span class="line">    u2 <span class="keyword">length</span><span class="comment">;</span></span><br><span class="line">    u1 bytes[<span class="keyword">length</span>]<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>u2:length =&gt; 00 12 =&gt; 长度为18 </p>
+<p>u2:bytes[] =&gt; 4c 6a 61 76 61 2f 6c 61 6e 67 2f 53 74 72 69 6e 67 3b =&gt; UTF-8缩写编码表示的字符串，128个US-ASCII字符只需一个字节编码（Unicode范围由U+0000至U+007F）=&gt; Ljava/lang/String;</p>
+<p>其他更多类型查看<a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html" target="_blank" rel="external">官网</a>。</p>
+<h2 id="7-访问标志（u2-access-flags）"><a href="#7-访问标志（u2-access-flags）" class="headerlink" title="7. 访问标志（u2:access_flags）"></a>7. 访问标志（u2:access_flags）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">21</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">标记名</th>
+<th style="text-align:center">值</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ACC_PUBLIC</td>
+<td style="text-align:center">0x0001</td>
+<td style="text-align:center">是否为public类型</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_FINAL</td>
+<td style="text-align:center">0x0010</td>
+<td style="text-align:center">是否被申明为final，只有类可设置</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_SUPER</td>
+<td style="text-align:center">0x0020</td>
+<td style="text-align:center">是否允许使用invokespecial字节码指令的新语义，JDK 1.0.2之后编译出来的类这个标志都必须为真</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_INTERFACE</td>
+<td style="text-align:center">0x0200</td>
+<td style="text-align:center">标识接口</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ABSTRACT</td>
+<td style="text-align:center">0x0400</td>
+<td style="text-align:center">是否为abstract，对于接口和抽象类来说，此标志为真，其他类值为假的</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_SYNTHETIC</td>
+<td style="text-align:center">0x1000</td>
+<td style="text-align:center">标识这个类并非由用户代码产生的</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ANNOTATION</td>
+<td style="text-align:center">0x2000</td>
+<td style="text-align:center">标识这是一个注解</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ENUM</td>
+<td style="text-align:center">0x4000</td>
+<td style="text-align:center">标识这是一个枚举</td>
+</tr>
+</tbody>
+</table>
+<p>我们的例子是一个最简单的类，并且编译器在1.0.2之后所以 ACC_PUBLIC ACC_SUPER 为真 即<br>0x0001 | 0x0020 所以我们的结果是0021</p>
+<h2 id="8-类索引（u2-this-class）"><a href="#8-类索引（u2-this-class）" class="headerlink" title="8. 类索引（u2: this_class）"></a>8. 类索引（u2: this_class）</h2><p>用来确定这个类的全限定名。</p>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">06</span></span><br></pre></td></tr></table></figure>
+<p>这个索引指向常量池index为6类型为Class的常量，即：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#6 = Class              #27            // com/qinglinyi/demo/ByteCodeSample</span><br></pre></td></tr></table></figure>
+<h2 id="9-父类索引（u2-super-class）"><a href="#9-父类索引（u2-super-class）" class="headerlink" title="9. 父类索引（u2: super_class）"></a>9. 父类索引（u2: super_class）</h2><p>用来确定这个类父类的全限定名。</p>
+<p>本例中：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">07</span></span><br></pre></td></tr></table></figure></p>
+<p>同类索引指向：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#7 = Class              #28            // java/lang/Object</span><br></pre></td></tr></table></figure>
+<h2 id="10-接口计数器（u2-interfaces-count）"><a href="#10-接口计数器（u2-interfaces-count）" class="headerlink" title="10. 接口计数器（u2: interfaces_count）"></a>10. 接口计数器（u2: interfaces_count）</h2><p>用来标记接口（索引）的数量</p>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">00</span></span><br></pre></td></tr></table></figure>
+<p>我们的例子没有接口，所以数量为0</p>
+<h2 id="11-接口索引集合（u2-interfaces）"><a href="#11-接口索引集合（u2-interfaces）" class="headerlink" title="11. 接口索引集合（u2: interfaces）"></a>11. 接口索引集合（u2: interfaces）</h2><p>用来描述该类实现哪些接口</p>
+<p>interfaces_count个u2，每个u2指向常量池，标记一个接口。</p>
+<p>本例中没有接口。</p>
+<h2 id="12-字段计数器（u2-fields-count）"><a href="#12-字段计数器（u2-fields-count）" class="headerlink" title="12. 字段计数器（u2: fields_count）"></a>12. 字段计数器（u2: fields_count）</h2><p>用来标记字段数量</p>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">01</span></span><br></pre></td></tr></table></figure>
+<p>我们只有一个字段</p>
+<h2 id="13-字段表集合（field-info-fields-fields-count-）"><a href="#13-字段表集合（field-info-fields-fields-count-）" class="headerlink" title="13. 字段表集合（field_info: fields[fields_count]）"></a>13. 字段表集合（field_info: fields[fields_count]）</h2><p>有fields_count个字段表field_info，用来表示字段。</p>
+<p>本例中：</p>
+<p><img src="/images/bytecode/field_info.png" width="800" alt="字段表集合"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">08</span> <span class="number">00</span> <span class="number">09</span> <span class="number">00</span> <span class="number">00</span></span><br></pre></td></tr></table></figure>
+<p>因为只有一个字段，所以就一个field_info</p>
+<p>字段表的结构是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">field_info &#123;</span><br><span class="line">    u2             access_flags;</span><br><span class="line">    u2             name_index;</span><br><span class="line">    u2             descriptor_index;</span><br><span class="line">    u2             attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是这样：</p>
+<p><img src="/images/bytecode/field_info2.png" width="800" alt="字段表集合"></p>
+<h3 id="13-1-u2-access-flag"><a href="#13-1-u2-access-flag" class="headerlink" title="13.1 u2: access_flag"></a>13.1 u2: access_flag</h3><p>字段的访问权限类型有这些：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th style="text-align:center">值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACC_PUBLIC</td>
+<td style="text-align:center">0x0001  </td>
+</tr>
+<tr>
+<td>ACC_PRIVATE</td>
+<td style="text-align:center">0x0002</td>
+</tr>
+<tr>
+<td>ACC_PROTECTED</td>
+<td style="text-align:center">0x0004</td>
+</tr>
+<tr>
+<td>ACC_STATIC</td>
+<td style="text-align:center">0x0008</td>
+</tr>
+<tr>
+<td>ACC_FINAL</td>
+<td style="text-align:center">0x0010</td>
+</tr>
+<tr>
+<td>ACC_VOLATILE</td>
+<td style="text-align:center">0x0040</td>
+</tr>
+<tr>
+<td>ACC_TRANSIENT</td>
+<td style="text-align:center">0x0080</td>
+</tr>
+<tr>
+<td>ACC_SYNTHETIC</td>
+<td style="text-align:center">0x1000</td>
+</tr>
+<tr>
+<td>ACC_ENUM</td>
+<td style="text-align:center">0x4000</td>
+</tr>
+</tbody>
+</table>
+<p>本例中：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">00 02</span><br><span class="line">```	</span><br><span class="line">   </span><br><span class="line">所以我们只有一个ACC_PUBLIC</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 13.2 u2: name_index</span><br><span class="line"></span><br><span class="line">字段名索引，可以获取字段名</span><br><span class="line"></span><br><span class="line">本例中：</span><br><span class="line"></span><br><span class="line">```java</span><br><span class="line">00 08</span><br></pre></td></tr></table></figure>
+<p>对应的常量池：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#8 = Utf8               msg</span><br></pre></td></tr></table></figure>
+<p>说明我们的字段名字是msg</p>
+<h3 id="13-3-u2-descriptor-index"><a href="#13-3-u2-descriptor-index" class="headerlink" title="13.3 u2: descriptor_index"></a>13.3 u2: descriptor_index</h3><p>描述符索引</p>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">09</span></span><br></pre></td></tr></table></figure>
+<p>对应的常量池：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#9 = Utf8               Ljava/lang/String;</span><br></pre></td></tr></table></figure>
+<p>说明我们这个字段是String类型</p>
+<h3 id="13-4-u2-attributes-count"><a href="#13-4-u2-attributes-count" class="headerlink" title="13.4 u2: attributes_count"></a>13.4 u2: attributes_count</h3><p>属性数量</p>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">00</span></span><br></pre></td></tr></table></figure>
+<p>数量为0，无属性。</p>
+<h3 id="13-5-attribute-info-attributes-attributes-count"><a href="#13-5-attribute-info-attributes-attributes-count" class="headerlink" title="13.5 attribute_info attributes[attributes_count]"></a>13.5 attribute_info attributes[attributes_count]</h3><p>attributes_count个attribute_info，对应着attributes_count个属性，本例中数量为0。</p>
+<h2 id="14-方法计数器（u2-methods-count）"><a href="#14-方法计数器（u2-methods-count）" class="headerlink" title="14. 方法计数器（u2: methods_count）"></a>14. 方法计数器（u2: methods_count）</h2><p>用来标记方法数量</p>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">02</span></span><br></pre></td></tr></table></figure>
+<p>我们只有2个方法</p>
+<h2 id="15-方法表集合（method-info-methods-methods-count-）"><a href="#15-方法表集合（method-info-methods-methods-count-）" class="headerlink" title="15. 方法表集合（method_info: methods[methods_count]）"></a>15. 方法表集合（method_info: methods[methods_count]）</h2><p>有methods_count个字段表method_info，用来表示方法。</p>
+<p>结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">method_info &#123;</span><br><span class="line">    u2             access_flags;</span><br><span class="line">    u2             name_index;</span><br><span class="line">    u2             descriptor_index;</span><br><span class="line">    u2             attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本例中：</p>
+<p>第一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="number">00</span> <span class="number">0100</span> <span class="number">0</span>a00 <span class="number">0b00</span> <span class="number">0100</span> <span class="number">0</span>c00 <span class="number">0000</span> <span class="number">3900</span></span><br><span class="line"><span class="number">0200</span> <span class="number">0100</span> <span class="number">0000</span> <span class="number">0</span>b2a b700 <span class="number">012</span>a <span class="number">1202</span> b500</span><br><span class="line"><span class="number">03</span>b1 <span class="number">0000</span> <span class="number">0002</span> <span class="number">000</span>d <span class="number">0000</span> <span class="number">000</span>a <span class="number">0002</span> <span class="number">0000</span></span><br><span class="line"><span class="number">0004</span> <span class="number">0004</span> <span class="number">0006</span> <span class="number">000</span>e <span class="number">0000</span> <span class="number">000</span>c <span class="number">0001</span> <span class="number">0000</span></span><br><span class="line"><span class="number">000</span>b <span class="number">000f</span> <span class="number">0010</span> <span class="number">0000</span></span><br></pre></td></tr></table></figure>
+<p>第二个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">                    <span class="number">0001</span> <span class="number">0011</span> <span class="number">000</span>b <span class="number">0001</span></span><br><span class="line"><span class="number">000</span>c <span class="number">0000</span> <span class="number">0039</span> <span class="number">0002</span> <span class="number">0001</span> <span class="number">0000</span> <span class="number">000</span>b b200</span><br><span class="line"><span class="number">042</span>a b400 <span class="number">03</span>b6 <span class="number">0005</span> b100 <span class="number">0000</span> <span class="number">0200</span> <span class="number">0</span>d00</span><br><span class="line"><span class="number">0000</span> <span class="number">0</span>a00 <span class="number">0200</span> <span class="number">0000</span> <span class="number">0900</span> <span class="number">0</span>a00 <span class="number">0</span>a00 <span class="number">0e00</span></span><br><span class="line"><span class="number">0000</span> <span class="number">0</span>c00 <span class="number">0100</span> <span class="number">0000</span> <span class="number">0b00</span> <span class="number">0f</span>00 <span class="number">1000</span> <span class="number">00</span></span><br></pre></td></tr></table></figure>
+<p><img src="/images/bytecode/methodinfo.png" alt="方法表"></p>
+<p>先看看第一个方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public com.qinglinyi.demo.ByteCodeSample();</span><br><span class="line">  descriptor: ()V</span><br><span class="line">  flags: ACC_PUBLIC</span><br><span class="line">  Code:</span><br><span class="line">    stack=2, locals=1, args_size=1</span><br><span class="line">       0: aload_0</span><br><span class="line">       1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">       4: aload_0</span><br><span class="line">       5: ldc           #2                  // String hello world</span><br><span class="line">       7: putfield      #3                  // Field msg:Ljava/lang/String;</span><br><span class="line">      10: return</span><br><span class="line">    LineNumberTable:</span><br><span class="line">      line 4: 0</span><br><span class="line">      line 6: 4</span><br><span class="line">    LocalVariableTable:</span><br><span class="line">      Start  Length  Slot  Name   Signature</span><br><span class="line">          0      11     0  this   Lcom/qinglinyi/demo/ByteCodeSample;</span><br></pre></td></tr></table></figure>
+<h3 id="15-1-u2-access-flag"><a href="#15-1-u2-access-flag" class="headerlink" title="15.1 u2: access_flag"></a>15.1 u2: access_flag</h3><p>和字段表访问标志类似</p>
+<p>方法访问标志如下表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">标记名</th>
+<th style="text-align:center">值</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ACC_PUBLIC</td>
+<td style="text-align:center">0x0001</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_PRIVATE</td>
+<td style="text-align:center">0x0002</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_PROTECTED</td>
+<td style="text-align:center">0x0004</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_STATIC</td>
+<td style="text-align:center">0x0008</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_FINAL</td>
+<td style="text-align:center">0x0010</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_SYNCHRONIZED</td>
+<td style="text-align:center">0x0020</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_BRIDGE</td>
+<td style="text-align:center">0x0040</td>
+<td style="text-align:center">是否由编译器产生的桥接方法</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_VARARGS</td>
+<td style="text-align:center">0x0080</td>
+<td style="text-align:center">是否接受不定参数</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_NATIVE</td>
+<td style="text-align:center">0x0100</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ABSTRACT</td>
+<td style="text-align:center">0x0400</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_STRICT</td>
+<td style="text-align:center">0x0800</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_SYNTHETIC</td>
+<td style="text-align:center">0x1000</td>
+<td style="text-align:center">方法是否由编译器自动产生</td>
+</tr>
+</tbody>
+</table>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">01</span></span><br></pre></td></tr></table></figure>
+<p>该方法为public方法。</p>
+<h3 id="15-2-u2-name-index"><a href="#15-2-u2-name-index" class="headerlink" title="15.2 u2: name_index"></a>15.2 u2: name_index</h3><p>方法名索引，本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">0</span>b</span><br></pre></td></tr></table></figure>
+<p>对应的方法名：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#10 = Utf8               &lt;init&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="15-3-u2-descriptor-index"><a href="#15-3-u2-descriptor-index" class="headerlink" title="15.3 u2: descriptor_index"></a>15.3 u2: descriptor_index</h3><p>描述符索引，本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">0</span>a</span><br></pre></td></tr></table></figure>
+<p>对应的方法名：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#11 = Utf8               ()V</span><br></pre></td></tr></table></figure>
+<h3 id="15-4-u2-attributes-count"><a href="#15-4-u2-attributes-count" class="headerlink" title="15.4 u2: attributes_count"></a>15.4 u2: attributes_count</h3><p>属性计数器，本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">01</span></span><br></pre></td></tr></table></figure>
+<p>1个属性</p>
+<h3 id="15-5-attribute-info-attributes-attributes-count"><a href="#15-5-attribute-info-attributes-attributes-count" class="headerlink" title="15.5 attribute_info attributes[attributes_count]"></a>15.5 attribute_info attributes[attributes_count]</h3><p>属性表集合</p>
+<p>属性结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attribute_info &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u1 info[attribute_length];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">                      <span class="number">00</span> <span class="number">0</span>c00 <span class="number">0000</span> <span class="number">3900</span></span><br><span class="line"><span class="number">0200</span> <span class="number">0100</span> <span class="number">0000</span> <span class="number">0</span>b2a b700 <span class="number">012</span>a <span class="number">1202</span> b500</span><br><span class="line"><span class="number">03</span>b1 <span class="number">0000</span> <span class="number">0002</span> <span class="number">000</span>d <span class="number">0000</span> <span class="number">000</span>a <span class="number">0002</span> <span class="number">0000</span></span><br><span class="line"><span class="number">0004</span> <span class="number">0004</span> <span class="number">0006</span> <span class="number">000</span>e <span class="number">0000</span> <span class="number">000</span>c <span class="number">0001</span> <span class="number">0000</span></span><br><span class="line"><span class="number">000</span>b <span class="number">000f</span> <span class="number">0010</span> <span class="number">0000</span></span><br></pre></td></tr></table></figure>
+<h4 id="15-5-1-u2-attribute-name-index"><a href="#15-5-1-u2-attribute-name-index" class="headerlink" title="15.5.1 u2: attribute_name_index"></a>15.5.1 u2: attribute_name_index</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">0</span>c</span><br></pre></td></tr></table></figure>
+<p>指向</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#12 = Utf8               Code</span><br></pre></td></tr></table></figure>
+<p>code类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Code_attribute &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u2 max_stack;</span><br><span class="line">    u2 max_locals;</span><br><span class="line">    u4 code_length;</span><br><span class="line">    u1 code[code_length];</span><br><span class="line">    u2 exception_table_length;</span><br><span class="line">    &#123;   u2 start_pc;</span><br><span class="line">        u2 end_pc;</span><br><span class="line">        u2 handler_pc;</span><br><span class="line">        u2 catch_type;</span><br><span class="line">    &#125; exception_table[exception_table_length];</span><br><span class="line">    u2 attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="15-5-2-u4-attribute-length"><a href="#15-5-2-u4-attribute-length" class="headerlink" title="15.5.2 u4: attribute_length"></a>15.5.2 u4: attribute_length</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">39</span></span><br></pre></td></tr></table></figure>
+<p>属性数量为57</p>
+<h4 id="15-5-3-other"><a href="#15-5-3-other" class="headerlink" title="15.5.3 other"></a>15.5.3 other</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">                                     <span class="number">00</span></span><br><span class="line"><span class="number">0200</span> <span class="number">0100</span> <span class="number">0000</span> <span class="number">0</span>b2a b700 <span class="number">012</span>a <span class="number">1202</span> b500</span><br><span class="line"><span class="number">03</span>b1 <span class="number">0000</span> <span class="number">0002</span> <span class="number">000</span>d <span class="number">0000</span> <span class="number">000</span>a <span class="number">0002</span> <span class="number">0000</span></span><br><span class="line"><span class="number">0004</span> <span class="number">0004</span> <span class="number">0006</span> <span class="number">000</span>e <span class="number">0000</span> <span class="number">000</span>c <span class="number">0001</span> <span class="number">0000</span></span><br><span class="line"><span class="number">000</span>b <span class="number">000f</span> <span class="number">0010</span> <span class="number">0000</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">         4: aload_0</span><br><span class="line">         5: ldc           #2                  // String hello world</span><br><span class="line">         7: putfield      #3                  // Field msg:Ljava/lang/String;</span><br><span class="line">        10: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 4: 0</span><br><span class="line">        line 6: 4</span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            0      11     0  this   Lcom/qinglinyi/demo/ByteCodeSample;</span><br></pre></td></tr></table></figure>
+<h2 id="16-属性计数器（u2-attributes-count）"><a href="#16-属性计数器（u2-attributes-count）" class="headerlink" title="16. 属性计数器（u2: attributes_count）"></a>16. 属性计数器（u2: attributes_count）</h2><p>类属性数量，本例中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">01</span></span><br></pre></td></tr></table></figure>
+<p>一个属性</p>
+<h2 id="17-属性表集合（attribute-info-attributes-attributes-count-）"><a href="#17-属性表集合（attribute-info-attributes-attributes-count-）" class="headerlink" title="17. 属性表集合（attribute_info: attributes[attributes_count]）"></a>17. 属性表集合（attribute_info: attributes[attributes_count]）</h2><p>类属性集合，本例只有一个：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span> <span class="number">12</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">13</span></span><br></pre></td></tr></table></figure>
+<p>0012对应</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#18 = Utf8               SourceFile</span><br></pre></td></tr></table></figure>
+<p>这是一个SourceFile类型的属性，结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SourceFile_attribute &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u2 sourcefile_index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>attribute_length:00 00 00 02为2，属性长度为2（SourceFile的长度就是2）。<br>sourcefile_index:00 13为13（十进制19）对应：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#19 = Utf8               ByteCodeSample.java</span><br></pre></td></tr></table></figure>
+<p><em>ps: 属性还有其他类型，暂略。。</em></p>
+<p><em>ps: 还有其他内容，请看参考</em></p>
+<h2 id="18-参考"><a href="#18-参考" class="headerlink" title="18. 参考"></a>18. 参考</h2><p>1.<a href="http://blog.csdn.net/dc_726/article/details/7944154" target="_blank" rel="external">学会阅读Java字节码</a><br>2.《深入理解Java虚拟机：JVM高级特性与最佳实践 第2版》<br>3.<a href="https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.10" target="_blank" rel="external">java文档</a></p>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/Window/" rel="next" title="Window">
+                <i class="fa fa-chevron-left"></i> Window
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/header.jpg"
+               alt="青林亦" />
+          <p class="site-author-name" itemprop="name">青林亦</p>
+          <p class="site-description motion-element" itemprop="description">知其然知其所以然</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinglinyi" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Class-文件结构"><span class="nav-text">1. Class 文件结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-简单例子"><span class="nav-text">2. 简单例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-魔数（u4-magic）"><span class="nav-text">3. 魔数（u4: magic）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-版本（u2-minor-version，u2-major-version）"><span class="nav-text">4. 版本（u2: minor_version，u2: major_version）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-常量池计数器-（u2-constant-pool-count）"><span class="nav-text">5. 常量池计数器 （u2: constant_pool_count）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-常量池（cp-info-constant-pool）"><span class="nav-text">6. 常量池（cp_info: constant_pool）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-CONSTANT-Methodref例子"><span class="nav-text">6.1 CONSTANT_Methodref例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-CONSTANT-Utf8例子"><span class="nav-text">6.2 CONSTANT_Utf8例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-访问标志（u2-access-flags）"><span class="nav-text">7. 访问标志（u2:access_flags）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-类索引（u2-this-class）"><span class="nav-text">8. 类索引（u2: this_class）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-父类索引（u2-super-class）"><span class="nav-text">9. 父类索引（u2: super_class）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-接口计数器（u2-interfaces-count）"><span class="nav-text">10. 接口计数器（u2: interfaces_count）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-接口索引集合（u2-interfaces）"><span class="nav-text">11. 接口索引集合（u2: interfaces）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-字段计数器（u2-fields-count）"><span class="nav-text">12. 字段计数器（u2: fields_count）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-字段表集合（field-info-fields-fields-count-）"><span class="nav-text">13. 字段表集合（field_info: fields[fields_count]）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#13-1-u2-access-flag"><span class="nav-text">13.1 u2: access_flag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-3-u2-descriptor-index"><span class="nav-text">13.3 u2: descriptor_index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-4-u2-attributes-count"><span class="nav-text">13.4 u2: attributes_count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-5-attribute-info-attributes-attributes-count"><span class="nav-text">13.5 attribute_info attributes[attributes_count]</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-方法计数器（u2-methods-count）"><span class="nav-text">14. 方法计数器（u2: methods_count）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-方法表集合（method-info-methods-methods-count-）"><span class="nav-text">15. 方法表集合（method_info: methods[methods_count]）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#15-1-u2-access-flag"><span class="nav-text">15.1 u2: access_flag</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-2-u2-name-index"><span class="nav-text">15.2 u2: name_index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-3-u2-descriptor-index"><span class="nav-text">15.3 u2: descriptor_index</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-4-u2-attributes-count"><span class="nav-text">15.4 u2: attributes_count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-5-attribute-info-attributes-attributes-count"><span class="nav-text">15.5 attribute_info attributes[attributes_count]</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#15-5-1-u2-attribute-name-index"><span class="nav-text">15.5.1 u2: attribute_name_index</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-5-2-u4-attribute-length"><span class="nav-text">15.5.2 u4: attribute_length</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-5-3-other"><span class="nav-text">15.5.3 other</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-属性计数器（u2-attributes-count）"><span class="nav-text">16. 属性计数器（u2: attributes_count）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-属性表集合（attribute-info-attributes-attributes-count-）"><span class="nav-text">17. 属性表集合（attribute_info: attributes[attributes_count]）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-参考"><span class="nav-text">18. 参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">青林亦</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/v/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/v/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/v/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/v/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/v/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/v/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("6soJuefioBwsV3O9Ra2uc0UC-MdYXbMMI", "oFp2PCvNprv3Q9bufDMCYJa0");</script>
+  <script>AV.useAVCloudUS();</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
