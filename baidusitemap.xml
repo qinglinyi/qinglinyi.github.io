@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://www.qinglinyi.com/posts/jdbc/</loc>
+    <lastmod>2017-03-22T04:44:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>jdbc粗记</title>
+        <pubTime>2017-03-22T03:53:56.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.qinglinyi.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.qinglinyi.com/posts/byteCode/</loc>
     <lastmod>2016-12-16T08:00:00.000Z</lastmod>
     <data>

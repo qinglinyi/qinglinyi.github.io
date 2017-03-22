@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.qinglinyi.com/posts/jdbc/</loc>
+    
+    <lastmod>2017-03-22T04:44:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.qinglinyi.com/posts/byteCode/</loc>
     
     <lastmod>2016-12-16T08:00:00.000Z</lastmod>
