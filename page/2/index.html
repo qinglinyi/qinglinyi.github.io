@@ -251,6 +251,143 @@
             
               
                 
+                <a class="post-title-link" href="/posts/about-android-handler/" itemprop="url">
+                  Android Handler消息机制
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-16T16:51:51+08:00" content="2016-05-16">
+              2016-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/about-android-handler/" class="leancloud_visitors" data-flag-title="Android Handler消息机制">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          概述
+就应用程序而言，Android系统中Java的应用程序和其他系统上相同，都是靠消息驱动来工作的，它们大致的工作原理如下：
+
+有一个消息队列，可以往这个消息队列中投递消息。
+有一个消息循环，不断从消息队列中获取消息，然后处理。
+
+
+示意图如下：
+
+
+事件源把需要处理的消息加入到消息队列中，一般是
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/posts/about-android-handler/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+    
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/posts/about-string/" itemprop="url">
                   关于Java String
                 </a>
@@ -695,10 +832,10 @@ The String class represents character strings. All string literals in Java progr
           <p>转载请注明：<a href="http://www.qinglinyi.com/posts/publish-to-jcenter/">http://www.qinglinyi.com/posts/publish-to-jcenter/</a></p>
 <p>第一次发布项目到jcenter，虽然网上有很多教程了，但是过程还是比较曲折。不过最终还是找到简单的方式，使用com.novoda.bintray-release实现发布。</p>
 <h2 id="认识jcenter"><a href="#认识jcenter" class="headerlink" title="认识jcenter"></a>认识jcenter</h2><p>我们经常在android studio项目中看到：</p>
-<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">allprojects </span>&#123;</span><br><span class="line">    <span class="class">repositories </span>&#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>那么jcenter到底是什么呢？</strong></p>
 <p>我们可以将jcenter理解为<strong>代码仓库</strong>。如果我们在builde.gradle文件中设置例如：</p>
-<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> 'com.google.<span class="built_in">code</span>.gson:gson:<span class="number">2.3</span><span class="number">.1</span>'</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.google.code.gson:gson:2.3.1&apos;</span><br></pre></td></tr></table></figure>
           <div class="post-more-link text-center">
             <a class="btn" href="/posts/publish-to-jcenter/#more" rel="contents">
               阅读全文 &raquo;
@@ -1377,136 +1514,6 @@ The String class represents character strings. All string literals in Java progr
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/posts/retrofit/" itemprop="url">
-                  Retrofit2 源码解析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-08T12:22:29+08:00" content="2016-03-08">
-              2016-03-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-             <span id="/posts/retrofit/" class="leancloud_visitors" data-flag-title="Retrofit2 源码解析">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>转载请注明：<a href="http://www.qinglinyi.com/posts/retrofit/">http://www.qinglinyi.com/posts/retrofit/</a></p>
-<p>本文是关于Retrofit2源码解析的，主要介绍了Retrofit 2.0API的基本原理、主要类以及接口还有Retrofit是怎么工作的。</p>
-<h2 id="认识Retrofit2"><a href="#认识Retrofit2" class="headerlink" title="认识Retrofit2"></a>认识Retrofit2</h2><p><strong><em>  A type-safe HTTP client for Android and Java </em></strong><br>意思就是说Retrofit是一个Android和Java的类型安全的Http客户端/请求工具。<br>对于Retrofit的详细介绍我们可以通过<a href="http://square.github.io/retrofit/">官网</a>了解。 </p>
-<h2 id="Retrofit2-使用"><a href="#Retrofit2-使用" class="headerlink" title="Retrofit2 使用"></a>Retrofit2 使用</h2>  <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> public <span class="class"><span class="keyword">interface</span> <span class="title">GitHubService</span> </span>&#123;</span><br><span class="line"> 	<span class="meta">@GET</span>(<span class="string">"users/&#123;user&#125;/repos"</span>)</span><br><span class="line"> 	Call&lt;<span class="built_in">List</span>&lt;Repo&gt;&gt; listRepos(<span class="meta">@Path</span>(<span class="string">"user"</span>) <span class="built_in">String</span> user);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">   .baseUrl(<span class="string">"https://api.github.com"</span>)</span><br><span class="line">   .build();</span><br><span class="line"></span><br><span class="line"> GitHubService service = retrofit.create(GitHubService.<span class="keyword">class</span>);</span><br><span class="line"> </span><br><span class="line"> Call&lt;<span class="built_in">List</span>&lt;Repo&gt;&gt; repos = service.listRepos(<span class="string">"octocat"</span>);</span><br><span class="line"> </span><br><span class="line"> repos.enqueue(<span class="keyword">new</span> Callback&lt;<span class="built_in">List</span>&lt;Repo&gt;&gt;() &#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   public <span class="keyword">void</span> onResponse(Response&lt;<span class="built_in">List</span>&lt;Repo&gt;&gt; response) &#123;</span><br><span class="line">     <span class="comment">// do something  </span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   public <span class="keyword">void</span> onFailure(Throwable t) &#123;</span><br><span class="line">     <span class="comment">// do something</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p> 或者这样：</p>
- <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">interface</span> <span class="title">GitHubService</span> </span>&#123;</span><br><span class="line">	<span class="meta">@GET</span>(<span class="string">"users/&#123;user&#125;/repos"</span>)</span><br><span class="line">	Observable&lt;<span class="built_in">List</span>&lt;Repo&gt;&gt; listRepos(<span class="meta">@Path</span>(<span class="string">"user"</span>) <span class="built_in">String</span> user);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">  .baseUrl(<span class="string">"https://api.github.com"</span>)</span><br><span class="line">  .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">  .addCallAdapterFactory(RxJavaCallAdapterFactory.create())</span><br><span class="line">  .build();</span><br><span class="line"></span><br><span class="line">GitHubService service = retrofit.create(GitHubService.<span class="keyword">class</span>);</span><br><span class="line"></span><br><span class="line">service.listRepos(<span class="string">"octocat"</span>)</span><br><span class="line">              .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">              .subscribeOn(Schedulers.io())</span><br><span class="line">              .subscribe();</span><br></pre></td></tr></table></figure>
-<p><strong> <code>注意：</code></strong> <code>详细的使用，大家可以查看其它教程。</code></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/posts/retrofit/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-    
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1552,7 +1559,7 @@ The String class represents character strings. All string literals in Java progr
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>

@@ -4,6 +4,43 @@
 
     
   <url>
+    <loc>http://www.qinglinyi.com/posts/Service/</loc>
+    <lastmod>2018-08-04T14:45:21.557Z</lastmod>
+    <data>
+        <display>
+        <title>Android Service</title>
+        <pubTime>2018-08-04T13:53:56.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Service</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.qinglinyi.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.qinglinyi.com/posts/snackbar/</loc>
+    <lastmod>2017-07-05T13:42:44.000Z</lastmod>
+    <data>
+        <display>
+        <title>snackbar</title>
+        <pubTime>2017-05-16T12:31:30.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.qinglinyi.com/posts/jdbc/</loc>
     <lastmod>2017-03-22T04:44:28.000Z</lastmod>
     <data>

@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android" />
+  <meta name="keywords" content="Android,Service," />
 
 
 
@@ -82,15 +82,45 @@
 
 
 
-<meta name="description" content="知其然知其所以然">
-<meta property="og:type" content="website">
-<meta property="og:title" content="青林亦">
-<meta property="og:url" content="http://www.qinglinyi.com/archives/page/3/index.html">
+<meta name="description" content="Service
+1. 概述Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。
+对Service我们要注意到：
+
+不是一个单独的进程，除非你特殊指定
+不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。
+
+以此，Service其实很简单，它提供了前面我们说到的两个特征：
+
+执行一些需要在后台运">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Service">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/Service/index.html">
 <meta property="og:site_name" content="青林亦">
-<meta property="og:description" content="知其然知其所以然">
+<meta property="og:description" content="Service
+1. 概述Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。
+对Service我们要注意到：
+
+不是一个单独的进程，除非你特殊指定
+不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。
+
+以此，Service其实很简单，它提供了前面我们说到的两个特征：
+
+执行一些需要在后台运">
+<meta property="og:image" content="http://www.qinglinyi.com/images/service/Service.png">
+<meta property="og:updated_time" content="2018-08-04T14:45:21.557Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="青林亦">
-<meta name="twitter:description" content="知其然知其所以然">
+<meta name="twitter:title" content="Android Service">
+<meta name="twitter:description" content="Service
+1. 概述Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。
+对Service我们要注意到：
+
+不是一个单独的进程，除非你特殊指定
+不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。
+
+以此，Service其实很简单，它提供了前面我们说到的两个特征：
+
+执行一些需要在后台运">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/service/Service.png">
 
 
 
@@ -108,7 +138,7 @@
   };
 </script>
 
-  <title> 归档 | 青林亦 </title>
+  <title> Android Service | 青林亦 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -139,7 +169,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -227,107 +257,202 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 22 篇文章。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
-
-      
-      
-      
-
-      
-        
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
-        </div>
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/posts/retrofit/" itemprop="url">
-              
-                <span itemprop="name">Retrofit2 源码解析</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-03-08T12:22:29+08:00"
-              content="2016-03-08" >
-          03-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/posts/build-blog/" itemprop="url">
-              
-                <span itemprop="name">Mac使用Hexo+Github构建自己的博客</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-03-04T15:01:11+08:00"
-              content="2016-03-04" >
-          03-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
 
   
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android Service
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-08-04T21:53:56+08:00" content="2018-08-04">
+              2018-08-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/posts/Service/" class="leancloud_visitors" data-flag-title="Android Service">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
 
 
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p><img src="/images/service/Service.png" width="702" height="415" alt="Service"></p>
+<h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。</p>
+<p>对Service我们要注意到：</p>
+<ol>
+<li>不是一个单独的进程，除非你特殊指定</li>
+<li>不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。</li>
+</ol>
+<p>以此，Service其实很简单，它提供了前面我们说到的两个特征：</p>
+<ol>
+<li>执行一些需要在后台运行的长时间的操作，这个情况一般使用startService，Service会一直运行，直到操作完成或者被明确的结束</li>
+<li>为其他应用(或者是自己)提供服务，这个情况一般使用bindService，建立一个长连接与Service进行交互</li>
+</ol>
+<p>这也引出Service的两种启动方式：startService和bindService</p>
+<p>那么它们有什么区别？</p>
+<ol>
+<li>如前面所说，使用场景不同</li>
+<li>生命周期不同</li>
+</ol>
+<h3 id="2-Service的通信（交互）"><a href="#2-Service的通信（交互）" class="headerlink" title="2. Service的通信（交互）"></a>2. Service的通信（交互）</h3><ol>
+<li>通过事件</li>
+<li>通过Binder</li>
+</ol>
+<h4 id="2-1-事件"><a href="#2-1-事件" class="headerlink" title="2.1 事件"></a>2.1 事件</h4><p>适用于startService，通过Intent进行数据（事件、消息）传入，通过事件发布进行数据（事件、消息）传出。</p>
+<p>事件发布的形式：</p>
+<ol>
+<li>广播</li>
+<li>事件总线</li>
+</ol>
+<h4 id="2-2-Binder"><a href="#2-2-Binder" class="headerlink" title="2.2. Binder"></a>2.2. Binder</h4><p>适用于bindService。通过ServiceConnection可以获取一个IBinder。</p>
+<ol>
+<li>本地服务（相同进程），可以通过IBinder直接获取Service实例进行交互</li>
+<li>远程服务（不同进程），通过AIDL，AIDL还有一个简单的方式，不需要自己实现AIDL，就是Messenger，这是Android默认实现的一个AIDL</li>
+</ol>
+<p><a href="https://blog.csdn.net/lmj623565791/article/details/47017485" target="_blank" rel="external">https://blog.csdn.net/lmj623565791/article/details/47017485</a></p>
+<h3 id="3-IntentService"><a href="#3-IntentService" class="headerlink" title="3. IntentService"></a>3. IntentService</h3><p>我们知道Service其实运行在主线程，但是我们需要进行耗时操作，那就需要在子线程中执行，所以便有了IntentService。</p>
+<p>IntentService其实默认提供一个HandlerThread，和对应Handler，将onStartCommand传的Intent分发到Handler中处理，使用者只要简单的实现onHandleIntent进行处理就可以了。</p>
+<h3 id="4-Service保活"><a href="#4-Service保活" class="headerlink" title="4. Service保活"></a>4. Service保活</h3><p>onStartCommand 三个返回值：</p>
+<ol>
+<li>START_NOT_STICKY：如果Service被系统杀掉之后，没有然后</li>
+<li>START_STICKY：杀掉之后，会被安排重启，但是不会保存之前的Intent</li>
+<li>START_REDELIVER_INTENT：保存之前的Intent</li>
+</ol>
+<p>其他：前台服务，进程相互唤醒，AlarmManager等</p>
+<h3 id="5-Android进程级别"><a href="#5-Android进程级别" class="headerlink" title="5. Android进程级别"></a>5. Android进程级别</h3><ol>
+<li>前台进程</li>
+<li>可见进程</li>
+<li>服务进程</li>
+<li>后台进程</li>
+<li>空进程</li>
+</ol>
+<ul>
+<li>[ ] Android进程</li>
+</ul>
+
+      
+    </div>
+    
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+            <a href="/tags/Service/" rel="tag">#Service</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/snackbar/" rel="next" title="snackbar">
+                <i class="fa fa-chevron-left"></i> snackbar
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -335,6 +460,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -354,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/header.jpg"
@@ -366,7 +504,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -383,7 +521,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -424,6 +562,17 @@
       </section>
 
       
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-text">Service</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-概述"><span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Service的通信（交互）"><span class="nav-text">2. Service的通信（交互）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-事件"><span class="nav-text">2.1 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Binder"><span class="nav-text">2.2. Binder</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-IntentService"><span class="nav-text">3. IntentService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Service保活"><span class="nav-text">4. Service保活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Android进程级别"><span class="nav-text">5. Android进程级别</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
 
     </div>
   </aside>
@@ -438,7 +587,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -519,11 +668,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
 
 
   
