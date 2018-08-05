@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.qinglinyi.com/posts/BrocastReceiver/</loc>
+    
+    <lastmod>2018-08-05T03:14:05.021Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.qinglinyi.com/posts/Service/</loc>
     
     <lastmod>2018-08-05T03:12:09.242Z</lastmod>
