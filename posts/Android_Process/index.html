@@ -64,7 +64,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,Service," />
+  <meta name="keywords" content="Android,进程," />
 
 
 
@@ -82,45 +82,33 @@
 
 
 
-<meta name="description" content="Service
-1. 概述Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。
-对Service我们要注意到：
-
-不是一个单独的进程，除非你特殊指定
-不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。
-
-以此，Service其实很简单，它提供了前面我们说到的两个特征：
-
-执行一些需要在后台运">
+<meta name="description" content="Android进程
+1. 进程和线程1.1 概念进程是表示资源分配的基本单位，又是调度运行的基本单位。线程是进程中执行运算的最小单位，亦即执行处理机调度的基本单位。
+1.2 线程的好处
+开销少，易于调度。进程有自己的独立空间，线程可以共享同一进程的资源。切换和创建线程的开销比进程小。
+提高并发性。通过线程可方便有效地实现并发性。进程可创建多个线程来执行同一程序的不同部分。
+有利于充分发挥多处理器的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android Service">
-<meta property="og:url" content="http://www.qinglinyi.com/posts/Service/index.html">
+<meta property="og:title" content="Android进程">
+<meta property="og:url" content="http://www.qinglinyi.com/posts/Android_Process/index.html">
 <meta property="og:site_name" content="青林亦">
-<meta property="og:description" content="Service
-1. 概述Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。
-对Service我们要注意到：
-
-不是一个单独的进程，除非你特殊指定
-不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。
-
-以此，Service其实很简单，它提供了前面我们说到的两个特征：
-
-执行一些需要在后台运">
-<meta property="og:image" content="http://www.qinglinyi.com/images/service/Service.png">
-<meta property="og:updated_time" content="2018-08-05T03:12:09.242Z">
+<meta property="og:description" content="Android进程
+1. 进程和线程1.1 概念进程是表示资源分配的基本单位，又是调度运行的基本单位。线程是进程中执行运算的最小单位，亦即执行处理机调度的基本单位。
+1.2 线程的好处
+开销少，易于调度。进程有自己的独立空间，线程可以共享同一进程的资源。切换和创建线程的开销比进程小。
+提高并发性。通过线程可方便有效地实现并发性。进程可创建多个线程来执行同一程序的不同部分。
+有利于充分发挥多处理器的">
+<meta property="og:image" content="http://www.qinglinyi.com/images/android/android_process.png">
+<meta property="og:updated_time" content="2018-08-05T09:41:05.543Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Service">
-<meta name="twitter:description" content="Service
-1. 概述Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。
-对Service我们要注意到：
-
-不是一个单独的进程，除非你特殊指定
-不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。
-
-以此，Service其实很简单，它提供了前面我们说到的两个特征：
-
-执行一些需要在后台运">
-<meta name="twitter:image" content="http://www.qinglinyi.com/images/service/Service.png">
+<meta name="twitter:title" content="Android进程">
+<meta name="twitter:description" content="Android进程
+1. 进程和线程1.1 概念进程是表示资源分配的基本单位，又是调度运行的基本单位。线程是进程中执行运算的最小单位，亦即执行处理机调度的基本单位。
+1.2 线程的好处
+开销少，易于调度。进程有自己的独立空间，线程可以共享同一进程的资源。切换和创建线程的开销比进程小。
+提高并发性。通过线程可方便有效地实现并发性。进程可创建多个线程来执行同一程序的不同部分。
+有利于充分发挥多处理器的">
+<meta name="twitter:image" content="http://www.qinglinyi.com/images/android/android_process.png">
 
 
 
@@ -138,7 +126,7 @@
   };
 </script>
 
-  <title> Android Service | 青林亦 </title>
+  <title> Android进程 | 青林亦 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -278,7 +266,7 @@
             
             
               
-                Android Service
+                Android进程
               
             
           </h1>
@@ -290,8 +278,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-08-04T21:53:56+08:00" content="2018-08-04">
-              2018-08-04
+            <time itemprop="dateCreated" datetime="2018-08-05T17:53:56+08:00" content="2018-08-05">
+              2018-08-05
             </time>
           </span>
 
@@ -324,7 +312,7 @@
 
           
           
-             <span id="/posts/Service/" class="leancloud_visitors" data-flag-title="Android Service">
+             <span id="/posts/Android_Process/" class="leancloud_visitors" data-flag-title="Android进程">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -346,62 +334,66 @@
       
 
       
-        <h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p><img src="/images/service/Service.png" width="702" height="415" alt="Service"></p>
-<h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>Android四大组件之一，相对于Activity，Service一般用于执行：不和用户直接交互、具有较长运行时间的操作，或者为其他应用提供服务。</p>
-<p>对Service我们要注意到：</p>
-<ol>
-<li>不是一个单独的进程，除非你特殊指定</li>
-<li>不是一个线程，所以，如果需要进行耗时操作，需要开一个线程来完成。</li>
+        <h2 id="Android进程"><a href="#Android进程" class="headerlink" title="Android进程"></a>Android进程</h2><p><img src="/images/android/android_process.png" width="702" height="415" alt="process"></p>
+<h3 id="1-进程和线程"><a href="#1-进程和线程" class="headerlink" title="1. 进程和线程"></a>1. 进程和线程</h3><h4 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念"></a>1.1 概念</h4><p>进程是表示资源分配的基本单位，又是调度运行的基本单位。<br>线程是进程中执行运算的最小单位，亦即执行处理机调度的基本单位。</p>
+<h4 id="1-2-线程的好处"><a href="#1-2-线程的好处" class="headerlink" title="1.2 线程的好处"></a>1.2 线程的好处</h4><ol>
+<li>开销少，易于调度。进程有自己的独立空间，线程可以共享同一进程的资源。切换和创建线程的开销比进程小。</li>
+<li>提高并发性。通过线程可方便有效地实现并发性。进程可创建多个线程来执行同一程序的不同部分。</li>
+<li>有利于充分发挥多处理器的功能。通过创建多线程，每个线程在一个处理器上运行，从而实现应用程序的并发性，使每个处理器都得到充分运行。</li>
 </ol>
-<p>以此，Service其实很简单，它提供了前面我们说到的两个特征：</p>
-<ol>
-<li>执行一些需要在后台运行的长时间的操作，这个情况一般使用startService，Service会一直运行，直到操作完成或者被明确的结束</li>
-<li>为其他应用(或者是自己)提供服务，这个情况一般使用bindService，建立一个长连接与Service进行交互</li>
+<h4 id="1-3-进程与线程的关系"><a href="#1-3-进程与线程的关系" class="headerlink" title="1.3 进程与线程的关系"></a>1.3 进程与线程的关系</h4><ol>
+<li>一个进程可以有多个线程，但至少有一个线程；而一个线程只能在一个进程的地址空间内活动。</li>
+<li>资源分配给进程，同一个进程的所有线程共享该进程所有资源。</li>
+<li>CPU分配给线程，即真正在处理器运行的是线程。</li>
+<li>线程在执行过程中需要协作同步，不同进程的线程间要利用消息通信的办法实现同步。</li>
 </ol>
-<p>这也引出Service的两种启动方式：startService和bindService</p>
-<p>那么它们有什么区别？</p>
-<ol>
-<li>如前面所说，使用场景不同</li>
-<li>生命周期不同</li>
+<h4 id="1-4-进程间通信的方式"><a href="#1-4-进程间通信的方式" class="headerlink" title="1.4 进程间通信的方式"></a>1.4 进程间通信的方式</h4><ol>
+<li>管道-PIPE</li>
+<li>命名管道-FIFO</li>
+<li>信号 （signal）</li>
+<li>消息队列（Message queues）</li>
+<li>信号量（Semaphore）</li>
+<li>共享内存（Share Memory）</li>
+<li>内存映射（Memory Map）</li>
+<li>套接字</li>
+<li>Android实现的通信方式: Binder（算是内存映射的一种）</li>
 </ol>
-<h3 id="2-Service的通信（交互）"><a href="#2-Service的通信（交互）" class="headerlink" title="2. Service的通信（交互）"></a>2. Service的通信（交互）</h3><ol>
-<li>通过事件</li>
-<li>通过Binder</li>
-</ol>
-<h4 id="2-1-事件"><a href="#2-1-事件" class="headerlink" title="2.1 事件"></a>2.1 事件</h4><p>适用于startService，通过Intent进行数据（事件、消息）传入，通过事件发布进行数据（事件、消息）传出。</p>
-<p>事件发布的形式：</p>
-<ol>
-<li>广播</li>
-<li>事件总线</li>
-</ol>
-<h4 id="2-2-Binder"><a href="#2-2-Binder" class="headerlink" title="2.2. Binder"></a>2.2. Binder</h4><p>适用于bindService。通过ServiceConnection可以获取一个IBinder。</p>
-<ol>
-<li>本地服务（相同进程），可以通过IBinder直接获取Service实例进行交互</li>
-<li>远程服务（不同进程），通过AIDL，AIDL还有一个简单的方式，不需要自己实现AIDL，就是Messenger，这是Android默认实现的一个AIDL</li>
-</ol>
-<p><a href="https://blog.csdn.net/lmj623565791/article/details/47017485" target="_blank" rel="external">https://blog.csdn.net/lmj623565791/article/details/47017485</a></p>
-<h3 id="3-IntentService"><a href="#3-IntentService" class="headerlink" title="3. IntentService"></a>3. IntentService</h3><p>我们知道Service其实运行在主线程，但是我们需要进行耗时操作，那就需要在子线程中执行，所以便有了IntentService。</p>
-<p>IntentService其实默认提供一个HandlerThread，和对应Handler，将onStartCommand传的Intent分发到Handler中处理，使用者只要简单的实现onHandleIntent进行处理就可以了。</p>
-<h3 id="4-JobService"><a href="#4-JobService" class="headerlink" title="4. JobService"></a>4. JobService</h3><blockquote>
-<p>有时候我们希望在特定情况下再启动事务，比如说延迟若干时间之后，或者等手机空闲了再运行，这样一方面不会在系统资源紧张之时喧宾夺主，另一方面也起到削峰填谷提高系统效率的作用。<br>Android从5.0开始，增加支持一种特殊的机制，即任务调度JobScheduler，该工具集成了常见的几种运行条件，开发者只需添加少数几行代码，即可完成原来要多种组件配合的工作。<br>任务调度机制由三个工具组成，首先是JobInfo，它指定了一个任务的概要信息，比如何时启动，启动时需要满足什么条件等等；其次是JobScheduler，它是系统提供的任务调度服务，它的实例从系统服务Context.JOB_SCHEDULER_SERVICE中获得；最后是JobService，它描述了该任务内部的具体业务逻辑，它的运行时刻由JobScheduler根据JobInfo指定的条件而计算决定</p>
-</blockquote>
-<h3 id="5-Service保活"><a href="#5-Service保活" class="headerlink" title="5. Service保活"></a>5. Service保活</h3><p>onStartCommand 三个返回值：</p>
-<ol>
-<li>START_NOT_STICKY：如果Service被系统杀掉之后，没有然后</li>
-<li>START_STICKY：杀掉之后，会被安排重启，但是不会保存之前的Intent</li>
-<li>START_REDELIVER_INTENT：保存之前的Intent</li>
-</ol>
-<p>其他：前台服务，进程相互唤醒，AlarmManager等</p>
-<h3 id="6-Android进程级别"><a href="#6-Android进程级别" class="headerlink" title="6. Android进程级别"></a>6. Android进程级别</h3><ol>
+<ul>
+<li>[ ] IPC</li>
+<li>[ ] Binder</li>
+</ul>
+<h4 id="1-5-参考"><a href="#1-5-参考" class="headerlink" title="1.5 参考"></a>1.5 参考</h4><p>[<a href="https://www.cnblogs.com/losing-1216/p/5083097.html" target="_blank" rel="external">https://www.cnblogs.com/losing-1216/p/5083097.html</a>]</p>
+<p>[<a href="https://www.cnblogs.com/zhuzhu2016/p/5804875.html" target="_blank" rel="external">https://www.cnblogs.com/zhuzhu2016/p/5804875.html</a>]</p>
+<p>[<a href="https://www.cnblogs.com/chump-zwl/p/6962762.html" target="_blank" rel="external">https://www.cnblogs.com/chump-zwl/p/6962762.html</a>]</p>
+<p>[<a href="https://blog.csdn.net/a987073381/article/details/52006729/" target="_blank" rel="external">https://blog.csdn.net/a987073381/article/details/52006729/</a>]</p>
+<h3 id="2-Android进程级别"><a href="#2-Android进程级别" class="headerlink" title="2. Android进程级别"></a>2. Android进程级别</h3><ol>
 <li>前台进程</li>
 <li>可见进程</li>
 <li>服务进程</li>
 <li>后台进程</li>
 <li>空进程</li>
 </ol>
+<h4 id="2-1-前台进程"><a href="#2-1-前台进程" class="headerlink" title="2.1 前台进程"></a>2.1 前台进程</h4><ol>
+<li>拥有正在与用户交互的Activity</li>
+<li>拥有如下情况的Service：</li>
+</ol>
 <ul>
-<li>[ ] Android进程</li>
+<li>与1的Activity绑定的Service</li>
+<li>前台服务，即调用了startForeground()</li>
+<li>正在执行生命周期回调函数：onCreate()，onStartCommand()，onDestroy()</li>
 </ul>
+<ol>
+<li>拥有一个正在执行onReceive()方法的BroadcastReceiver</li>
+</ol>
+<h4 id="2-2-可见进程"><a href="#2-2-可见进程" class="headerlink" title="2.2 可见进程"></a>2.2 可见进程</h4><ol>
+<li>拥有一个Activity，这个Activity不在前台但是用户可见（onPause但是没有onStop）</li>
+<li>拥有一个Service，这个Service与1的Activity绑定</li>
+</ol>
+<h4 id="2-3-服务进程"><a href="#2-3-服务进程" class="headerlink" title="2.3 服务进程"></a>2.3 服务进程</h4><p>持有一个正在运行的Service，这个Service不是前面两种情况</p>
+<h4 id="2-4-后台进程"><a href="#2-4-后台进程" class="headerlink" title="2.4 后台进程"></a>2.4 后台进程</h4><p>如果进程不属于上面三种情况，但是进程持有一个用户不可见的activity（activity的onStop()被调用，但是onDestroy()没有调用的状态），就认为进程是一个后台进程</p>
+<h4 id="2-5-空进程"><a href="#2-5-空进程" class="headerlink" title="2.5 空进程"></a>2.5 空进程</h4><p>如果一个进程不包含任何活跃的应用组件，则认为是空进程</p>
+<p>保存这种进程的唯一理由是为了缓存的需要，为了加快下次要启动这个进程中的组件时的启动时间。系统为了平衡进程缓存和底层内核缓存的资源，经常会杀死空进程。</p>
+<h4 id="2-6-参考"><a href="#2-6-参考" class="headerlink" title="2.6 参考"></a>2.6 参考</h4><p>[<a href="https://blog.csdn.net/bfboys/article/details/53957396" target="_blank" rel="external">https://blog.csdn.net/bfboys/article/details/53957396</a>]</p>
 
       
     </div>
@@ -424,7 +416,7 @@
           
             <a href="/tags/Android/" rel="tag">#Android</a>
           
-            <a href="/tags/Service/" rel="tag">#Service</a>
+            <a href="/tags/进程/" rel="tag">#进程</a>
           
         </div>
       
@@ -433,17 +425,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/snackbar/" rel="next" title="snackbar">
-                <i class="fa fa-chevron-left"></i> snackbar
+              <a href="/posts/BrocastReceiver/" rel="next" title="Android Broadcast">
+                <i class="fa fa-chevron-left"></i> Android Broadcast
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/BrocastReceiver/" rel="prev" title="Android Broadcast">
-                Android Broadcast <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -575,7 +563,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-text">Service</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-概述"><span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Service的通信（交互）"><span class="nav-text">2. Service的通信（交互）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-事件"><span class="nav-text">2.1 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Binder"><span class="nav-text">2.2. Binder</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-IntentService"><span class="nav-text">3. IntentService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-JobService"><span class="nav-text">4. JobService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Service保活"><span class="nav-text">5. Service保活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Android进程级别"><span class="nav-text">6. Android进程级别</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Android进程"><span class="nav-text">Android进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-进程和线程"><span class="nav-text">1. 进程和线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-概念"><span class="nav-text">1.1 概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-线程的好处"><span class="nav-text">1.2 线程的好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-进程与线程的关系"><span class="nav-text">1.3 进程与线程的关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-进程间通信的方式"><span class="nav-text">1.4 进程间通信的方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-参考"><span class="nav-text">1.5 参考</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Android进程级别"><span class="nav-text">2. Android进程级别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-前台进程"><span class="nav-text">2.1 前台进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-可见进程"><span class="nav-text">2.2 可见进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-服务进程"><span class="nav-text">2.3 服务进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-后台进程"><span class="nav-text">2.4 后台进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-空进程"><span class="nav-text">2.5 空进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-参考"><span class="nav-text">2.6 参考</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>

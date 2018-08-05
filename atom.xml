@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.qinglinyi.com/"/>
-  <updated>2018-08-05T03:14:05.021Z</updated>
+  <updated>2018-08-05T09:41:05.543Z</updated>
   <id>http://www.qinglinyi.com/</id>
   
   <author>
@@ -14,6 +14,90 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Android进程</title>
+    <link href="http://www.qinglinyi.com/posts/Android_Process/"/>
+    <id>http://www.qinglinyi.com/posts/Android_Process/</id>
+    <published>2018-08-05T09:53:56.000Z</published>
+    <updated>2018-08-05T09:41:05.543Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;Android进程&quot;&gt;&lt;a href=&quot;#Android进程&quot; class=&quot;headerlink&quot; title=&quot;Android进程&quot;&gt;&lt;/a&gt;Android进程&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/images/android/android_process.png&quot; width=&quot;702&quot; height=&quot;415&quot; alt=&quot;process&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;1-进程和线程&quot;&gt;&lt;a href=&quot;#1-进程和线程&quot; class=&quot;headerlink&quot; title=&quot;1. 进程和线程&quot;&gt;&lt;/a&gt;1. 进程和线程&lt;/h3&gt;&lt;h4 id=&quot;1-1-概念&quot;&gt;&lt;a href=&quot;#1-1-概念&quot; class=&quot;headerlink&quot; title=&quot;1.1 概念&quot;&gt;&lt;/a&gt;1.1 概念&lt;/h4&gt;&lt;p&gt;进程是表示资源分配的基本单位，又是调度运行的基本单位。&lt;br&gt;线程是进程中执行运算的最小单位，亦即执行处理机调度的基本单位。&lt;/p&gt;
+&lt;h4 id=&quot;1-2-线程的好处&quot;&gt;&lt;a href=&quot;#1-2-线程的好处&quot; class=&quot;headerlink&quot; title=&quot;1.2 线程的好处&quot;&gt;&lt;/a&gt;1.2 线程的好处&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;开销少，易于调度。进程有自己的独立空间，线程可以共享同一进程的资源。切换和创建线程的开销比进程小。&lt;/li&gt;
+&lt;li&gt;提高并发性。通过线程可方便有效地实现并发性。进程可创建多个线程来执行同一程序的不同部分。&lt;/li&gt;
+&lt;li&gt;有利于充分发挥多处理器的功能。通过创建多线程，每个线程在一个处理器上运行，从而实现应用程序的并发性，使每个处理器都得到充分运行。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;1-3-进程与线程的关系&quot;&gt;&lt;a href=&quot;#1-3-进程与线程的关系&quot; class=&quot;headerlink&quot; title=&quot;1.3 进程与线程的关系&quot;&gt;&lt;/a&gt;1.3 进程与线程的关系&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;一个进程可以有多个线程，但至少有一个线程；而一个线程只能在一个进程的地址空间内活动。&lt;/li&gt;
+&lt;li&gt;资源分配给进程，同一个进程的所有线程共享该进程所有资源。&lt;/li&gt;
+&lt;li&gt;CPU分配给线程，即真正在处理器运行的是线程。&lt;/li&gt;
+&lt;li&gt;线程在执行过程中需要协作同步，不同进程的线程间要利用消息通信的办法实现同步。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;1-4-进程间通信的方式&quot;&gt;&lt;a href=&quot;#1-4-进程间通信的方式&quot; class=&quot;headerlink&quot; title=&quot;1.4 进程间通信的方式&quot;&gt;&lt;/a&gt;1.4 进程间通信的方式&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;管道-PIPE&lt;/li&gt;
+&lt;li&gt;命名管道-FIFO&lt;/li&gt;
+&lt;li&gt;信号 （signal）&lt;/li&gt;
+&lt;li&gt;消息队列（Message queues）&lt;/li&gt;
+&lt;li&gt;信号量（Semaphore）&lt;/li&gt;
+&lt;li&gt;共享内存（Share Memory）&lt;/li&gt;
+&lt;li&gt;内存映射（Memory Map）&lt;/li&gt;
+&lt;li&gt;套接字&lt;/li&gt;
+&lt;li&gt;Android实现的通信方式: Binder（算是内存映射的一种）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;[ ] IPC&lt;/li&gt;
+&lt;li&gt;[ ] Binder&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&quot;1-5-参考&quot;&gt;&lt;a href=&quot;#1-5-参考&quot; class=&quot;headerlink&quot; title=&quot;1.5 参考&quot;&gt;&lt;/a&gt;1.5 参考&lt;/h4&gt;&lt;p&gt;[&lt;a href=&quot;https://www.cnblogs.com/losing-1216/p/5083097.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.cnblogs.com/losing-1216/p/5083097.html&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;[&lt;a href=&quot;https://www.cnblogs.com/zhuzhu2016/p/5804875.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.cnblogs.com/zhuzhu2016/p/5804875.html&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;[&lt;a href=&quot;https://www.cnblogs.com/chump-zwl/p/6962762.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.cnblogs.com/chump-zwl/p/6962762.html&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;[&lt;a href=&quot;https://blog.csdn.net/a987073381/article/details/52006729/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://blog.csdn.net/a987073381/article/details/52006729/&lt;/a&gt;]&lt;/p&gt;
+&lt;h3 id=&quot;2-Android进程级别&quot;&gt;&lt;a href=&quot;#2-Android进程级别&quot; class=&quot;headerlink&quot; title=&quot;2. Android进程级别&quot;&gt;&lt;/a&gt;2. Android进程级别&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;前台进程&lt;/li&gt;
+&lt;li&gt;可见进程&lt;/li&gt;
+&lt;li&gt;服务进程&lt;/li&gt;
+&lt;li&gt;后台进程&lt;/li&gt;
+&lt;li&gt;空进程&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;2-1-前台进程&quot;&gt;&lt;a href=&quot;#2-1-前台进程&quot; class=&quot;headerlink&quot; title=&quot;2.1 前台进程&quot;&gt;&lt;/a&gt;2.1 前台进程&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;拥有正在与用户交互的Activity&lt;/li&gt;
+&lt;li&gt;拥有如下情况的Service：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;与1的Activity绑定的Service&lt;/li&gt;
+&lt;li&gt;前台服务，即调用了startForeground()&lt;/li&gt;
+&lt;li&gt;正在执行生命周期回调函数：onCreate()，onStartCommand()，onDestroy()&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;拥有一个正在执行onReceive()方法的BroadcastReceiver&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;2-2-可见进程&quot;&gt;&lt;a href=&quot;#2-2-可见进程&quot; class=&quot;headerlink&quot; title=&quot;2.2 可见进程&quot;&gt;&lt;/a&gt;2.2 可见进程&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;拥有一个Activity，这个Activity不在前台但是用户可见（onPause但是没有onStop）&lt;/li&gt;
+&lt;li&gt;拥有一个Service，这个Service与1的Activity绑定&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&quot;2-3-服务进程&quot;&gt;&lt;a href=&quot;#2-3-服务进程&quot; class=&quot;headerlink&quot; title=&quot;2.3 服务进程&quot;&gt;&lt;/a&gt;2.3 服务进程&lt;/h4&gt;&lt;p&gt;持有一个正在运行的Service，这个Service不是前面两种情况&lt;/p&gt;
+&lt;h4 id=&quot;2-4-后台进程&quot;&gt;&lt;a href=&quot;#2-4-后台进程&quot; class=&quot;headerlink&quot; title=&quot;2.4 后台进程&quot;&gt;&lt;/a&gt;2.4 后台进程&lt;/h4&gt;&lt;p&gt;如果进程不属于上面三种情况，但是进程持有一个用户不可见的activity（activity的onStop()被调用，但是onDestroy()没有调用的状态），就认为进程是一个后台进程&lt;/p&gt;
+&lt;h4 id=&quot;2-5-空进程&quot;&gt;&lt;a href=&quot;#2-5-空进程&quot; class=&quot;headerlink&quot; title=&quot;2.5 空进程&quot;&gt;&lt;/a&gt;2.5 空进程&lt;/h4&gt;&lt;p&gt;如果一个进程不包含任何活跃的应用组件，则认为是空进程&lt;/p&gt;
+&lt;p&gt;保存这种进程的唯一理由是为了缓存的需要，为了加快下次要启动这个进程中的组件时的启动时间。系统为了平衡进程缓存和底层内核缓存的资源，经常会杀死空进程。&lt;/p&gt;
+&lt;h4 id=&quot;2-6-参考&quot;&gt;&lt;a href=&quot;#2-6-参考&quot; class=&quot;headerlink&quot; title=&quot;2.6 参考&quot;&gt;&lt;/a&gt;2.6 参考&lt;/h4&gt;&lt;p&gt;[&lt;a href=&quot;https://blog.csdn.net/bfboys/article/details/53957396&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://blog.csdn.net/bfboys/article/details/53957396&lt;/a&gt;]&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Android进程&quot;&gt;&lt;a href=&quot;#Android进程&quot; class=&quot;headerlink&quot; title=&quot;Android进程&quot;&gt;&lt;/a&gt;Android进程&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/images/android/android_process.
+    
+    </summary>
+    
+      <category term="Android" scheme="http://www.qinglinyi.com/categories/Android/"/>
+    
+    
+      <category term="Android" scheme="http://www.qinglinyi.com/tags/Android/"/>
+    
+      <category term="进程" scheme="http://www.qinglinyi.com/tags/%E8%BF%9B%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>Android Broadcast</title>
@@ -1816,56 +1900,6 @@
 &lt;li&gt;play(Animator) 返回一个Builder，这个Builder提供with,before方法设置这些Animator的顺序。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;其实，playTogether和playSequentially也是使用play(Animator)和Builder的方式实现的。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Android" scheme="http://www.qinglinyi.com/categories/Android/"/>
-    
-    
-      <category term="Android" scheme="http://www.qinglinyi.com/tags/Android/"/>
-    
-      <category term="property animation" scheme="http://www.qinglinyi.com/tags/property-animation/"/>
-    
-      <category term="属性动画" scheme="http://www.qinglinyi.com/tags/%E5%B1%9E%E6%80%A7%E5%8A%A8%E7%94%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android属性动画Property Animation系列(3)_ObjectAnimator</title>
-    <link href="http://www.qinglinyi.com/posts/Property-Animation-2/"/>
-    <id>http://www.qinglinyi.com/posts/Property-Animation-2/</id>
-    <published>2016-03-22T03:11:25.000Z</published>
-    <updated>2016-04-17T06:33:44.000Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;类概述&quot;&gt;&lt;a href=&quot;#类概述&quot; class=&quot;headerlink&quot; title=&quot;类概述&quot;&gt;&lt;/a&gt;类概述&lt;/h2&gt;&lt;p&gt;ObjectAnimator类是ValueAnimator类的子类，它提供了直接绑定对象的方法，能够自动更新对象的属性，不要再实现ValueAnimator.AnimatorUpdateListener接口。&lt;/p&gt;
-&lt;p&gt;使用注意：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;绑定的对象需要提供属性的set方法，以便ObjectAnimator自动设置属性值。&lt;/li&gt;
-&lt;li&gt;如果你只给values…传入一个参数的时候，需要属性的get方法。&lt;/li&gt;
-&lt;li&gt;根据属性的情况，需要调用invalidate()方法更新View。可以在onAnimationUpdate()回调方法中调用，也可以在set方法中调用。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;h2 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h2&gt;&lt;p&gt;ObjectAnimator的使用基本和ValueAnimator类似。在这里就简单的实现一下：&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;代码&lt;/em&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;private void codeBegin() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        ObjectAnimator objectAnimator;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if (codeLine.getTag() != null &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;amp;&amp;amp; codeLine.getTag() instanceof ObjectAnimator) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            objectAnimator = (ObjectAnimator) codeLine.getTag();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125; else &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;         // objectAnimator = ObjectAnimator.ofFloat(codeLine, &amp;quot;myX&amp;quot;, 0f, 800f);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;         // 使用这个方式的时候，注意需要同时具有set和get方法&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            objectAnimator = ObjectAnimator.ofFloat(codeLine, &amp;quot;myX&amp;quot;, 800f);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            objectAnimator.setDuration(4000);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            objectAnimator.setInterpolator(new AccelerateDecelerateInterpolator());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            codeLine.setTag(objectAnimator);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        objectAnimator.end();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        objectAnimator.start();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;em&gt;xml&lt;/em&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;utf-8&amp;quot;?&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;objectAnimator xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:duration=&amp;quot;4000&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:interpolator=&amp;quot;@android:interpolator/accelerate_decelerate&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:repeatCount=&amp;quot;1&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:valueFrom=&amp;quot;0&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:valueTo=&amp;quot;800&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:repeatMode=&amp;quot;restart&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:propertyName=&amp;quot;myX&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:valueType=&amp;quot;floatType&amp;quot;/&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;其他方式的使用可参考ValueAnimator。&lt;strong&gt;代码在&lt;a href=&quot;https://github.com/qinglinyi/Animator&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;ObjectAnimator是ValueAnimator的子类，绑定对象直接变化属性进行动画。&lt;/li&gt;
-&lt;li&gt;基本使用类似ValueAnimator，但是注意对象属性的set和get方法以及invalidate()更新UI。&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;类概述&quot;&gt;&lt;a href=&quot;#类概述&quot; class=&quot;headerlink&quot; title=&quot;类概述&quot;&gt;&lt;/a&gt;类概述&lt;/h2&gt;&lt;p&gt;ObjectAnimator类是ValueAnimator类的子类，它提供了直接绑定对象的方法，能够自动更新对象的属性，不要再实现ValueAnimator.AnimatorUpdateListener接口。&lt;/p&gt;
-&lt;p&gt;使用注意：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;绑定的对象需要提供属性的set方法，以便ObjectAnimator自动设置属性值。&lt;/li&gt;
-&lt;li&gt;如果你只给values…传入一个参数的时候，需要属性的get方法。&lt;/li&gt;
-&lt;li&gt;根据属性的情况，需要调用invalidate()方法更新View。可以在onAnimationUpdate()回调方法中调用，也可以在set方法中调用。&lt;/li&gt;
-&lt;/ol&gt;
     
     </summary>
     
