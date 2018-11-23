@@ -4,8 +4,23 @@
 
     
   <url>
+    <loc>http://www.qinglinyi.com/posts/ios_jili_licenses/</loc>
+    <lastmod>2018-11-23T12:08:26.916Z</lastmod>
+    <data>
+        <display>
+        <title>iOS隐私政策(中文)</title>
+        <pubTime>2018-11-23T08:03:53.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.qinglinyi.com/posts/ANR/</loc>
-    <lastmod>2018-08-05T10:56:41.278Z</lastmod>
+    <lastmod>2018-08-05T10:56:41.279Z</lastmod>
     <data>
         <display>
         <title>ANR</title>
@@ -25,7 +40,7 @@
     
   <url>
     <loc>http://www.qinglinyi.com/posts/Android_Process/</loc>
-    <lastmod>2018-08-05T09:41:05.543Z</lastmod>
+    <lastmod>2018-08-05T09:41:05.544Z</lastmod>
     <data>
         <display>
         <title>Android进程</title>
@@ -47,7 +62,7 @@
     
   <url>
     <loc>http://www.qinglinyi.com/posts/BrocastReceiver/</loc>
-    <lastmod>2018-08-05T03:14:05.021Z</lastmod>
+    <lastmod>2018-08-05T03:14:05.022Z</lastmod>
     <data>
         <display>
         <title>Android Broadcast</title>
@@ -69,7 +84,7 @@
     
   <url>
     <loc>http://www.qinglinyi.com/posts/Service/</loc>
-    <lastmod>2018-08-05T03:12:09.242Z</lastmod>
+    <lastmod>2018-08-05T03:12:09.243Z</lastmod>
     <data>
         <display>
         <title>Android Service</title>
