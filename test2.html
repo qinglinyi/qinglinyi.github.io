@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<style type="text/css">
+
+		html {
+			height:100%;
+			margin:0;
+		}
+
+		body {
+			margin:0; 
+			height:100%;
+			/*background: #aaccdd;*/
+		}
+
+		.blur-bg {
+			width: 100%;
+			height: 100%;
+			/*background-image: url(./imgs/album.jpg);*/
+
+			position: absolute;
+			float: left;
+			z-index: 0;
+
+			-webkit-filter: blur(60px);
+			-moz-filter: blur(60px);
+			-ms-filter: blur(60px);    
+			filter: blur(60px);  
+		}
+
+		.blur-bg img{
+			width: 100%;
+			height: 100%;
+		}
+
+		.album {
+
+			width: 250px;
+			height: 250px;
+			margin-top: 100px; 
+			text-align: center;
+			position: absolute;
+
+			z-index: 1;
+
+			left: 50%;
+			transform: translate(-50%,0);
+		}
+
+		.album-img {
+			width: 200px;
+			height: 200px;
+			left: 25px;
+			border-radius:5%;
+			margin-top: 25px;
+			position: absolute;
+			float: left;
+			z-index: 0;
+		}
+
+		.play {
+			width: 80px;
+			height: 80px;
+			left: 85px;
+			top: 85px;
+			position: absolute;
+			float: left;
+			z-index: 1;
+		}
+
+		.info {
+			margin: auto;
+			position: absolute;
+			float: left;
+			bottom: 0px;
+			z-index: 1;
+		}
+
+		.info img {
+			width: 100%;
+			height: auto;
+		}
+
+
+
+
+	</style>
+
+</head>
+<body>
+	<div>
+
+		<div class="album">
+			<img class="album-img" src="./imgs/album.jpg">
+			<img class="play" src="./imgs/play.png">
+		</div>
+
+		<div class="info">
+			<img src="./imgs/info.png">
+		</div>
+
+		<div class="blur-bg">
+			<img src="./imgs/album.jpg">
+		</div>
+		
+	</div>
+
+
+</body>
+</html>
