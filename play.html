@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<style type="text/css">
+
+		html {
+			height:100%;
+			margin:0;
+		}
+
+		body {
+			margin:0; 
+			height:100%;
+			/*background: #aaccdd;*/
+		}
+
+		.blur-bg {
+			width: 100%;
+			height: 100%;
+			/*background-image: url(./imgs/album.jpg);*/
+
+			position: absolute;
+			float: left;
+			z-index: 0;
+
+			-webkit-filter: blur(60px);
+			-moz-filter: blur(60px);
+			-ms-filter: blur(60px);    
+			filter: blur(60px);  
+		}
+
+		.blur-bg img{
+			width: 100%;
+			height: 100%;
+		}
+
+		.album {
+
+			width: 80vw;
+			height: auto;
+			margin-top: 200px; 
+			text-align: center;
+			position: absolute;
+
+			z-index: 1;
+
+			left: 50%;
+			transform: translate(-50%,0);
+		}
+
+		.album-img {
+			width: 80vw;
+			height: 80vw;
+			left: 0vw;
+			border-radius:5%;
+			margin-top: 50px;
+			position: absolute;
+			float: left;
+			z-index: 0;
+		}
+
+		.play {
+			width: 30vw;
+			height: 30vw;
+			left: 25vw;
+			top: 30vw;
+			position: absolute;
+			float: left;
+			z-index: 1;
+		}
+		
+		.play a {
+			width: 100%;
+			height: 100%;
+			-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+			-webkit-user-select: none;
+			-moz-user-focus: none;
+			-moz-user-select: none;
+		}
+
+		.play img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.info {
+			position:fixed; 
+			bottom:0px;
+			width:auto;
+			z-index: 1
+		}
+
+		.info img {
+			width: 100%;
+			height: auto;
+		}
+
+
+	</style>
+
+	<script type="text/javascript">
+
+		function getRequest() {
+		var url = location.search; //获取url中含"?"符后的字串
+		var req = new Object();
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for(var i = 0; i < strs.length; i ++) {
+				req[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+			}
+		}
+		return req;
+	}
+
+	function getQueryValue(key) {
+		var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)","i");
+		var match = window.location.search.substr(1).match(reg);
+		if (match != null){
+			return unescape(match[2]);
+		}
+		return null;
+	}
+
+	// 加密函数
+	function compile(code) {
+		var c = String.fromCharCode(code.charCodeAt(0) + code.length);
+		for(var i=1; i<code.length; i++){
+			c += String.fromCharCode(code.charCodeAt(i) + code.charCodeAt(i - 1));
+		}
+		return escape(c);
+	} 
+
+	// 解密函数
+	function uncompile(code){  
+		code = unescape(code);  
+		var c = String.fromCharCode(code.charCodeAt(0)-code.length);  
+		for(var i = 1; i < code.length; i++){  
+			c += String.fromCharCode(code.charCodeAt(i) - c.charCodeAt(i - 1));  
+		}  
+		return c;
+	}
+
+	function playPause() {
+	    var music = document.getElementById('music');
+	    var music_btn = document.getElementById('music_btn');
+	    
+	    if (music.paused){
+	        music.play();
+	        music_btn.src = '/images/play/pause.png';
+	    } else {
+	        music.pause();
+	        music_btn.src = '/images/play/play.png'; 
+	    }
+	}
+
+	function onload(){
+		// var imgStr = compile("http://p1.music.126.net/XRxZk-k7_f_KFallvyNVQg==/109951163709089294.jpg?imageView&amp;thumbnail=360y360&amp;quality=75&amp;tostatic=0");
+    	// alert(imgStr.replace("%", "%25"));
+    	var imgSrc = uncompile(getQueryValue("img"));
+    	var musicSrc = uncompile(getQueryValue("music"));
+    	// alert(imgSrc);
+    	// alert(musicSrc);
+    	document.getElementById("album").src = imgSrc;
+    	document.getElementById("blur-bg").src = imgSrc;
+    	document.getElementById("music").src = musicSrc;
+  	}
+
+</script>
+
+</head>
+<body onload="onload()">
+	<div>
+
+		<div class="album">
+			<img id="album" class="album-img">
+			<div class="play">
+				<a onclick="playPause()();return false;">
+					<img id="music_btn" src="/images/play/play.png">
+				</a>
+			</div>
+		</div>
+
+		<div class="info">
+			<img src="/images/play/info.png">
+		</div>
+
+		<div class="blur-bg">
+			<img id="blur-bg">
+		</div>
+
+		<audio id="music" preload="" loop="loop">
+
+	</audio></div>
+</body>
+</html>
