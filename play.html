@@ -2,6 +2,11 @@
 <html>
 <head>
 
+	<meta charset="UTF-8">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta name="applicable-device" content="mobile">
+	<title>今历</title>
+
 	<style type="text/css">
 
 		html {
@@ -39,7 +44,7 @@
 
 			width: 80vw;
 			height: auto;
-			margin-top: 200px; 
+			margin-top: 15vh; 
 			text-align: center;
 			position: absolute;
 
@@ -95,8 +100,6 @@
 			width: 100%;
 			height: auto;
 		}
-
-
 	</style>
 
 	<script type="text/javascript">
@@ -155,13 +158,9 @@
 	    }
 	}
 
-	function onload(){
-		// var imgStr = compile("http://p1.music.126.net/XRxZk-k7_f_KFallvyNVQg==/109951163709089294.jpg?imageView&amp;thumbnail=360y360&amp;quality=75&amp;tostatic=0");
-    	// alert(imgStr.replace("%", "%25"));
+	function onload() {
     	var imgSrc = uncompile(getQueryValue("img"));
     	var musicSrc = uncompile(getQueryValue("music"));
-    	// alert(imgSrc);
-    	// alert(musicSrc);
     	document.getElementById("album").src = imgSrc;
     	document.getElementById("blur-bg").src = imgSrc;
     	document.getElementById("music").src = musicSrc;
