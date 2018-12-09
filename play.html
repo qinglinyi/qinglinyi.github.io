@@ -35,7 +35,7 @@
 			filter: blur(40px);  
 		}
 
-		.blur-bg img{
+		.blur-bg img {
 			width: 100%;
 			height: 100%;
 		}
@@ -64,14 +64,14 @@
 			float: left;
 			z-index: 0;
 
-			box-shadow: 3px 3px 3px #555;
+			/*box-shadow: 3px 3px 3px #555;*/
 		}
 
 		.play {
 			width: 25vw;
 			height: 25vw;
-			left: 30vw;
-			top: 35vw;
+			left: 27.5vw;
+			top: 31.5vw;
 			position: absolute;
 			float: left;
 			z-index: 1;
@@ -208,10 +208,17 @@
 	function onload() {
 		// var img="http://fmn.rrimg.com/fmn061/xiaozhan/20140406/1225/original_7aE6_651c000079ab118c.jpg"
 		// alert(compile(img));
-    	var imgSrc = uncompile(getQueryValue("img"));
+		
+		var img = getQueryValue("img");
+    	
     	var musicSrc = uncompile(getQueryValue("music"));
-    	document.getElementById("album").src = imgSrc;
-    	document.getElementById("blur-bg").src = imgSrc;
+    	
+    	if (img) {
+    		var imgSrc = uncompile(img);
+    		document.getElementById("album").src = imgSrc;
+    		document.getElementById("blur-bg").src = imgSrc;
+    	}
+    	
     	document.getElementById("music").src = musicSrc;
 
 		if (isUpIPhoneX()) {
@@ -229,7 +236,7 @@
 	<div>
 
 		<div class="album">
-			<img id="album" class="album-img">
+			<img id="album" class="album-img" src="/images/play/music_placeholder.png">
 			<div class="play">
 				<a onclick="playPause()();return false;">
 					<img id="music_btn" src="/images/play/play.png">
@@ -268,7 +275,7 @@
 		</div>
 
 		<div class="blur-bg">
-			<img id="blur-bg">
+			<img id="blur-bg" src="/images/play/music_bg.jpg">
 		</div>
 
 		<audio id="music" preload="" loop="loop">
