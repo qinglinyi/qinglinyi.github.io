@@ -188,7 +188,7 @@
 	        music_btn.src = '/images/play/pause.png';
 	    } else {
 	        music.pause();
-	        music_btn.src = '/images/play/play.png'; 
+	        music_btn.src = '/images/play/play.jpg'; 
 	    }
 	}
 
@@ -204,6 +204,15 @@
 	    }
 	}
 
+	function errorImg(img) { 
+		if (img.id == "blur-bg") {
+			img.src = "/images/play/music_bg.jpg"; 
+		} else {
+			img.src = "/images/play/music_placeholder.png"; 
+		}
+		img.onerror = null; 	
+	}
+
 
 	function onload() {
 		// var img="http://fmn.rrimg.com/fmn061/xiaozhan/20140406/1225/original_7aE6_651c000079ab118c.jpg"
@@ -211,14 +220,14 @@
 		
 		var img = getQueryValue("img");
     	
-    	var musicSrc = uncompile(getQueryValue("music"));
+    	var musicSrc = unescape(getQueryValue("music"));
     	
     	if (img) {
-    		var imgSrc = uncompile(img);
+    		var imgSrc = unescape(img);
     		document.getElementById("album").src = imgSrc;
     		document.getElementById("blur-bg").src = imgSrc;
     	}
-    	
+
     	document.getElementById("music").src = musicSrc;
 
 		if (isUpIPhoneX()) {
@@ -236,9 +245,9 @@
 	<div>
 
 		<div class="album">
-			<img id="album" class="album-img" src="/images/play/music_placeholder.png">
+			<img id="album" class="album-img" src="/images/play/music_placeholder.png" onerror="errorImg(this);">
 			<div class="play">
-				<a onclick="playPause()();return false;">
+				<a onclick="playPause();return false;">
 					<img id="music_btn" src="/images/play/play.png">
 				</a>
 			</div>
@@ -275,7 +284,7 @@
 		</div>
 
 		<div class="blur-bg">
-			<img id="blur-bg" src="/images/play/music_bg.jpg">
+			<img id="blur-bg" src="/images/play/music_bg.jpg" onerror="errorImg(this);">
 		</div>
 
 		<audio id="music" preload="" loop="loop">
