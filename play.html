@@ -21,13 +21,18 @@
 		}
 
 		.blur-bg {
-			width: 100%;
-			height: 100%;
+			width: 140%;
+			height: 140%;
+			left: -10%;
+			top: -10%;
+			right: 10%;
+			bottom: 10%;
+			background: #f00;
 			/*background-image: url(./imgs/album.jpg);*/
 
 			position: absolute;
 			float: left;
-			z-index: 0;
+			z-index: -1;
 
 			-webkit-filter: blur(40px);
 			-moz-filter: blur(40px);
@@ -50,8 +55,8 @@
 
 			z-index: 1;
 
-			left: 50%;
-			transform: translate(-50%,0);
+			left: 100%;
+			transform: translate(-100%,0);
 		}
 
 		.album-img {
